@@ -2,7 +2,9 @@ import QtQuick 2.1
 import Sailfish.Silica 1.0
 
 Page {
-    id: mainPage
+    id: mp
+
+    property alias contentItem: flickable
 
     Connections {
         target: coverAdaptor
@@ -18,10 +20,11 @@ Page {
 
     SilicaFlickable {
         id: flickable
+        z: -2;
 
         anchors.fill: parent
 
-        PageHeader { id: header; title: constants.appName }
+        PageHeader { id: header; title: selectedSectionName + " - " + constants.appName }
 
         PullDownMenu {
             id: pullDownMenu
@@ -50,12 +53,6 @@ Page {
             }
         }
 
-        // The delegate for each section header
-        Component {
-            id: sectionHeading
-            SectionHeader { text: section }
-        }
-
         SilicaListView {
             id: listView
 
@@ -72,64 +69,60 @@ Page {
 
             model: newsModel
 
-            section.property: "name"
-            section.criteria: ViewSection.FullString
-            section.delegate: sectionHeading
-
             delegate: Column {
-                    id: feedItem
+                id: feedItem
 
-                    opacity: feedModel.busy ? 0.2 : 1
-                    enabled: !feedModel.busy
-                    clip: true
+                opacity: feedModel.busy ? 0.2 : 1
+                enabled: !feedModel.busy
+                clip: true
 
-                    width: listView.width
-                    spacing: constants.paddingSmall
+                width: listView.width
+                spacing: constants.paddingSmall
+
+                Label {
+                    id: titleLbl
+                    width: parent.width
+                    font.pixelSize: constants.fontSizeSmall
+                    color: constants.colorPrimary
+                    textFormat: Text.PlainText
+                    wrapMode: Text.Wrap;
+                    text: title
+
+                    MouseArea {
+                        enabled: link !== ""
+                        anchors.fill: parent
+                        onClicked: {
+                            var props = {
+                                "url": link
+                            }
+                            pageStack.push(Qt.resolvedUrl("WebPage.qml"), props);
+                        }
+                    }
+                }
+
+                Row {
+                    width: parent.width
 
                     Label {
-                        id: titleLbl
-                        width: parent.width
-                        font.pixelSize: constants.fontSizeSmall
-                        color: constants.colorPrimary
+                        id: authorLbl
+                        font.pixelSize: constants.fontSizeXXSmall
+                        color: constants.colorHighlight
                         textFormat: Text.PlainText
-                        wrapMode: Text.Wrap;
-                        text: title
-
-                        MouseArea {
-                            enabled: link !== ""
-                            anchors.fill: parent
-                            onClicked: {
-                                var props = {
-                                    "url": link
-                                }
-                                pageStack.push(Qt.resolvedUrl("WebPage.qml"), props);
-                            }
-                        }
+                        text: author
                     }
-
-                    Row {
-                        width: parent.width
-
-                        Label {
-                            id: authorLbl
-                            font.pixelSize: constants.fontSizeXXSmall
-                            color: constants.colorHighlight
-                            textFormat: Text.PlainText
-                            text: author
-                        }
-                        Label {
-                            id: updatedLbl
-                            font.pixelSize: constants.fontSizeXXSmall
-                            color: constants.colorHighlight
-                            textFormat: Text.PlainText
-                            text: " (" + Format.formatDate(formatPublishedDate(publishedDate), Formatter.DurationElapsed) + ")"
-                        }
+                    Label {
+                        id: updatedLbl
+                        font.pixelSize: constants.fontSizeXXSmall
+                        color: constants.colorHighlight
+                        textFormat: Text.PlainText
+                        text: " (" + Format.formatDate(formatPublishedDate(publishedDate), Formatter.DurationElapsed) + ")"
                     }
+                }
 
-                    Separator {
-                        anchors { left: parent.left; right: parent.right; }
-                        color: constants.colorSecondary;
-                    }
+                Separator {
+                    anchors { left: parent.left; right: parent.right; }
+                    color: constants.colorSecondary;
+                }
             }
 
             // Timer for top/bottom buttons

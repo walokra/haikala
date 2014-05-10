@@ -8,8 +8,6 @@ Item {
     signal isLoaded
 
     property int status: XMLHttpRequest.UNSENT
-    property bool isLoading: status === XMLHttpRequest.LOADING
-    property bool wasLoading: false
 
     // flag indicating that this model is busy
     property bool busy: false
@@ -17,11 +15,18 @@ Item {
     property variant sources: []
     property variant _sourcesQueue: []
 
+    property var allFeeds : [];
+
     // name of the feed currently loading
     property string currentlyLoading
 
-    function load(name, url) {
-        newsModel.clear();
+    function load(source, onSuccess) {
+        var name = source.name;
+        var url = source.url;
+        var id = source.id;
+
+        console.log("Now loading: " + name);
+        currentlyLoading = name;
 
         var req = new XMLHttpRequest;
         req.open("GET", url);
@@ -41,58 +46,73 @@ Item {
                 }
                 */
                 //console.log("description="  + objectArray.responseData.feed.description);
-                for (var key in objectArray.responseData.feed.entries) {
+                var entries = [];
+                for (var i in objectArray.responseData.feed.entries) {
                     //var jsonObject = objectArray.responseData.feed.entries[key];
                     //console.log("jsonObject="  + JSON.stringify(jsonObject));
-                    _loadItem(objectArray.responseData.feed.entries, key, name, url);
+                    entries.push(_loadItem(objectArray.responseData.feed.entries, i));
                 }
 
-                if (wasLoading == true) {
-                    wrapper.isLoaded()
-                }
+                var feed = { };
+                feed["name"] = name;
+                feed["id"] = id;
+                feed["entries"] = entries;
+
+                allFeeds.push(feed);
+                onSuccess();
             }
-            wasLoading = (status === XMLHttpRequest.LOADING);
         }
         req.send();
     }
 
-   /*
+    /*
     * Adds the item from the given model.
     */
-   function _loadItem(model, i, name, url) {
-       var item = _createItem(model[i]);
-       item["source"] = url
-       //item["date"] = item.dateString !== "" ? new Date(item.dateString) : new Date();
-       item["name"] = name;
+    function _loadItem(model, i) {
+        return _createItem(model[i]);
+    }
 
-       newsModel.append(item);
-   }
-
-   function _createItem(obj) {
-       var item = { };
-       for (var key in obj) {
+    function _createItem(obj) {
+        var item = { };
+        for (var key in obj) {
            item[key] = obj[key];
+        }
+        return item;
+    }
+
+    /*
+    * Takes the next source from the sources queue and loads it.
+    */
+    // FIXME: better way to manage async
+    function _loadFeeds(queue) {
+       if (queue.length > 0) {
+           var source = queue.pop();
+           load(source, function() {
+                       _loadFeeds(queue);
+                   }
+            );
+       } else {
+           for(var i in allFeeds) {
+              if (allFeeds[i].id === "uutiset") {
+                  newsModel.append(allFeeds[i].entries)
+                  break;
+              }
+           }
+
+           console.debug("newsModel.count=" + newsModel.count);
+           busy = false;
+           currentlyLoading = "";
        }
-       return item;
-   }
+    }
 
     function refresh() {
+        busy = true;
+        newsModel.clear();
+        //for (var i = 0; i < sources.length; i++) {
+        //    console.log("Source: " + sources[i].url);
+        //}
         _sourcesQueue = sources;
-        var queue = _sourcesQueue;
-        if (queue.length > 0) {
-            var source = queue.pop();
-            var name = source.name;
-            var url = source.url;
-
-            console.log("Now loading: " + name);
-            currentlyLoading = name;
-            load(name, url);
-
-            _sourcesQueue = queue;
-        } else {
-            busy = false;
-            currentlyLoading = "";
-        }
+        _loadFeeds(_sourcesQueue);
     }
 
     function abort() {

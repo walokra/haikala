@@ -43,7 +43,7 @@ CoverBackground {
 
     // [abort] while loading
     CoverActionList {
-        enabled: feedModel.isLoading
+        enabled: feedModel.busy
 
         CoverAction {
             iconSource: "image://theme/icon-cover-cancel"
@@ -55,7 +55,7 @@ CoverBackground {
 
     // [refresh only]
     CoverActionList {
-        enabled: !feedModel.isLoading
+        enabled: !feedModel.busy
 
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"

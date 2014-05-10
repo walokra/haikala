@@ -6,10 +6,6 @@ Dialog {
 
     allowedOrientations: Orientation.All
 
-    property string selectedId : ""
-    property string selectedUrl : ""
-    property string selectedName : ""
-
     SilicaFlickable {
         id: flickable
 
@@ -31,46 +27,7 @@ Dialog {
             anchors.leftMargin: constants.paddingMedium
             anchors.rightMargin: constants.paddingMedium
 
-            SectionHeader { text: qsTr("Basic feed") }
-
-            ComboBox {
-                id: feedModeBox
-                currentIndex: 0
-                width: parent.width
-
-                label: qsTr("Basic feed") + ":"
-
-                menu: ContextMenu {
-                    id: feedMenu
-
-                    Repeater {
-                         width: parent.width
-                         model: settings.feeds_basic_news
-
-                         delegate: MenuItem {
-                             text: modelData.name
-                             onClicked: {
-                                 //console.log("onClicked: " + index + "; id=" + modelData.id)
-                                 selectedId = modelData.id
-                                 selectedName = modelData.name
-                                 selectedUrl = modelData.url
-                             }
-                         }
-                    }
-                    //onActiveChanged: {
-                    //    console.log("onActiveChanged, index: " + feedModeBox.currentIndex)
-                    //}
-                }
-                onCurrentIndexChanged: {
-                    selectedId = settings.feeds_basic_news[currentIndex].id
-                    selectedName = settings.feeds_basic_news[currentIndex].name
-                    selectedUrl = settings.feeds_basic_news[currentIndex].url
-                    //console.debug("onCurrentIndexChanged("+ currentIndex +"): selectedId= " + selectedId + "; selectedUrl=" + selectedUrl)
-                }
-            }
-
-            /*
-            SectionHeader { text: qsTr("Specific news feeds") }
+            SectionHeader { text: qsTr("Filter shown feeds") }
 
             Column {
                 id: newsFeeds;
@@ -81,7 +38,7 @@ Dialog {
                 Repeater {
                     id: txtSwitchRepeater
                     width: parent.width
-                    model: settings.feeds_specific_news
+                    model: settings.feeds_filterable
 
                     delegate: TextSwitch {
                         text: modelData.name
@@ -93,16 +50,14 @@ Dialog {
                     }
                 }
             }
-            */
         }
 
         VerticalScrollDecorator { flickable: flickable }
     }
 
-    /*
     function addFeed(id) {
         //console.debug("addFeed: " + id)
-        settings.feeds_specific_news.forEach(function(entry) {
+        settings.feeds_filterable.forEach(function(entry) {
             if (entry.id === id) {
                 entry.selected = true;
             }
@@ -111,51 +66,34 @@ Dialog {
 
     function removeFeed(id) {
         //console.debug("removeFeed: " + id)
-        settings.feeds_specific_news.forEach(function(entry) {
+        settings.feeds_filterable.forEach(function(entry) {
             if (entry.id === id) {
                 entry.selected = false;
             }
         });
     }
-    */
 
     onAccepted: {
         sourcesModel.clear()
 
-        if (selectedId && selectedId != "none") {
-            settings.feeds_basic_selected = selectedId
-            sourcesModel.addSource(selectedId, selectedName, selectedUrl)
-        }
-
-        /*
         // Check which feeds are selected and add them to source
-        settings.feeds_specific_news.forEach(function(entry) {
+        settings.feeds.forEach(function(entry) {
+                sourcesModel.addSource(entry.id, entry.name, entry.url)
+        });
+
+        // Check which feeds are selected and add them to source
+        settings.feeds_filterable.forEach(function(entry) {
             if (entry.selected === true) {
-                //console.debug("specific selected, " + entry.id + "; "+ entry.selected)
+                //console.debug("feeds_filterable selected, " + entry.id + "; "+ entry.selected)
                 sourcesModel.addSource(entry.id, entry.name, entry.url)
             }
         });
-        */
 
         settings.saveFeedSettings();
     }
 
     Component.onCompleted: {
-        //console.debug("FeedsPage.onCompleted, feeds_basic_selected=" + settings.feeds_basic_selected)
-        switch (settings.feeds_basic_selected) {
-            case settings.feeds_basic_news[0].id:
-                feedModeBox.currentIndex = 0
-                break;
-            case settings.feeds_basic_news[1].id:
-                feedModeBox.currentIndex = 1
-                break;
-            case settings.feeds_basic_news[2].id:
-                feedModeBox.currentIndex = 2
-                break;
-            default:
-                feedModeBox.currentIndex = 1
-        }
-        //console.debug("feedModeBox.currentIndex=" + feedModeBox.currentIndex)
+
     }
 
 }

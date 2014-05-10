@@ -1,8 +1,10 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 
-ApplicationWindow
-{
+ApplicationWindow {
+    id: main
+
+    property Page currentPage: pageStack.currentPage
 
     ListModel { id: newsModel }
 
@@ -39,7 +41,6 @@ ApplicationWindow
         }
     }
 
-    initialPage: mainPageComponent
     cover: Qt.resolvedUrl("CoverPage.qml")
 
     QtObject {
@@ -54,9 +55,60 @@ ApplicationWindow
         MainPage { id: mainPage }
     }
 
+    property string selectedSection: "uutiset"
+    property string selectedSectionName: "Uutiset"
+    initialPage: Component {
+        id: mainPage;
+
+        MainPage {
+            id: mp;
+            property bool __isMainPage : true;
+
+            Binding {
+                target: mp.contentItem;
+                property: "parent";
+                value: mp.status === PageStatus.Active ? viewer : mp;
+            }
+        }
+    }
+
     Settings { id: settings }
 
     Constants { id: constants }
+
+    PanelView {
+        id: viewer;
+
+        // a workaround to avoid TextAutoScroller picking up PanelView as an "outer"
+        // flickable and doing undesired contentX adjustments (the right side panel
+        // slides partially in) meanwhile typing/scrolling long TextEntry content
+        property bool maximumFlickVelocity: false;
+
+        width: pageStack.currentPage.width;
+        panelWidth: Screen.width / 3 * 2;
+        panelHeight: pageStack.currentPage.height;
+        height: currentPage && currentPage.contentHeight || pageStack.currentPage.height;
+        visible: (!!currentPage && !!currentPage.__isMainPage) || !viewer.closed;
+
+        rotation: pageStack.currentPage.rotation;
+
+        property int ori: pageStack.currentPage.orientation;
+
+        anchors.centerIn: parent;
+        anchors.verticalCenterOffset: ori === Orientation.Portrait ? -(panelHeight - height) / 2 :
+            ori === Orientation.PortraitInverted ? (panelHeight - height) / 2 : 0;
+        anchors.horizontalCenterOffset: ori === Orientation.Landscape ? (panelHeight - height) / 2 :
+            ori === Orientation.LandscapeInverted ? -(panelHeight - height) / 2 : 0;
+
+        Connections {
+            target: pageStack;
+            onCurrentPageChanged: viewer.hidePanel();
+        }
+
+        leftPanel: FeedPanel {
+            id: feedPanel;
+        }
+    }
 
     Component.onCompleted: {
     }

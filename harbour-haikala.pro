@@ -24,6 +24,9 @@ OTHER_FILES = \
     qml/FeedsPage.qml \
     qml/AboutPage.qml \
     qml/WebPage.qml \
-    qml/CoverPage.qml
+    qml/Panel.qml \
+    qml/PanelView.qml \
+    qml/CoverPage.qml \
+    qml/FeedPanel.qml
 
 INCLUDEPATH += $$PWD
