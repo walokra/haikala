@@ -53,6 +53,12 @@ Page {
             }
         }
 
+        // The delegate for each section header
+        Component {
+            id: sectionHeading
+            SectionHeader { text: section }
+        }
+
         SilicaListView {
             id: listView
 
@@ -68,6 +74,10 @@ Page {
             }
 
             model: newsModel
+
+            section.property: "timeSince"
+            section.criteria: ViewSection.FullString
+            section.delegate: sectionHeading
 
             delegate: Column {
                 id: feedItem
@@ -110,13 +120,15 @@ Page {
                         textFormat: Text.PlainText
                         text: author
                     }
+                    /*
                     Label {
                         id: updatedLbl
                         font.pixelSize: constants.fontSizeXXSmall
                         color: constants.colorHighlight
                         textFormat: Text.PlainText
-                        text: " (" + Format.formatDate(formatPublishedDate(publishedDate), Formatter.DurationElapsed) + ")"
+                        text: " (" + timeSince + ")"
                     }
+                    */
                 }
 
                 Separator {
@@ -178,15 +190,6 @@ Page {
 
             VerticalScrollDecorator { flickable: flickable }
         }
-    }
-
-    function formatPublishedDate(datetime) {
-        // May, 10 2014 08:34:44
-        // 2014-05-10T06:04:00.000Z
-        var epoch = Date.parse(datetime);
-        var date = new Date(epoch);
-
-        return date.toISOString();
     }
 
     BusyIndicator {

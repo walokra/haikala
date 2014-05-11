@@ -74,6 +74,20 @@ Page {
 
             ListItem {
                 Image {
+                    id: highFiImage;
+                    source: "images/high-fi.svg";
+                    width: 74;
+                    height: 80;
+                }
+                Label {
+                    anchors { left: highFiImage.right; leftMargin: constants.paddingLarge; }
+                    text: "high.fi";
+                    font.pixelSize: constants.fontSizeLarge;
+                }
+            }
+
+            ListItem {
+                Image {
                     id: qtImage;
                     source: "images/qt_icon.png";
                     width: 80;
