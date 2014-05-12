@@ -42,6 +42,8 @@ Item {
                 }
             }
         }
+
+        req.setRequestHeader("User-Agent", constants.userAgent);
         req.send();
     }
 
