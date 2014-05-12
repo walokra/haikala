@@ -1,9 +1,9 @@
 .pragma library
 .import QtQuick.LocalStorage 2.0 as LS
 
-var identifier = "Haikala";
+var identifier = "Uutishai";
 var version = "1.0";
-var description = "Haikala database";
+var description = "Uutishai database";
 
 /**
   Open app's database, create it if not exists.

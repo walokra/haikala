@@ -120,15 +120,6 @@ Page {
                         textFormat: Text.PlainText
                         text: author
                     }
-                    /*
-                    Label {
-                        id: updatedLbl
-                        font.pixelSize: constants.fontSizeXXSmall
-                        color: constants.colorHighlight
-                        textFormat: Text.PlainText
-                        text: " (" + timeSince + ")"
-                    }
-                    */
                 }
 
                 Separator {

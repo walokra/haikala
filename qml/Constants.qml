@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 QtObject {
     id: constant;
 
-    property string appName : "Haikala";
+    property string appName : "Uutishai";
 
     property string userAgent : appName + " " + APP_VERSION + "-" + APP_RELEASE + "(Jolla; Qt; SailfishOS)";
 

@@ -13,6 +13,7 @@ OTHER_FILES = \
     rpm/harbour-haikala.spec \
     rpm/harbour-haikala.yaml \
     rpm/harbour-haikala.changes \
+    translations/*.ts \
     qml/components/storage.js \
     qml/MainPage.qml \
     qml/Constants.qml \
@@ -26,6 +27,12 @@ OTHER_FILES = \
     qml/Panel.qml \
     qml/PanelView.qml \
     qml/CoverPage.qml \
-    qml/FeedPanel.qml
+    qml/FeedPanel.qml \
+    qml/components/utils.js
 
 INCLUDEPATH += $$PWD
+
+# to disable building translations every time, comment out the
+# following CONFIG line
+CONFIG += sailfishapp_i18n
+TRANSLATIONS += translations/harbour-haikala-fi.ts

@@ -13,16 +13,18 @@ Page {
 
         PageHeader {
             id: header;
-            title: qsTr("About Haikala");
+            title: qsTr("About Uutishai");
         }
 
         Column {
             id: contentArea;
-            anchors { top: header.bottom; left: parent.left; right: parent.right }
+            anchors { top: header.bottom; left: parent.left; right: parent.right; }
             height: childrenRect.height;
 
             anchors.leftMargin: constants.paddingMedium;
             anchors.rightMargin: constants.paddingMedium;
+            anchors.margins: Theme.paddingMedium;
+            spacing: Theme.paddingMedium;
 
             Item {
                 anchors { left: parent.left; right: parent.right; }
@@ -31,9 +33,11 @@ Page {
                 Label {
                     id: aboutText;
                     width: parent.width;
+                    textFormat: Text.StyledText;
+                    linkColor: Theme.highlightColor;
                     wrapMode: Text.Wrap;
                     font.pixelSize: constants.fontSizeMedium;
-                    text: qsTr("Haikala is a news feed reader for High.fi news portal's feeds (http://high.fi). Haikala is open source software and licensed under the terms of the MIT license.")
+                    text: qsTr("Uutishai is a news feed reader for") + " <a href='http://high.fi'>High.fi</a> " + qsTr("news portal's feeds. Uutishai is open source software and licensed under the terms of the MIT license.")
                 }
             }
 
@@ -52,7 +56,7 @@ Page {
                 }
             }
 
-            SectionHeader { text: qsTr("Developed By"); }
+            SectionHeader { text: qsTr("Developed by"); }
 
             ListItem {
                 id: root;
@@ -70,7 +74,17 @@ Page {
                 }
             }
 
-            SectionHeader { text: qsTr("Powered By") }
+            Label {
+                width: parent.width;
+                textFormat: Text.StyledText;
+                linkColor: Theme.highlightColor;
+                font.pixelSize: Theme.fontSizeSmall;
+                truncationMode: TruncationMode.Fade;
+                text: qsTr("Bug reports") + ": " + "<a href='https://github.com/walokra/haikala/issues'>https://github.com/walokra/haikala/issues</a>";
+                onLinkActivated: Qt.openUrlExternally(link);
+            }
+
+            SectionHeader { text: qsTr("Powered by") }
 
             ListItem {
                 Image {
@@ -81,8 +95,11 @@ Page {
                 }
                 Label {
                     anchors { left: highFiImage.right; leftMargin: constants.paddingLarge; }
-                    text: "high.fi";
+                    textFormat: Text.StyledText
+                    linkColor: Theme.highlightColor
+                    text: "<a href='http://high.fi'>High.fi</a>";
                     font.pixelSize: constants.fontSizeLarge;
+                    onLinkActivated: Qt.openUrlExternally(link);
                 }
             }
 

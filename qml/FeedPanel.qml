@@ -46,12 +46,10 @@ Panel {
                     }
 
                     onClicked: {
-                        console.debug("Showing feed: " + modelData.name);
+                        //console.debug("Showing feed: " + modelData.name);
                         newsModel.clear()
                         selectedSection = modelData.id
                         selectedSectionName = modelData.name
-                        //console.log("allFeeds: " + JSON.stringify(feedModel.allFeeds));
-                        //console.log("allFeeds: " + feedModel.allFeeds.length);
 
                         for(var i in feedModel.allFeeds) {
                             if (feedModel.allFeeds[i].id === selectedSection) {
@@ -73,8 +71,7 @@ Panel {
 
                 delegate: BackgroundItem {
                     id: filteredFeedItem;
-                    anchors.left: parent.left; anchors.right: parent.right;
-                    visible: modelData.selected
+                    visible: modelData.selected;
 
                     Label {
                         anchors { left: parent.left; right: parent.right; }
@@ -85,12 +82,10 @@ Panel {
                     }
 
                     onClicked: {
-                        console.debug("Showing feed: " + modelData.name);
+                        //console.debug("Showing feed: " + modelData.name);
                         newsModel.clear()
                         selectedSection = modelData.id
                         selectedSectionName = modelData.name
-                        //console.log("allFeeds: " + JSON.stringify(feedModel.allFeeds));
-                        //console.log("allFeeds: " + feedModel.allFeeds.length);
 
                         for(var i in feedModel.allFeeds) {
                             if (feedModel.allFeeds[i].id === selectedSection) {
