@@ -4,14 +4,6 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <source>About Uutishai</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uutishai is a news feed reader for</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28,7 +20,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>news portal&apos;s feeds. Uutishai is open source software and licensed under the terms of the MIT license.</source>
+        <source>About Haikala</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Haikala is a news feed reader for</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>news portal&apos;s feeds. Haikala is open source software and licensed under the terms of the MIT license.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
 
-    app->setApplicationName("Uutishai");
+    app->setApplicationName("Haikala");
     app->setOrganizationName("harbour-haikala");
     app->setApplicationVersion(APP_VERSION);
 

@@ -4,12 +4,12 @@
 <context>
     <name>AboutPage</name>
     <message>
-	<source>About Uutishai</source>
-	<translation>Tietoja Uutishaista</translation>
+	<source>About Haikala</source>
+	<translation>Tietoja Haikalasta</translation>
     </message>
     <message>
-	<source>Uutishai is a news feed reader for</source>
-	<translation>Uutishai on uutissyötteiden lukija</translation>
+	<source>Haikala is a news feed reader for</source>
+	<translation>Haikala on uutissyötteiden lukija</translation>
     </message>
     <message>
 	<source>Version</source>
@@ -28,8 +28,8 @@
 	<translation>Voimanlähteet</translation>
     </message>
     <message>
-	<source>news portal&apos;s feeds. Uutishai is open source software and licensed under the terms of the MIT license.</source>
-	<translation>uutisportaalin syötteille. Uutishai on avoimen lähdekoodin ohjelmisto ja lisensoitu MIT-lisenssillä.</translation>
+	<source>news portal&apos;s feeds. Haikala is open source software and licensed under the terms of the MIT license.</source>
+	<translation>uutisportaalin syötteille. Haikala on avoimen lähdekoodin ohjelmisto ja lisensoitu MIT-lisenssillä.</translation>
     </message>
 </context>
 <context>

@@ -13,7 +13,7 @@ Page {
 
         PageHeader {
             id: header;
-            title: qsTr("About Uutishai");
+            title: qsTr("About Haikala");
         }
 
         Column {
@@ -37,7 +37,7 @@ Page {
                     linkColor: Theme.highlightColor;
                     wrapMode: Text.Wrap;
                     font.pixelSize: constants.fontSizeMedium;
-                    text: qsTr("Uutishai is a news feed reader for") + " <a href='http://high.fi'>High.fi</a> " + qsTr("news portal's feeds. Uutishai is open source software and licensed under the terms of the MIT license.")
+                    text: qsTr("Haikala is a news feed reader for") + " <a href='http://high.fi'>High.fi</a> " + qsTr("news portal's feeds. Haikala is open source software and licensed under the terms of the MIT license.")
                 }
             }
 
