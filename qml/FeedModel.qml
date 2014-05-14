@@ -108,6 +108,7 @@ Item {
      */
     function refresh() {
         busy = true;
+        allFeeds = [];
         newsModel.clear();
         _sourcesQueue = sources;
         _loadFeeds(_sourcesQueue);
