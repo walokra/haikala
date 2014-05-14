@@ -105,6 +105,7 @@ Item {
             }
 
             busy = false;
+            loading = false;
             currentlyLoading = "";
         }
     }
@@ -145,5 +146,6 @@ Item {
             newsModel.error(qsTr("Error with %1:\n%2").arg(feedName).arg(error));
         }
         busy = false;
+        loading = false;
     }
 }
