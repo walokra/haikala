@@ -41,6 +41,18 @@ CoverBackground {
         }
     }
 
+    // [abort] while loading
+    CoverActionList {
+        enabled: feedModel.busy
+
+        CoverAction {
+            iconSource: "image://theme/icon-cover-cancel"
+            onTriggered: {
+                coverAdaptor.abort();
+            }
+        }
+    }
+
     // [refresh only]
     CoverActionList {
         enabled: !feedModel.busy

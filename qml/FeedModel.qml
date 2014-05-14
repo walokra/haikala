@@ -6,7 +6,6 @@ Item {
     id: wrapper
 
     signal error(string details)
-    signal isLoaded
 
     property int status: XMLHttpRequest.UNSENT
 
@@ -16,6 +15,7 @@ Item {
     property variant sources: []
     property variant _sourcesQueue: []
     property variant lastRefresh;
+    property bool loading: false;
 
     property var allFeeds : [];
 
@@ -74,7 +74,11 @@ Item {
                  function(jsonObject, id, name) {
                      var entries = [];
                      for (var i in jsonObject.responseData.feed.entries) {
-                         entries.push(_loadItem(jsonObject.responseData.feed.entries, i));
+                         if (loading) {
+                            entries.push(_loadItem(jsonObject.responseData.feed.entries, i));
+                         } else {
+                             break;
+                         }
                      }
 
                      var feed = { };
@@ -84,7 +88,9 @@ Item {
 
                      allFeeds.push(feed);
 
-                     _loadFeeds(queue);
+                     if (loading) {
+                        _loadFeeds(queue);
+                     }
                  },
                 function(status, error) {
                     _handleError(status, error);
@@ -108,11 +114,20 @@ Item {
      */
     function refresh() {
         busy = true;
+        loading = true;
         allFeeds = [];
         newsModel.clear();
         _sourcesQueue = sources;
         _loadFeeds(_sourcesQueue);
         lastRefresh = new Date();
+    }
+
+    /* Aborts loading.
+     */
+    function abort() {
+        _sourcesQueue = [];
+        loading = true;
+        busy = false;
     }
 
     function _handleError(status, error) {
