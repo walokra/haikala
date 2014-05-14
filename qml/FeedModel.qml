@@ -121,6 +121,7 @@ Item {
         _sourcesQueue = sources;
         _loadFeeds(_sourcesQueue);
         lastRefresh = new Date();
+        timeSinceRefresh = Utils.timeDiff(lastRefresh);
     }
 
     /* Aborts loading.

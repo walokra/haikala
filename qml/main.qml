@@ -5,6 +5,7 @@ ApplicationWindow {
     id: main
 
     property Page currentPage: pageStack.currentPage
+    property string timeSinceRefresh;
 
     ListModel { id: newsModel }
 
@@ -48,11 +49,6 @@ ApplicationWindow {
 
         signal refresh
         signal abort
-    }
-
-    Component {
-        id: mainPageComponent
-        MainPage { id: mainPage }
     }
 
     property string selectedSection: "uutiset"

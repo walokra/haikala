@@ -1,11 +1,18 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
+import "components/utils.js" as Utils
 
 Page {
     id: mp
 
     property alias contentItem: flickable
 
+    onStatusChanged: {
+        if (status == PageStatus.Activating) {
+            timeSinceRefresh = Utils.timeDiff(feedModel.lastRefresh);
+        }
+    }
+	
     Connections {
         target: coverAdaptor
 
@@ -53,6 +60,17 @@ Page {
             }
         }
 
+        Label {
+            id: lastRefreshLbl;
+            anchors { top: header.bottom; right: parent.right; }
+            anchors.rightMargin: constants.paddingLarge;
+            font.pixelSize: constants.fontSizeXXSmall;
+            color: constants.colorHighlight;
+            textFormat: Text.PlainText;
+            text: qsTr("Refreshed") + ": " + timeSinceRefresh;
+            visible: timeSinceRefresh != "";
+        }
+
         // The delegate for each section header
         Component {
             id: sectionHeading
@@ -62,14 +80,14 @@ Page {
         SilicaListView {
             id: listView
 
-            anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom; }
+            anchors { top: lastRefreshLbl.bottom; left: parent.left; right: parent.right; bottom: parent.bottom; }
             anchors.margins: constants.paddingSmall;
 
             cacheBuffer: 4000
             pressDelay: 0
 
             ViewPlaceholder {
-                enabled: sourcesModel.count > 0 && !feedModel.busy && newsModel.count === 0
+                enabled: sourcesModel.count > 0 && !feedModel.busy && feedModel.allFeeds.length === 0
                 text: qsTr("Pull down to refresh")
             }
 

@@ -75,12 +75,12 @@ Page {
             }
 
             Label {
-                width: parent.width;
+                anchors { right: parent.right; rightMargin: Theme.paddingLarge; }
                 textFormat: Text.StyledText;
                 linkColor: Theme.highlightColor;
                 font.pixelSize: Theme.fontSizeSmall;
                 truncationMode: TruncationMode.Fade;
-                text: qsTr("Bug reports") + ": " + "<a href='https://github.com/walokra/haikala/issues'>https://github.com/walokra/haikala/issues</a>";
+                text: qsTr("Bug reports") + ": " + "<a href='https://github.com/walokra/haikala/issues'>Github</a>";
                 onLinkActivated: Qt.openUrlExternally(link);
             }
 

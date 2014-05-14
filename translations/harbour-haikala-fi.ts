@@ -40,7 +40,7 @@
     </message>
 </context>
 <context>
-    <name>FeedModel</name>
+    <name>utils</name>
     <message>
 	<source>Now</source>
 	<translation>Nyt</translation>
