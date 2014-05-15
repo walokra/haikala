@@ -91,6 +91,18 @@
         <source>Open in browser</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Copy link to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>copied to clipboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>utils</name>

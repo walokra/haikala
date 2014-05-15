@@ -4,11 +4,12 @@ import "components/utils.js" as Utils
 
 CoverBackground {
     id: cover
-	
+
     onStatusChanged: {
         //console.log("cover.onStatusChanged, status=" + status);
         if (status == PageStatus.Deactivating) {
-            timeSinceRefresh = Utils.timeDiff(feedModel.lastRefresh);
+            //console.log("cover deactivating");
+            Utils.updateTimeSince(newsModel);
         }
     }
 

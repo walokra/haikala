@@ -41,6 +41,19 @@ Page {
                 }
 
                 MenuItem {
+                    text: qsTr("Copy link to clipboard");
+                    onClicked: {
+                        textArea.text = url; textArea.selectAll(); textArea.copy();
+                        infoBanner.showText(qsTr("Link") + " " + textArea.text + " " + qsTr("copied to clipboard."));
+                    }
+                }
+
+                TextArea {
+                    id: textArea;
+                    visible: false;
+                }
+
+                MenuItem {
                     text: qsTr("Open in browser")
 
                     onClicked: {

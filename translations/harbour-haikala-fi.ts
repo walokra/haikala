@@ -117,6 +117,18 @@
 	<translation>Sulje web-näkymä</translation>
     </message>
     <message>
+	<source>Copy link to clipboard</source>
+	<translation>Kopioi linkki leikepöydälle</translation>
+    </message>
+    <message>
+	<source>Link</source>
+	<translation>Linkki</translation>
+    </message>
+    <message>
+	<source>copied to clipboard.</source>
+	<translation>kopioitu leikepöydälle.</translation>
+    </message>
+    <message>
 	<source>Open in browser</source>
 	<translation>Avaa selaimessa</translation>
     </message>

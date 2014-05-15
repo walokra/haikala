@@ -60,6 +60,7 @@ Item {
            item[key] = obj[key];
         }
         item["timeSince"] = Utils.timeDiff(obj["publishedDate"]);
+        item["read"] = false;
 
         return item;
     }
@@ -121,7 +122,6 @@ Item {
         _sourcesQueue = sources;
         _loadFeeds(_sourcesQueue);
         lastRefresh = new Date();
-        timeSinceRefresh = Utils.timeDiff(lastRefresh);
     }
 
     /* Aborts loading.

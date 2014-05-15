@@ -1,5 +1,13 @@
 .pragma library
 
+function updateTimeSince(model) {
+    //console.log("updateTimeSince, model.count=" + model.count);
+    for (var i=0; i < model.count; i++) {
+        var entry = model.get(i);
+        entry.timeSince = timeDiff(entry.publishedDate);
+    };
+}
+
 /*
  * Calculates time difference to current time for given time.
  */

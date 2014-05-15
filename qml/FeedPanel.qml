@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "components/utils.js" as Utils
 
 Panel {
     id: feedPanel;
@@ -51,12 +52,8 @@ Panel {
                         selectedSection = modelData.id
                         selectedSectionName = modelData.name
 
-                        for(var i in feedModel.allFeeds) {
-                            if (feedModel.allFeeds[i].id === selectedSection) {
-                                newsModel.append(feedModel.allFeeds[i].entries)
-                                break;
-                            }
-                        }
+                        appendToNewsModel(selectedSection)
+                        Utils.updateTimeSince(newsModel);
 
                         //console.log("newsModel.count: " + newsModel.count);
                         viewer.hidePanel();
@@ -87,12 +84,8 @@ Panel {
                         selectedSection = modelData.id
                         selectedSectionName = modelData.name
 
-                        for(var i in feedModel.allFeeds) {
-                            if (feedModel.allFeeds[i].id === selectedSection) {
-                                newsModel.append(feedModel.allFeeds[i].entries)
-                                break;
-                            }
-                        }
+                        appendToNewsModel(selectedSection)
+                        Utils.updateTimeSince(newsModel);
 
                         //console.log("newsModel.count: " + newsModel.count);
                         viewer.hidePanel();
@@ -102,6 +95,15 @@ Panel {
         }
 
         VerticalScrollDecorator { }
+    }
+
+    function appendToNewsModel(selectedSection) {
+        for(var i in feedModel.allFeeds) {
+            if (feedModel.allFeeds[i].id === selectedSection) {
+                newsModel.append(feedModel.allFeeds[i].entries)
+                break;
+            }
+        }
     }
 
     onClicked: {
