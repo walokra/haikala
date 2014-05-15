@@ -100,7 +100,7 @@ Page {
                     id: titleLbl
                     width: parent.width
                     font.pixelSize: constants.fontSizeSmall
-                    color: constants.colorPrimary
+                    color: (read) ? constants.colorSecondary : constants.colorPrimary;
                     textFormat: Text.PlainText
                     wrapMode: Text.Wrap;
                     text: title
