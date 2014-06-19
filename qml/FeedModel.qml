@@ -128,7 +128,7 @@ Item {
      */
     function abort() {
         _sourcesQueue = [];
-        loading = true;
+        loading = false;
         busy = false;
     }
 
