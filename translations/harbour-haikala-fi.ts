@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="fi" version="2.1">
+<TS version="2.0" language="fi">
 <context>
     <name>AboutPage</name>
     <message>
@@ -40,40 +40,11 @@
     </message>
 </context>
 <context>
-    <name>utils</name>
+    <name>FeedModel</name>
     <message>
-	<source>Now</source>
-	<translation>Nyt</translation>
-    </message>
-    <message>
-	<source>Just now</source>
-	<translation>Juuri nyt</translation>
-    </message>
-    <message>
-	<source>&lt; 5 minutes</source>
-	<translation>&lt; 5 minuuttia</translation>
-    </message>
-    <message>
-	<source>&lt; 15 minutes</source>
-	<translation>&lt; 15 minuuttia</translation>
-    </message>
-    <message>
-	<source>&lt; 30 minutes</source>
-	<translation>&lt; 30 minuuttia</translation>
-    </message>
-    <message>
-	<source>&lt; 45 minutes</source>
-	<translation>&lt; 45 minuuttia</translation>
-    </message>
-    <message numerus="yes">
-	<source>%n hour(s)</source>
-	<translation>
-	    <numerusform>%n tunti(a)</numerusform>
-	</translation>
-    </message>
-    <message>
-	<source>Yesterday %1</source>
-	<translation>Eilen %1</translation>
+	<source>Error with %1:
+%2</source>
+	<translation>Virhe %1: %2</translation>
     </message>
 </context>
 <context>
@@ -133,5 +104,42 @@
 	<translation>Avaa selaimessa</translation>
     </message>
 </context>
+<context>
+    <name>utils</name>
+    <message>
+	<source>Now</source>
+	<translation>Nyt</translation>
+    </message>
+    <message>
+	<source>Just now</source>
+	<translation>Juuri nyt</translation>
+    </message>
+    <message>
+	<source>&lt; 5 minutes</source>
+	<translation>&lt; 5 minuuttia</translation>
+    </message>
+    <message>
+	<source>&lt; 15 minutes</source>
+	<translation>&lt; 15 minuuttia</translation>
+    </message>
+    <message>
+	<source>&lt; 30 minutes</source>
+	<translation>&lt; 30 minuuttia</translation>
+    </message>
+    <message>
+	<source>&lt; 45 minutes</source>
+	<translation>&lt; 45 minuuttia</translation>
+    </message>
+    <message numerus="yes">
+	<source>%n hour(s)</source>
+	<translation>
+	    <numerusform>%n tunti(a)</numerusform>
+	    <numerusform></numerusform>
+	</translation>
+    </message>
+    <message>
+	<source>Yesterday %1</source>
+	<translation>Eilen %1</translation>
+    </message>
+</context>
 </TS>
-
