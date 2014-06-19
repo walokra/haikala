@@ -5,7 +5,8 @@ import "components/utils.js" as Utils
 Page {
     id: mp
 
-    property alias contentItem: flickable
+    property alias contentItem: flickable;
+    property bool hasQuickScroll: listView.hasOwnProperty("quickScroll") || listView.quickScroll;
 
     onStatusChanged: {
         if (status == PageStatus.Activating) {
@@ -148,7 +149,7 @@ Page {
 
             // to top button
             Rectangle {
-                visible: opacity > 0;
+                visible: !hasQuickScroll && opacity > 0;
                 width: 64;
                 height: 64;
                 anchors { top: listView.top; right: listView.right; margins: Theme.paddingLarge; }
@@ -169,7 +170,7 @@ Page {
 
             // to bottom button
             Rectangle {
-                visible: opacity > 0;
+                visible: !hasQuickScroll && opacity > 0;
                 width: 64;
                 height: 64;
                 anchors { bottom: listView.bottom; right: listView.right; margins: constants.paddingLarge; }
