@@ -38,6 +38,10 @@
         <source>Refreshing</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Updated</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FeedModel</name>

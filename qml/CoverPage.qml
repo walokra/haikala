@@ -20,14 +20,18 @@ CoverBackground {
         opacity: 0.1
     }
 
-    Column {
+    Item {
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.leftMargin: Theme.paddingLarge
-        anchors.rightMargin: Theme.paddingLarge
+        anchors.leftMargin: Theme.paddingSmall
+        anchors.rightMargin: Theme.paddingSmall
+        anchors.topMargin: Theme.paddingSmall
+        anchors.bottomMargin: Theme.paddingSmall
         width: parent.width
+        height: parent.height
 
         Label {
+            anchors { top: parent.top; left: parent.left; right: parent.right; }
             visible: feedModel.busy
             font.pixelSize: Theme.fontSizeLarge
             color: Theme.highlightColor
@@ -47,6 +51,49 @@ CoverBackground {
                     angle = (angle + 10) % 360;
                 }
             }
+        }
+
+        ListView {
+            id: coverNewsList
+            width: parent.width;
+            anchors { top: parent.top; left: parent.left; right: parent.right; bottom: lastUpdateLbl.top }
+            model: newsModel
+
+            delegate: Item {
+                id: item
+                anchors { left: parent.left; right: parent.right; }
+                height: titleText.height + constants.paddingSmall
+                opacity: index < 5 ? 1.0 - index * 0.17 : 0.0
+
+                Label {
+                    id: titleText
+                    anchors { left: parent.left; right: parent.right;}
+                    text: title
+                    maximumLineCount: 2
+                    elide: Text.ElideRight
+                    font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily }
+                    wrapMode: Text.Wrap
+                    color: Theme.secondaryColor
+                }
+            }
+        }
+
+        Label {
+            id: lastUpdateLbl
+            anchors { right: parent.right; bottom: parent.bottom }
+            font.pixelSize: Theme.fontSizeTiny
+            color: Theme.secondaryColor
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+            text: formatLastUpdatedLbl(feedModel.lastRefresh)
+            opacity: 0.7
+        }
+    }
+
+    function formatLastUpdatedLbl(date) {
+        if (date) {
+            return qsTr("Updated") + " " + date.getHours() + ":" + date.getMinutes() + ", " + date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
+        } else {
+            return ""
         }
     }
 

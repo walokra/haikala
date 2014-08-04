@@ -38,6 +38,10 @@
 	<source>Refreshing</source>
 	<translation>Päivitetään</translation>
     </message>
+    <message>
+	<source>Updated</source>
+	<translation>Päivitetty</translation>
+    </message>
 </context>
 <context>
     <name>FeedModel</name>
