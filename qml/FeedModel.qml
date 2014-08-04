@@ -16,6 +16,7 @@ Item {
     property variant _sourcesQueue: []
     property variant lastRefresh;
     property bool loading: false;
+    property string highfi_API: "/json-private"
 
     property var allFeeds : [];
 
@@ -24,8 +25,9 @@ Item {
 
     function load(source, onSuccess, onFailure) {
         var name = source.name;
-        var url = source.url;
+        var url = source.url + highfi_API;
         var id = source.id;
+        //console.debug("load(source="  + JSON.stringify(source) + "), url=" + url);
 
         //console.log("Now loading: " + name);
         currentlyLoading = name;
@@ -35,6 +37,7 @@ Item {
         req.onreadystatechange = function() {
             if (req.readyState === XMLHttpRequest.DONE) {
                 if (req.status == 200 ) {
+                    //console.debug("200: " + req.responseText);
                     var jsonObject = JSON.parse(req.responseText);
                     onSuccess(jsonObject, id, name);
                 } else {
@@ -61,6 +64,8 @@ Item {
         }
         item["timeSince"] = Utils.timeDiff(obj["publishedDate"]);
         item["read"] = false;
+        item["link"] += encodeURI("&deviceID=" + settings.deviceID + "&appID=" + constants.userAgent);
+        //console.debug("link=" + item["link"]);
 
         return item;
     }
@@ -69,6 +74,7 @@ Item {
      * Takes the next source from the sources queue and loads it.
      */
     function _loadFeeds(queue) {
+        //console.debug("_loadFeeds()");
         if (queue.length > 0) {
             var source = queue.pop();
             load(source,
@@ -93,8 +99,8 @@ Item {
                         _loadFeeds(queue);
                      }
                  },
-                function(status, error) {
-                    _handleError(status, error);
+                function(status, responseText) {
+                    _handleError(status, responseText);
                 }
              );
         } else {
@@ -120,6 +126,8 @@ Item {
         allFeeds = [];
         newsModel.clear();
         _sourcesQueue = sources;
+        //console.debug("_sourcesQueue=" + JSON.stringify(_sourcesQueue));
+
         _loadFeeds(_sourcesQueue);
         lastRefresh = new Date();
     }
@@ -132,20 +140,49 @@ Item {
         busy = false;
     }
 
+    /*
+     * Get next page of headlines.
+     */
+    function getPage(page) {
+        //console.debug("getPage("+page+")");
+        busy = true;
+        loading = true;
+        var tmp = [];
+        sources.forEach(function(entry) {
+            if (entry.id === selectedSection) {
+                var data = {
+                    "id": entry.id,
+                    "name": entry.name,
+                    "url": entry.url + "/"+page,
+                };
+                tmp.push(data);
+                //console.debug("tmp=" + JSON.stringify(tmp));
+            }
+        });
+        _sourcesQueue = tmp;
+
+        _loadFeeds(_sourcesQueue);
+    }
+
     function _handleError(status, error) {
         console.log("status=" + status + "; error=" + error);
 
         var feedName = currentlyLoading + "";
-        if (error.substring(0, 5) === "Host ") {
-            // Host ... not found
-            newsModel.error(qsTr("Error with %1:\n%2").arg(feedName).arg(error));
-        } else if (error.indexOf(" - server replied: ") !== -1) {
-            var idx = error.indexOf(" - server replied: ");
-            var reply = error.substring(idx + 19);
-            newsModel.error(qsTr("Error with %1:\n%2").arg(feedName).arg(reply));
+        if (error !== "") {
+            if (error.substring(0, 5) === "Host ") {
+                // Host ... not found
+                infoBanner.showError(qsTr("Error with %1:\n%2").arg(feedName).arg(error));
+            } else if (error.indexOf(" - server replied: ") !== -1) {
+                var idx = error.indexOf(" - server replied: ");
+                var reply = error.substring(idx + 19);
+                infoBanner.showError(qsTr("Error with %1:\n%2").arg(feedName).arg(reply));
+            } else {
+                infoBanner.showError(qsTr("Error with %1:\n%2").arg(feedName).arg(error));
+            }
         } else {
-            newsModel.error(qsTr("Error with %1:\n%2").arg(feedName).arg(error));
+            infoBanner.showError(qsTr("Error with %1:\n%2").arg(feedName).arg(qsTr("Unknown error with code %1").arg(status)));
         }
+
         busy = false;
         loading = false;
     }

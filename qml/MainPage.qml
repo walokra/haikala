@@ -7,9 +7,10 @@ Page {
 
     property alias contentItem: flickable;
     property bool hasQuickScroll: listView.hasOwnProperty("quickScroll") || listView.quickScroll;
+    property int currPageNro: 1;
 
     onStatusChanged: {
-        if (status == PageStatus.Activating) {
+        if (status === PageStatus.Activating) {
             Utils.updateTimeSince(newsModel);
         }
     }
@@ -18,6 +19,7 @@ Page {
         target: coverAdaptor
 
         onRefresh: {
+            currPageNro = 1;
             feedModel.refresh();
         }
 
@@ -32,6 +34,7 @@ Page {
 
         anchors.fill: parent
 
+        //PageHeader { id: header; title: selectedSectionName + ((currPageNro > 1) ? ", " + qsTr("page") + " " + currPageNro : " - " + constants.appName) }
         PageHeader { id: header; title: selectedSectionName + " - " + constants.appName }
 
         PullDownMenu {
@@ -56,6 +59,7 @@ Page {
             MenuItem {
                 text: qsTr("Refresh")
                 onClicked: {
+                    currPageNro = 1;
                     feedModel.refresh()
                 }
             }
@@ -137,6 +141,20 @@ Page {
                     color: constants.colorSecondary;
                 }
             }
+
+            footer:
+                Button {
+                    visible: false;
+                    //visible: sourcesModel.count > 0 && !feedModel.busy && feedModel.allFeeds.length > 0
+                    anchors.horizontalCenter: parent.horizontalCenter;
+                    text: qsTr("Load more");
+                    onClicked: {
+                        //console.debug("Loading more items");
+                        currPageNro += 1;
+                        feedModel.getPage(currPageNro);
+                        listView.scrollToTop();
+                    }
+                }
 
             // Timer for top/bottom buttons
             Timer {

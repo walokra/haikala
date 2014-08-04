@@ -50,6 +50,10 @@
 %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unknown error with code %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FeedsPage</name>
@@ -82,6 +86,10 @@
     </message>
     <message>
         <source>Pull down to refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load more</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

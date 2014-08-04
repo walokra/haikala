@@ -1,3 +1,7 @@
+* Tue Aug 5 2014 Marko Wallin <mtw@iki.fi> 0.3.0-1
+- Cover page shows latest headlines
+- Switched API for better usage possibilities
+
 * Fri May 16 2014 Marko Wallin <mtw@iki.fi> 0.2.0-1
 - Marking read links, copy link to clipboard from Web view, update time since refreshed
 

@@ -79,9 +79,6 @@ function readSetting(key) {
     else if (res === 'false') {
         return false;
     }
-    else if (!res) {
-        return false;
-    }
 
     return res;
 }

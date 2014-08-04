@@ -50,6 +50,10 @@
 %2</source>
 	<translation>Virhe %1: %2</translation>
     </message>
+    <message>
+	<source>Unknown error with code %1</source>
+	<translation>Tuntematon virhe koodilla %1</translation>
+    </message>
 </context>
 <context>
     <name>FeedsPage</name>
@@ -83,6 +87,10 @@
     <message>
 	<source>Pull down to refresh</source>
 	<translation>Vedä alas päivittääksesi</translation>
+    </message>
+    <message>
+	<source>Load more</source>
+	<translation>Lataa lisää</translation>
     </message>
 </context>
 <context>
