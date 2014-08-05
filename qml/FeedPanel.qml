@@ -10,7 +10,7 @@ Panel {
     Connections {
         target: settings
 
-        onSettingsLoaded: {
+        onFeedSettingsLoaded: {
             filteredFeedRepeater.model = settings.feeds_filterable;
         }
     }

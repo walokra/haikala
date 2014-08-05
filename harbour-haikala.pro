@@ -28,7 +28,8 @@ OTHER_FILES = \
     qml/PanelView.qml \
     qml/CoverPage.qml \
     qml/FeedPanel.qml \
-    qml/components/utils.js
+    qml/components/utils.js \
+    qml/SettingsPage.qml
 
 INCLUDEPATH += $$PWD
 

@@ -4,9 +4,14 @@ import "components/storage.js" as Storage
 QtObject {
     id: settings;
 
-    signal settingsLoaded
+    signal settingsLoaded;
+    signal feedSettingsLoaded;
 
     property string deviceID: "devel";
+
+    // SettingsPage
+    property bool showDescription: false;
+    property bool useMobileURL: false;
 
     // high.fi feeds
     property var feeds : [
@@ -43,15 +48,7 @@ QtObject {
             }
         });
 
-        deviceID = Storage.readSetting("deviceID");
-        //console.debug("deviceID=" + deviceID);
-        if (deviceID === "") {
-            deviceID = generateUUID();
-            //console.debug("generated deviceID=" + deviceID);
-            Storage.writeSetting("deviceID", deviceID);
-        }
-
-        settingsLoaded();
+        feedSettingsLoaded();
     }
 
     function saveFeedSettings() {
@@ -59,11 +56,34 @@ QtObject {
             Storage.writeSetting(entry.id, entry.selected);
         });
 
+        feedSettingsLoaded();
+    }
+
+    function loadSettings() {
+        var results = Storage.readAllSettings();
+        for (var s in results) {
+            if (settings.hasOwnProperty(s)) {
+                settings[s] = results[s];
+            }
+        }
+        console.debug("deviceID=" + deviceID);
+        console.debug("showDescription=" + showDescription);
+        if (deviceID === "") {
+            deviceID = _generateUUID();
+            //console.debug("generated deviceID=" + deviceID);
+            Storage.writeSetting("deviceID", deviceID);
+        }
+
         settingsLoaded();
     }
 
+    function saveSettings() {
+        Storage.writeSetting("showDescription", settings.showDescription);
+        Storage.writeSetting("useMobileURL", settings.useMobileURL);
+    }
+
     // http://stackoverflow.com/a/8809472
-    function generateUUID(){
+    function _generateUUID(){
         var d = new Date().getTime();
         var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = (d + Math.random()*16)%16 | 0;

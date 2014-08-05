@@ -49,6 +49,14 @@ Page {
             }
 
             MenuItem {
+                id: settingsMenu
+                text: qsTr("Settings")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
+                }
+            }
+
+            MenuItem {
                 id: feedsMenu
                 text: qsTr("Feeds")
                 onClicked: {
@@ -116,12 +124,26 @@ Page {
                         onClicked: {
                             markAsRead(link);
 
+                            var url = (settings.useMobileURL && mobileLink != "") ? mobileLink : link;
                             var props = {
-                                "url": link
+                                "url": url,
+                                "originalURL": originalURL,
+                                "originalMobileURL": originalMobileURL
                             }
                             pageStack.push(Qt.resolvedUrl("WebPage.qml"), props);
                         }
                     }
+                }
+
+                Label {
+                    id: descLbl;
+                    visible: settings.showDescription == true && shortDescription != "";
+                    width: parent.width
+                    font.pixelSize: constants.fontSizeXXSmall
+                    color: constants.colorSecondary;
+                    textFormat: Text.PlainText
+                    wrapMode: Text.Wrap;
+                    text: shortDescription;
                 }
 
                 Row {

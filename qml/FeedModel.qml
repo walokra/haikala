@@ -60,8 +60,13 @@ Item {
     function _createItem(obj) {
         var item = { };
         for (var key in obj) {
-           item[key] = obj[key];
+            item[key] = obj[key];
+
+            if (!item["shortDescription"]) {
+                item["shortDescription"] = "";
+            }
         }
+
         item["timeSince"] = Utils.timeDiff(obj["publishedDate"]);
         item["read"] = false;
         item["link"] += encodeURI("&deviceID=" + settings.deviceID + "&appID=" + constants.userAgent);
@@ -79,6 +84,7 @@ Item {
             var source = queue.pop();
             load(source,
                  function(jsonObject, id, name) {
+                     //console.log("_loadFeeds: load success");
                      var entries = [];
                      for (var i in jsonObject.responseData.feed.entries) {
                          if (loading) {

@@ -17,7 +17,7 @@ db.transaction(function(tx) {
 /**
   Read all settings.
 */
-function readFeedSettings() {
+function readAllSettings() {
     var res = {};
     db.readTransaction(function(tx) {
         var rs = tx.executeSql('SELECT * FROM settings;')
@@ -30,7 +30,7 @@ function readFeedSettings() {
             } else {
                 res[rs.rows.item(i).key] = rs.rows.item(i).value
             }
-            console.log("key=" + rs.rows.item(i).key + "; value=" + rs.rows.item(i).value);
+            //console.log("key=" + rs.rows.item(i).key + "; value=" + rs.rows.item(i).value);
         }
     });
     return res;

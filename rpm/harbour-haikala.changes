@@ -1,12 +1,15 @@
 * Tue Aug 5 2014 Marko Wallin <mtw@iki.fi> 0.3.0-1
-- Cover page shows latest headlines
-- Switched API for better usage possibilities
+- Cover page shows latest headlines.
+- Switched API for better usage possibilities.
+- Show descriptions and use mobile optimized URLs.
+- Settings for showing description and mobile URLs.
+- Copy original URL to clipboard.
 
 * Fri May 16 2014 Marko Wallin <mtw@iki.fi> 0.2.0-1
-- Marking read links, copy link to clipboard from Web view, update time since refreshed
+- Marking read links, copy link to clipboard from Web view, update time since refreshed.
 
 * Wed May 14 2014 Marko Wallin <mtw@iki.fi> 0.1.1-1
-- Clearing old feed items on refresh
+- Clearing old feed items on refresh.
 
 * Mon May 12 2014 Marko Wallin <mtw@iki.fi> 0.1.0-1
 - Initial working version with translations and feed selections.

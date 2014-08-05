@@ -164,5 +164,6 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        settings.loadSettings();
     }
 }

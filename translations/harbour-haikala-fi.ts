@@ -28,7 +28,7 @@
 	<translation>Voimanlähteet</translation>
     </message>
     <message>
-	<source>news portal&apos;s feeds. Haikala is open source software and licensed under the terms of the MIT license.</source>
+	<source>news portal&apos;s feeds. Haikala is open source software and licensed with MIT license.</source>
 	<translation>uutisportaalin syötteille. Haikala on avoimen lähdekoodin ohjelmisto ja lisensoitu MIT-lisenssillä.</translation>
     </message>
 </context>
@@ -91,6 +91,29 @@
     <message>
 	<source>Load more</source>
 	<translation>Lataa lisää</translation>
+    </message>
+    <message>
+	<source>Settings</source>
+	<translation>Asetukset</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPage</name>
+    <message>
+	<source>Settings</source>
+	<translation>Asetukset</translation>
+    </message>
+    <message>
+	<source>Save</source>
+	<translation>Tallenna</translation>
+    </message>
+    <message>
+	<source>Show description</source>
+	<translation>Näytä lyhyt kuvaus</translation>
+    </message>
+    <message>
+	<source>Use mobile optimized URLs</source>
+	<translation>Käytä mobiili-sivustoja</translation>
     </message>
 </context>
 <context>
