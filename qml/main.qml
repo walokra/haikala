@@ -5,6 +5,8 @@ ApplicationWindow {
     id: main
 
     property Page currentPage: pageStack.currentPage
+    property int currPageNro: 1;
+    property bool hasMore: false;
 
     ListModel { id: newsModel }
 

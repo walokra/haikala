@@ -5,8 +5,8 @@ Page {
     id: root
 
     property string url
-    property string originalURL
-    property string originalMobileURL
+    //property string originalURL
+    //property string originalMobileURL
 
     // work around Silica bug: don't let webview enable forward navigation
     onForwardNavigationChanged: {
@@ -45,9 +45,9 @@ Page {
                 MenuItem {
                     text: qsTr("Copy link to clipboard");
                     onClicked: {
-                        var shareUrl = (settings.useMobileURL && originalMobileURL != "") ? originalMobileURL : originalURL;
+                        //var shareUrl = (settings.useMobileURL && originalMobileURL != "") ? originalMobileURL : originalURL;
 
-                        textArea.text = shareUrl; textArea.selectAll(); textArea.copy();
+                        textArea.text = url; textArea.selectAll(); textArea.copy();
                         infoBanner.showText(qsTr("Link") + " " + textArea.text + " " + qsTr("copied to clipboard."));
                     }
                 }

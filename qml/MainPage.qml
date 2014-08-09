@@ -7,7 +7,7 @@ Page {
 
     property alias contentItem: flickable;
     property bool hasQuickScroll: listView.hasOwnProperty("quickScroll") || listView.quickScroll;
-    property int currPageNro: 1;
+    property bool moreEnabled: selectedSection !== "top" && sourcesModel.count > 0 && hasMore && !feedModel.busy && feedModel.allFeeds.length > 0;
 
     onStatusChanged: {
         if (status === PageStatus.Activating) {
@@ -68,7 +68,7 @@ Page {
                 text: qsTr("Refresh")
                 onClicked: {
                     currPageNro = 1;
-                    feedModel.refresh()
+                    feedModel.refresh();
                 }
             }
         }
@@ -79,14 +79,30 @@ Page {
             SectionHeader { text: section }
         }
 
+        Label {
+            id: poweredLbl;
+            anchors { bottom: parent.bottom; }
+            anchors.horizontalCenter: parent.horizontalCenter;
+            anchors.leftMargin: Theme.paddingSmall;
+            anchors.rightMargin: Theme.paddingSmall;
+            anchors.bottomMargin: Theme.paddingSmall;
+            anchors.topMargin: Theme.paddingSmall;
+            font.pixelSize: Theme.fontSizeTiny;
+            color: Theme.secondaryColor;
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+            text: qsTr("powered by high.fi");
+            opacity: 0.7;
+        }
+
         SilicaListView {
             id: listView
 
-            anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: parent.bottom; }
+            anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: poweredLbl.top; }
             anchors.margins: constants.paddingSmall;
 
             cacheBuffer: 4000
             pressDelay: 0
+            clip: true;
 
             ViewPlaceholder {
                 enabled: sourcesModel.count > 0 && !feedModel.busy && feedModel.allFeeds.length === 0
@@ -122,15 +138,18 @@ Page {
                         enabled: link !== ""
                         anchors.fill: parent
                         onClicked: {
-                            markAsRead(link);
+                            internal.markAsRead(link);
 
-                            var url = (settings.useMobileURL && mobileLink != "") ? mobileLink : link;
+                            var url = (settings.useMobileURL && originalMobileURL != "") ? originalMobileURL : originalURL;
+                            var highFiUrl = (settings.useMobileURL && mobileLink != "") ? mobileLink : link;
                             var props = {
-                                "url": url,
-                                "originalURL": originalURL,
-                                "originalMobileURL": originalMobileURL
+                                "url": url
+                                //,"originalURL": originalURL,
+                                //"originalMobileURL": originalMobileURL
                             }
                             pageStack.push(Qt.resolvedUrl("WebPage.qml"), props);
+
+                            internal.makeHighFiCall(highFiUrl);
                         }
                     }
                 }
@@ -166,15 +185,14 @@ Page {
 
             footer:
                 Button {
-                    visible: false;
-                    //visible: sourcesModel.count > 0 && !feedModel.busy && feedModel.allFeeds.length > 0
+                    visible: moreEnabled == true;
                     anchors.horizontalCenter: parent.horizontalCenter;
                     text: qsTr("Load more");
                     onClicked: {
                         //console.debug("Loading more items");
                         currPageNro += 1;
                         feedModel.getPage(currPageNro);
-                        listView.scrollToTop();
+                        //listView.scrollToTop();
                     }
                 }
 
@@ -233,27 +251,46 @@ Page {
         }
     }
 
-    function markAsRead(link) {
-        // @FIXME: better way to mark as read?
-        for (var i=0; i < newsModel.count; i++) {
-            var entry = newsModel.get(i);
-            if (entry.link === link) {
-                entry.read = true;
-                break;
-            }
-        };
+    QtObject {
+        id: internal;
 
-        for (i=0; i < feedModel.allFeeds.length; i++) {
-            var feed = feedModel.allFeeds[i];
-            for (var j=0; j < feed.entries.length; j++) {
-                var e = feed.entries[j];
-                if (e.link === link) {
-                    e.read = true;
-                    break;
+        function makeHighFiCall(url) {
+            //console.log("makeHighFiCall. url=" + url);
+
+            var req = new XMLHttpRequest;
+            req.open("GET", url);
+            req.onreadystatechange = function() {
+                if (req.readyState === XMLHttpRequest.DONE) {
+                    //console.debug(req.status +"; " + req.responseText);
                 }
             }
-        };
-        //
+
+            req.setRequestHeader("User-Agent", constants.userAgent);
+            req.send();
+        }
+
+        function markAsRead(link) {
+            // @FIXME: better way to mark as read?
+            for (var i=0; i < newsModel.count; i++) {
+                var entry = newsModel.get(i);
+                if (entry.link === link) {
+                    entry.read = true;
+                    break;
+                }
+            };
+
+            for (i=0; i < feedModel.allFeeds.length; i++) {
+                var feed = feedModel.allFeeds[i];
+                for (var j=0; j < feed.entries.length; j++) {
+                    var e = feed.entries[j];
+                    if (e.link === link) {
+                        e.read = true;
+                        break;
+                    }
+                }
+            };
+            //
+        }
     }
 
     BusyIndicator {

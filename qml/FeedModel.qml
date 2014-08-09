@@ -8,6 +8,7 @@ Item {
     signal error(string details)
 
     property int status: XMLHttpRequest.UNSENT
+    property int refreshTimeout: 30;
 
     // flag indicating that this model is busy
     property bool busy: false
@@ -15,6 +16,7 @@ Item {
     property variant sources: []
     property variant _sourcesQueue: []
     property variant lastRefresh;
+    property string lastSection;
     property bool loading: false;
     property string highfi_API: "/json-private"
 
@@ -25,7 +27,7 @@ Item {
 
     function load(source, onSuccess, onFailure) {
         var name = source.name;
-        var url = source.url + highfi_API;
+        var url = source.url + highfi_API + "?APIKEY=" + constants.apiKey;
         var id = source.id;
         //console.debug("load(source="  + JSON.stringify(source) + "), url=" + url);
 
@@ -38,7 +40,11 @@ Item {
             if (req.readyState === XMLHttpRequest.DONE) {
                 if (req.status == 200 ) {
                     //console.debug("200: " + req.responseText);
-                    var jsonObject = JSON.parse(req.responseText);
+                    var response = req.responseText;
+                    if (currPageNro !== 1) {
+                        response = removeLastComma(req.responseText);
+                    }
+                    var jsonObject = JSON.parse(response);
                     onSuccess(jsonObject, id, name);
                 } else {
                     onFailure(req.status, req.responseText);
@@ -48,6 +54,15 @@ Item {
 
         req.setRequestHeader("User-Agent", constants.userAgent);
         req.send();
+    }
+
+    function removeLastComma(JSONString){
+        var n=JSONString.lastIndexOf(",");
+        //console.debug("n=" + n);
+        JSONString = JSONString.substr(0, n) + "" + JSONString.substr(n+1);
+
+        //console.debug("JSONString" + JSONString)
+        return JSONString;
     }
 
     /*
@@ -79,7 +94,7 @@ Item {
      * Takes the next source from the sources queue and loads it.
      */
     function _loadFeeds(queue) {
-        //console.debug("_loadFeeds()");
+        //console.debug("_loadFeeds(" + JSON.stringify(queue) + ")");
         if (queue.length > 0) {
             var source = queue.pop();
             load(source,
@@ -98,6 +113,13 @@ Item {
                      feed["name"] = name;
                      feed["id"] = id;
                      feed["entries"] = entries;
+
+                     //console.debug("entries.count=" + entries.length);
+                     if (entries.length === 70) {
+                         hasMore = true;
+                     } else {
+                         hasMore = false;
+                     }
 
                      allFeeds.push(feed);
 
@@ -123,19 +145,72 @@ Item {
         }
     }
 
+    function _loadMore(queue) {
+        //console.debug("_loadMore(" + JSON.stringify(queue) + ")");
+        var source = queue.pop();
+        load(source,
+             function(jsonObject, id, name) {
+                 //console.log("_loadFeeds: load success");
+                 var entries = [];
+                 for (var i in jsonObject.responseData.feed.entries) {
+                     if (loading) {
+                        entries.push(_loadItem(jsonObject.responseData.feed.entries, i));
+                     } else {
+                         break;
+                     }
+                 }
+
+                 var feed = { };
+                 feed["name"] = name;
+                 feed["id"] = id;
+                 feed["entries"] = entries;
+
+                 //console.debug("entries.count=" + entries.length);
+                 if (entries.length === 70) {
+                     hasMore = true;
+                 } else {
+                     hasMore = false;
+                 }
+
+                 allFeeds.push(feed);
+                 newsModel.append(entries);
+
+                 busy = false;
+                 loading = false;
+                 currentlyLoading = "";
+             },
+            function(status, responseText) {
+                _handleError(status, responseText);
+            }
+         );
+    }
+
     /*
      * Clears and reloads the model from the current sources.
      */
     function refresh() {
-        busy = true;
-        loading = true;
-        allFeeds = [];
-        newsModel.clear();
-        _sourcesQueue = sources;
-        //console.debug("_sourcesQueue=" + JSON.stringify(_sourcesQueue));
+        var refresh = true;
+        if (lastRefresh) {
+            var diff = new Date().getTime() - lastRefresh.getTime() // milliseconds
+            diff = diff / 1000;
+            console.log("diff=" + diff + " s");
+            if (diff < refreshTimeout) {
+                console.log("Timeout between refreshing same section is 30s");
+                refresh = false;
+            }
+        }
 
-        _loadFeeds(_sourcesQueue);
-        lastRefresh = new Date();
+        if (refresh) {
+            busy = true;
+            loading = true;
+            allFeeds = [];
+            newsModel.clear();
+            _sourcesQueue = sources;
+            //console.debug("_sourcesQueue=" + JSON.stringify(_sourcesQueue));
+
+            _loadFeeds(_sourcesQueue);
+            lastRefresh = new Date();
+        }
     }
 
     /* Aborts loading.
@@ -167,7 +242,7 @@ Item {
         });
         _sourcesQueue = tmp;
 
-        _loadFeeds(_sourcesQueue);
+        _loadMore(_sourcesQueue);
     }
 
     function _handleError(status, error) {

@@ -1,5 +1,6 @@
 .pragma library
 .import QtQuick.LocalStorage 2.0 as LS
+Qt.include("../lib/sha1.js");
 
 var identifier = "Haikala";
 var version = "1.0";
@@ -30,7 +31,7 @@ function readAllSettings() {
             } else {
                 res[rs.rows.item(i).key] = rs.rows.item(i).value
             }
-            //console.log("key=" + rs.rows.item(i).key + "; value=" + rs.rows.item(i).value);
+            //console.log("storage.js: readAllSettings, key=" + rs.rows.item(i).key + "; value=" + rs.rows.item(i).value);
         }
     });
     return res;
@@ -40,7 +41,7 @@ function readAllSettings() {
   Write setting to database.
 */
 function writeSetting(key, value) {
-    //console.debug("writeSetting(" + key + "=" + value + ")");
+    //console.debug("storage.js, writeSetting(" + key + "=" + value + ")");
 
     if (value === true) {
         value = 'true';
@@ -81,4 +82,10 @@ function readSetting(key) {
     }
 
     return res;
+}
+
+function makeHash(string) {
+    var hash = CryptoJS.SHA1(string);
+    //console.debug("hash=" + hash);
+    return hash.toString(CryptoJS.enc.Hex);
 }

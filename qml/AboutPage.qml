@@ -37,7 +37,7 @@ Page {
                     linkColor: Theme.highlightColor;
                     wrapMode: Text.Wrap;
                     font.pixelSize: constants.fontSizeMedium;
-                    text: qsTr("Haikala is a news feed reader for") + " <a href='http://high.fi'>High.fi</a> " + qsTr("news portal's feeds. Haikala is open source software and licensed under the terms of the MIT license.")
+                    text: qsTr("Haikala is a news reader for") + " <a href='http://high.fi'>High.fi</a> " + qsTr("news portal's feeds. Haikala is open source software and licensed under the terms of the MIT license.")
                 }
             }
 
@@ -89,7 +89,7 @@ Page {
             ListItem {
                 Image {
                     id: highFiImage;
-                    source: "images/high-fi.svg";
+                    source: "images/high-fi.png";
                     width: 74;
                     height: 80;
                 }

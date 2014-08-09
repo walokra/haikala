@@ -7,7 +7,7 @@ QtObject {
     signal settingsLoaded;
     signal feedSettingsLoaded;
 
-    property string deviceID: "devel";
+    property string deviceID: "";
 
     // SettingsPage
     property bool showDescription: false;
@@ -66,13 +66,14 @@ QtObject {
                 settings[s] = results[s];
             }
         }
-        console.debug("deviceID=" + deviceID);
-        console.debug("showDescription=" + showDescription);
+
+        //console.debug("deviceID=" + deviceID);
         if (deviceID === "") {
-            deviceID = _generateUUID();
-            //console.debug("generated deviceID=" + deviceID);
+            var uuid = _generateUUID();
+            deviceID = Storage.makeHash(uuid);
             Storage.writeSetting("deviceID", deviceID);
         }
+        //console.debug("generated uuid=" + uuid + "; deviceID=" + deviceID);
 
         settingsLoaded();
     }
@@ -92,4 +93,9 @@ QtObject {
         });
         return uuid;
     }
+
+    function _makeHash(string) {
+        return CryptoJS.SHA1(string);
+    }
+
 }

@@ -15,6 +15,7 @@ OTHER_FILES = \
     rpm/harbour-haikala.changes \
     translations/*.ts \
     qml/components/storage.js \
+    qml/lib/sha1.js \
     qml/MainPage.qml \
     qml/Constants.qml \
     qml/Settings.qml \
