@@ -40,11 +40,7 @@ Item {
             if (req.readyState === XMLHttpRequest.DONE) {
                 if (req.status == 200 ) {
                     //console.debug("200: " + req.responseText);
-                    var response = req.responseText;
-                    if (currPageNro !== 1) {
-                        response = removeLastComma(req.responseText);
-                    }
-                    var jsonObject = JSON.parse(response);
+                    var jsonObject = JSON.parse(req.responseText);
                     onSuccess(jsonObject, id, name);
                 } else {
                     onFailure(req.status, req.responseText);
@@ -54,15 +50,6 @@ Item {
 
         req.setRequestHeader("User-Agent", constants.userAgent);
         req.send();
-    }
-
-    function removeLastComma(JSONString){
-        var n=JSONString.lastIndexOf(",");
-        //console.debug("n=" + n);
-        JSONString = JSONString.substr(0, n) + "" + JSONString.substr(n+1);
-
-        //console.debug("JSONString" + JSONString)
-        return JSONString;
     }
 
     /*
