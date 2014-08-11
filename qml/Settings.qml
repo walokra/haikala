@@ -13,6 +13,9 @@ QtObject {
     property bool showDescription: false;
     property bool useMobileURL: false;
 
+    property string highFiDomain: "http://high.fi/";
+    property string highFiAPI: "json-private"
+
     // high.fi feeds
     property var feeds : [
         {id: "top", name: "Suosituimmat", url: "http://high.fi/top"},

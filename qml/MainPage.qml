@@ -35,7 +35,7 @@ Page {
         anchors.fill: parent
 
         //PageHeader { id: header; title: selectedSectionName + ((currPageNro > 1) ? ", " + qsTr("page") + " " + currPageNro : " - " + constants.appName) }
-        PageHeader { id: header; title: selectedSectionName + " - " + constants.appName }
+        PageHeader { id: header; title: (searchText != "") ? searchText  + " - " + constants.appName: selectedSectionName + " - " + constants.appName }
 
         PullDownMenu {
             id: pullDownMenu
@@ -61,6 +61,25 @@ Page {
                 text: qsTr("Feeds")
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("FeedsPage.qml"))
+                }
+            }
+
+            SearchField {
+                id: searchTextField;
+
+                width: parent.width;
+                font.pixelSize: constants.fontSizeSmall;
+                font.bold: false;
+                placeholderText: qsTr("Search...");
+
+                EnterKey.enabled: text.trim().length > 0;
+                EnterKey.iconSource: "image://theme/icon-m-enter-accept";
+                EnterKey.onClicked: {
+                    //console.log("Searched: " + query);
+                    searchText = "\"" + text + "\"";
+                    pullDownMenu.close();
+                    searchTextField.focus = false;
+                    feedModel.search(text);
                 }
             }
 
@@ -107,8 +126,9 @@ Page {
             clip: true;
 
             ViewPlaceholder {
-                enabled: sourcesModel.count > 0 && !feedModel.busy && feedModel.allFeeds.length === 0
-                text: qsTr("Pull down to refresh")
+                id: placeholder;
+                enabled: sourcesModel.count > 0 && !feedModel.busy && feedModel.allFeeds.length === 0 && newsModel.count === 0;
+                text: searchResults === 0 ? qsTr("No results") : qsTr("Pull down to refresh");
             }
 
             model: newsModel

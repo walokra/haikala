@@ -7,6 +7,8 @@ ApplicationWindow {
     property Page currentPage: pageStack.currentPage
     property int currPageNro: 1;
     property bool hasMore: false;
+    property string searchText: "";
+    property int searchResults: -1;
 
     ListModel { id: newsModel }
 

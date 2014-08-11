@@ -54,6 +54,10 @@
         <source>Unknown error with code %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FeedsPage</name>
@@ -98,6 +102,14 @@
     </message>
     <message>
         <source>powered by high.fi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No results</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

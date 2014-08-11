@@ -18,7 +18,6 @@ Item {
     property variant lastRefresh;
     property string lastSection;
     property bool loading: false;
-    property string highfi_API: "/json-private"
 
     property var allFeeds : [];
 
@@ -27,7 +26,7 @@ Item {
 
     function load(source, onSuccess, onFailure) {
         var name = source.name;
-        var url = source.url + highfi_API + "?APIKEY=" + constants.apiKey;
+        var url = source.url + "/" + settings.highFiAPI + "?APIKEY=" + constants.apiKey;
         var id = source.id;
         //console.debug("load(source="  + JSON.stringify(source) + "), url=" + url);
 
@@ -56,10 +55,10 @@ Item {
     * Adds the item from the given model.
     */
     function _loadItem(model, i) {
-        return _createItem(model[i]);
+        return createItem(model[i]);
     }
 
-    function _createItem(obj) {
+    function createItem(obj) {
         var item = { };
         for (var key in obj) {
             item[key] = obj[key];
@@ -176,6 +175,8 @@ Item {
      * Clears and reloads the model from the current sources.
      */
     function refresh() {
+        searchResults = -1;
+        searchText = "";
         var refresh = true;
         if (lastRefresh) {
             var diff = new Date().getTime() - lastRefresh.getTime() // milliseconds
@@ -230,6 +231,46 @@ Item {
         _sourcesQueue = tmp;
 
         _loadMore(_sourcesQueue);
+    }
+
+    function search(searchText) {
+        newsModel.clear();
+        // http://high.fi/search.cfm?q=formula&x=0&y=0&outputtype=json-private
+        var url = settings.highFiDomain + "search.cfm?q=" + searchText + "&x=0&y=0&outputtype=" + settings.highFiAPI + "&APIKEY=" + constants.apiKey;
+        //console.debug("search, url=" + url);
+
+        var req = new XMLHttpRequest;
+        req.open("GET", url);
+        req.onreadystatechange = function() {
+            if (req.readyState === XMLHttpRequest.DONE) {
+                //console.debug(req.status +"; " + req.responseText);
+                var jsonObject = JSON.parse(req.responseText);
+
+                var entries = [];
+                for (var i in jsonObject.responseData.feed.entries) {
+                    entries.push(feedModel.createItem(jsonObject.responseData.feed.entries[i]));
+                }
+
+                var feed = { };
+                feed["name"] = qsTr("Search");
+                feed["id"] = "search";
+                feed["entries"] = entries;
+
+                //console.debug("entries.count=" + entries.length);
+                if (entries.length === 70) {
+                    hasMore = true;
+                } else {
+                    hasMore = false;
+                }
+
+                newsModel.append(entries);
+            }
+
+            searchResults = newsModel.count;
+        }
+
+        req.setRequestHeader("User-Agent", constants.userAgent);
+        req.send();
     }
 
     function _handleError(status, error) {
