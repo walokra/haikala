@@ -1,20 +1,18 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 
-Dialog {
-    id: feedsPage
-
-    allowedOrientations: Orientation.All
+Item {
+    id: root;
+    height: settingsSlideView.height; width: settingsSlideView.width;
 
     SilicaFlickable {
-        id: flickable
+        id: flickable;
 
-        anchors.fill: parent
+        anchors.fill: parent;
 
-        DialogHeader {
-            id: header
-            title: qsTr("Feeds")
-            acceptText: qsTr("Save")
+        PageHeader {
+            id: header;
+            title: qsTr("Feeds");
         }
 
         contentHeight: contentArea.height + 150;
@@ -46,6 +44,7 @@ Dialog {
                         onCheckedChanged: {
                             //console.debug("onCheckedChanged, id=" + modelData.id)
                             checked ? addFeed(modelData.id) : removeFeed(modelData.id);
+                            //saveFeeds();
                         }
                     }
                 }
@@ -71,25 +70,6 @@ Dialog {
                 entry.selected = false;
             }
         });
-    }
-
-    onAccepted: {
-        sourcesModel.clear()
-
-        // Check which feeds are selected and add them to source
-        settings.feeds.forEach(function(entry) {
-                sourcesModel.addSource(entry.id, entry.name, entry.url)
-        });
-
-        // Check which feeds are selected and add them to source
-        settings.feeds_filterable.forEach(function(entry) {
-            if (entry.selected === true) {
-                //console.debug("feeds_filterable selected, " + entry.id + "; "+ entry.selected)
-                sourcesModel.addSource(entry.id, entry.name, entry.url)
-            }
-        });
-
-        settings.saveFeedSettings();
     }
 
     Component.onCompleted: {

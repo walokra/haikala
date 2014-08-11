@@ -60,17 +60,13 @@
     </message>
 </context>
 <context>
-    <name>FeedsPage</name>
-    <message>
-        <source>Feeds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
+    <name>FeedsView</name>
     <message>
         <source>Filter shown feeds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Feeds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -78,10 +74,6 @@
     <name>MainPage</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Feeds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -116,11 +108,18 @@
 <context>
     <name>SettingsPage</name>
     <message>
-        <source>Settings</source>
+        <source>Feeds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save</source>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsView</name>
+    <message>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -129,6 +128,17 @@
     </message>
     <message>
         <source>Use mobile optimized URLs</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TabPanel</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1,5 +1,3 @@
-.pragma library
-
 function updateTimeSince(model) {
     //console.log("updateTimeSince, model.count=" + model.count);
     for (var i=0; i < model.count; i++) {

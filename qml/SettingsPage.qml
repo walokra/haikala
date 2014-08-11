@@ -1,60 +1,33 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-Dialog {
+Page {
     id: settingsPage;
 
     allowedOrientations: Orientation.All;
 
-    SilicaFlickable {
-        id: flickable;
+    property Item feedsView: feedsView;
+    property Item settingsView: settingsView;
 
-        anchors.fill: parent;
+    SlideshowView {
+        id: settingsSlideView
+        objectName: "settingsSlideView"
 
-        DialogHeader {
-            id: header
-            title: qsTr("Settings");
-            acceptText: qsTr("Save");
+        itemWidth: width;
+        itemHeight: height;
+        height: window.height - settingsPageHeader.visibleHeight;
+        clip:true
+
+        anchors { top: parent.top; left: parent.left; right: parent.right }
+        model: VisualItemModel {
+            FeedsView { id: feedsView; }
+            SettingsView { id: settingsView; }
         }
-
-        contentHeight: contentArea.height;
-
-        Column {
-            id: contentArea;
-            anchors { top: header.bottom; left: parent.left; right: parent.right; }
-            width: parent.width;
-
-            anchors.leftMargin: constants.paddingMedium;
-            anchors.rightMargin: constants.paddingMedium;
-
-            Column {
-                anchors {left: parent.left; right: parent.right; }
-                width: parent.width;
-                height: childrenRect.height;
-
-                TextSwitch {
-                    text: qsTr("Show description");
-                    checked: settings.showDescription;
-                    onCheckedChanged: {
-                        checked ? settings.showDescription = true : settings.showDescription = false;
-                    }
-                }
-
-                TextSwitch {
-                    text: qsTr("Use mobile optimized URLs");
-                    checked: settings.useMobileURL;
-                    onCheckedChanged: {
-                        checked ? settings.useMobileURL = true : settings.useMobileURL = false;
-                    }
-                }
-            }
-        }
-
-        VerticalScrollDecorator { flickable: flickable }
     }
 
-    onAccepted: {
-        settings.saveSettings();
+    TabPanel {
+        id: settingsPageHeader;
+        listView: settingsSlideView;
+        lblArray: [qsTr("Feeds"), qsTr("Settings")]
     }
-
 }

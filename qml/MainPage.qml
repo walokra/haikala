@@ -56,14 +56,6 @@ Page {
                 }
             }
 
-            MenuItem {
-                id: feedsMenu
-                text: qsTr("Feeds")
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("FeedsPage.qml"))
-                }
-            }
-
             SearchField {
                 id: searchTextField;
 

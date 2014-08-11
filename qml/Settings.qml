@@ -55,6 +55,21 @@ QtObject {
     }
 
     function saveFeedSettings() {
+        sourcesModel.clear()
+
+        // Check which feeds are selected and add them to source
+        feeds.forEach(function(entry) {
+            sourcesModel.addSource(entry.id, entry.name, entry.url)
+        });
+
+        // Check which feeds are selected and add them to source
+        feeds_filterable.forEach(function(entry) {
+            if (entry.selected === true) {
+                //console.debug("feeds_filterable selected, " + entry.id + "; "+ entry.selected)
+                sourcesModel.addSource(entry.id, entry.name, entry.url)
+            }
+        });
+
         feeds_filterable.forEach(function(entry) {
             Storage.writeSetting(entry.id, entry.selected);
         });

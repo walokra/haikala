@@ -22,7 +22,6 @@ OTHER_FILES = \
     qml/main.qml \
     qml/FeedModel.qml \
     qml/SourcesModel.qml \
-    qml/FeedsPage.qml \
     qml/AboutPage.qml \
     qml/WebPage.qml \
     qml/Panel.qml \
@@ -30,7 +29,10 @@ OTHER_FILES = \
     qml/CoverPage.qml \
     qml/FeedPanel.qml \
     qml/components/utils.js \
-    qml/SettingsPage.qml
+    qml/SettingsPage.qml \
+    qml/SettingsView.qml \
+    qml/FeedsView.qml \
+    qml/TabPanel.qml
 
 INCLUDEPATH += $$PWD
 
