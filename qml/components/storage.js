@@ -31,7 +31,7 @@ function readAllSettings() {
             } else {
                 res[rs.rows.item(i).key] = rs.rows.item(i).value
             }
-            //console.log("storage.js: readAllSettings, key=" + rs.rows.item(i).key + "; value=" + rs.rows.item(i).value);
+            console.log("storage.js: readAllSettings, key=" + rs.rows.item(i).key + "; value=" + rs.rows.item(i).value);
         }
     });
     return res;
@@ -61,8 +61,6 @@ function writeSetting(key, value) {
  Read given setting from database.
 */
 function readSetting(key) {
-    //console.debug("readSetting(" + key + ")");
-
     var res = "";
     db.readTransaction(function(tx) {
         var rows = tx.executeSql("SELECT value AS val FROM settings WHERE key=?;", [key]);
@@ -80,6 +78,8 @@ function readSetting(key) {
     else if (res === 'false') {
         return false;
     }
+
+    //console.debug("storage.js: readSetting(key=" + key + "; value=" + res + ")");
 
     return res;
 }

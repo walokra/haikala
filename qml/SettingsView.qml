@@ -35,7 +35,6 @@ Item {
                     checked: settings.showDescription;
                     onCheckedChanged: {
                         checked ? settings.showDescription = true : settings.showDescription = false;
-                        //saveSettings();
                     }
                 }
 
@@ -44,7 +43,34 @@ Item {
                     checked: settings.useMobileURL;
                     onCheckedChanged: {
                         checked ? settings.useMobileURL = true : settings.useMobileURL = false;
-                        //saveSettings();
+                    }
+                }
+
+                ComboBox {
+                    id: languageBox;
+                    currentIndex: 0;
+                    width: parent.width;
+                    label: qsTr("Language");
+
+                    menu: ContextMenu {
+
+                        Repeater {
+                            id: languageMenuRepeater;
+                            width: parent.width;
+                            model: settings.supportedLanguages;
+
+                            delegate: MenuItem {
+                                id: mainMode;
+                                text: modelData.country;
+                                onClicked: {
+                                    settings.useToRetrieveLists = modelData.useToRetrieveLists;
+                                    settings.mostPopularName = modelData.mostPopularName;
+                                    settings.latestName = modelData.latestName;
+                                    settings.domainToUse = modelData.domainToUse;
+                                    settings.genericNewsURLPart = modelData.genericNewsURLPart;
+                                }
+                            }
+                        }
                     }
                 }
             }

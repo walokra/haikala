@@ -4,12 +4,12 @@ ListModel {
 
     signal modelChanged
 
-    function addSource(id, name, url) {
-        //console.debug("addSource: " + id + ", " + name + ", " + url)
+    function addSource(sectionID, title, htmlFilename) {
+        //console.debug("addSource: " + sectionID + ", " + title + ", " + htmlFilename)
         append({
-            "id": id,
-            "name": name,
-            "url": url
+            "sectionID": sectionID,
+            "title": title,
+            "htmlFilename": htmlFilename
         });
 
         modelChanged();

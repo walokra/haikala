@@ -25,13 +25,13 @@ Item {
     property string currentlyLoading
 
     function load(source, onSuccess, onFailure) {
-        var name = source.name;
-        var url = source.url + "/" + settings.highFiAPI + "?APIKEY=" + constants.apiKey;
-        var id = source.id;
-        //console.debug("load(source="  + JSON.stringify(source) + "), url=" + url);
+        var title = source.title;
+        var url = "http://" + settings.domainToUse + "/" + source.htmlFilename + "/" + settings.highFiAPI + "?APIKEY=" + constants.apiKey;
+        var sectionID = source.sectionID;
+        console.debug("load(source="  + JSON.stringify(source) + "), url=" + url);
 
         //console.log("Now loading: " + name);
-        currentlyLoading = name;
+        currentlyLoading = title;
 
         var req = new XMLHttpRequest;
         req.open("GET", url);
@@ -40,7 +40,7 @@ Item {
                 if (req.status == 200 ) {
                     //console.debug("200: " + req.responseText);
                     var jsonObject = JSON.parse(req.responseText);
-                    onSuccess(jsonObject, id, name);
+                    onSuccess(jsonObject, sectionID, title);
                 } else {
                     onFailure(req.status, req.responseText);
                 }
@@ -84,7 +84,7 @@ Item {
         if (queue.length > 0) {
             var source = queue.pop();
             load(source,
-                 function(jsonObject, id, name) {
+                 function(jsonObject, sectionID, title) {
                      //console.log("_loadFeeds: load success");
                      var entries = [];
                      for (var i in jsonObject.responseData.feed.entries) {
@@ -96,8 +96,8 @@ Item {
                      }
 
                      var feed = { };
-                     feed["name"] = name;
-                     feed["id"] = id;
+                     feed["title"] = title;
+                     feed["sectionID"] = sectionID;
                      feed["entries"] = entries;
 
                      //console.debug("entries.count=" + entries.length);
@@ -119,7 +119,7 @@ Item {
              );
         } else {
             for(var i in allFeeds) {
-               if (allFeeds[i].id === selectedSection) {
+               if (allFeeds[i].sectionID === selectedSection) {
                    newsModel.append(allFeeds[i].entries)
                    break;
                }
@@ -135,7 +135,7 @@ Item {
         //console.debug("_loadMore(" + JSON.stringify(queue) + ")");
         var source = queue.pop();
         load(source,
-             function(jsonObject, id, name) {
+             function(jsonObject, sectionID, title) {
                  //console.log("_loadFeeds: load success");
                  var entries = [];
                  for (var i in jsonObject.responseData.feed.entries) {
@@ -147,8 +147,8 @@ Item {
                  }
 
                  var feed = { };
-                 feed["name"] = name;
-                 feed["id"] = id;
+                 feed["title"] = title;
+                 feed["sectionID"] = sectionID;
                  feed["entries"] = entries;
 
                  //console.debug("entries.count=" + entries.length);
@@ -220,9 +220,9 @@ Item {
         sources.forEach(function(entry) {
             if (entry.id === selectedSection) {
                 var data = {
-                    "id": entry.id,
-                    "name": entry.name,
-                    "url": entry.url + "/"+page,
+                    "sectionID": entry.sectionID,
+                    "title": entry.title,
+                    "url": entry.htmlFilename + "/"+page,
                 };
                 tmp.push(data);
                 //console.debug("tmp=" + JSON.stringify(tmp));
@@ -236,8 +236,8 @@ Item {
     function search(searchText) {
         newsModel.clear();
         // http://high.fi/search.cfm?q=formula&x=0&y=0&outputtype=json-private
-        var url = settings.highFiDomain + "search.cfm?q=" + searchText + "&x=0&y=0&outputtype=" + settings.highFiAPI + "&APIKEY=" + constants.apiKey;
-        //console.debug("search, url=" + url);
+        var url = "http://" + settings.domainToUse + "/search.cfm?q=" + searchText + "&x=0&y=0&outputtype=" + settings.highFiAPI + "&APIKEY=" + constants.apiKey;
+        console.debug("search, url=" + url);
 
         var req = new XMLHttpRequest;
         req.open("GET", url);
@@ -252,8 +252,8 @@ Item {
                 }
 
                 var feed = { };
-                feed["name"] = qsTr("Search");
-                feed["id"] = "search";
+                feed["title"] = qsTr("Search");
+                feed["sectionID"] = -1;
                 feed["entries"] = entries;
 
                 //console.debug("entries.count=" + entries.length);

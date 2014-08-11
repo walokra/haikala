@@ -36,15 +36,14 @@ Item {
                 Repeater {
                     id: txtSwitchRepeater
                     width: parent.width
-                    model: settings.feeds_filterable
+                    model: settings.categories
 
                     delegate: TextSwitch {
-                        text: modelData.name
+                        text: modelData.title
                         checked: modelData.selected
                         onCheckedChanged: {
                             //console.debug("onCheckedChanged, id=" + modelData.id)
-                            checked ? addFeed(modelData.id) : removeFeed(modelData.id);
-                            //saveFeeds();
+                            checked ? addFeed(modelData.sectionID) : removeFeed(modelData.sectionID);
                         }
                     }
                 }
@@ -56,8 +55,8 @@ Item {
 
     function addFeed(id) {
         //console.debug("addFeed: " + id)
-        settings.feeds_filterable.forEach(function(entry) {
-            if (entry.id === id) {
+        settings.categories.forEach(function(entry) {
+            if (entry.sectionID === id) {
                 entry.selected = true;
             }
         });
@@ -65,8 +64,8 @@ Item {
 
     function removeFeed(id) {
         //console.debug("removeFeed: " + id)
-        settings.feeds_filterable.forEach(function(entry) {
-            if (entry.id === id) {
+        settings.categories.forEach(function(entry) {
+            if (entry.sectionID === id) {
                 entry.selected = false;
             }
         });

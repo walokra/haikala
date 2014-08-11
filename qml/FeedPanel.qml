@@ -11,7 +11,7 @@ Panel {
         target: settings
 
         onFeedSettingsLoaded: {
-            filteredFeedRepeater.model = settings.feeds_filterable;
+            feedRepeater.model = settings.categories;
         }
     }
 
@@ -32,16 +32,16 @@ Panel {
             Repeater {
                 id: feedRepeater
                 width: parent.width
-                model: settings.feeds
+                model: settings.categories
 
                 delegate: BackgroundItem {
                     id: feedItem;
-                    anchors.left: parent.left; anchors.right: parent.right;
+                    visible: modelData.selected;
 
                     Label {
                         anchors { left: parent.left; right: parent.right; }
                         anchors.verticalCenter: parent.verticalCenter;
-                        text: modelData.name;
+                        text: modelData.title;
                         font.pixelSize: constants.fontSizeMedium;
                         color: feedItem.highlighted ? constants.colorHighlight : constants.colorPrimary;
                     }
@@ -49,8 +49,8 @@ Panel {
                     onClicked: {
                         //console.debug("Showing feed: " + modelData.name);
                         newsModel.clear()
-                        selectedSection = modelData.id
-                        selectedSectionName = modelData.name
+                        selectedSection = modelData.sectionID
+                        selectedSectionName = modelData.title
 
                         appendToNewsModel(selectedSection)
                         Utils.updateTimeSince(newsModel);
@@ -61,6 +61,7 @@ Panel {
                 }
             }
 
+            /*
             Repeater {
                 id: filteredFeedRepeater
                 width: parent.width
@@ -91,7 +92,7 @@ Panel {
                         viewer.hidePanel();
                     }
                 }
-            }
+            }*/
         }
 
         VerticalScrollDecorator { }
@@ -99,7 +100,7 @@ Panel {
 
     function appendToNewsModel(selectedSection) {
         for(var i in feedModel.allFeeds) {
-            if (feedModel.allFeeds[i].id === selectedSection) {
+            if (feedModel.allFeeds[i].sectionID === selectedSection) {
                 newsModel.append(feedModel.allFeeds[i].entries)
                 break;
             }

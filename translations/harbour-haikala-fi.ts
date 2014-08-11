@@ -138,6 +138,10 @@
         <source>Use mobile optimized URLs</source>
         <translation>Käytä mobiili-sivustoja</translation>
     </message>
+    <message>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TabPanel</name>

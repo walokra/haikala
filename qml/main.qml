@@ -19,9 +19,9 @@ ApplicationWindow {
             var sources = [];
             for (var i = 0; i < count; i++) {
                 var data = {
-                    "id": get(i).id,
-                    "name": get(i).name,
-                    "url": get(i).url,
+                    "sectionID": get(i).sectionID,
+                    "title": get(i).title,
+                    "htmlFilename": get(i).htmlFilename,
                 };
                 sources.push(data);
             }
@@ -29,11 +29,7 @@ ApplicationWindow {
         }
 
         Component.onCompleted: {
-            //console.debug("SourcesModel.onCompleted")
-            settings.loadFeedSettings();
-            if (count === 0) {
-                sourcesModel.addSource("uutiset", "Uutiset", "http://high.fi/uutiset/json")
-            }
+            settings.init();
         }
     }
 
@@ -54,8 +50,8 @@ ApplicationWindow {
         signal abort
     }
 
-    property string selectedSection: "uutiset"
-    property string selectedSectionName: "Uutiset"
+    property variant selectedSection: 0;
+    property string selectedSectionName: "Suosituimmat";
     initialPage: Component {
         id: mainPage;
 
