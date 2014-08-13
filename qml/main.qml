@@ -2,39 +2,24 @@ import QtQuick 2.1
 import Sailfish.Silica 1.0
 
 ApplicationWindow {
-    id: main
+    id: main;
 
-    property Page currentPage: pageStack.currentPage
+    property Page currentPage: pageStack.currentPage;
+
+    property string selectedSection: settings.genericNewsURLPart;
+    property string selectedSectionName: settings.latestName;
     property int currPageNro: 1;
     property bool hasMore: false;
     property string searchText: "";
     property int searchResults: -1;
+    property var sources: [];
 
     ListModel { id: newsModel }
 
-    SourcesModel {
-        id: sourcesModel
-
-        onModelChanged: {
-            var sources = [];
-            for (var i = 0; i < count; i++) {
-                var data = {
-                    "sectionID": get(i).sectionID,
-                    "title": get(i).title,
-                    "htmlFilename": get(i).htmlFilename,
-                };
-                sources.push(data);
-            }
-            feedModel.sources = sources;
-        }
-
-        Component.onCompleted: {
-            settings.init();
-        }
-    }
+    SourcesModel { id: sourcesModel; }
 
     FeedModel {
-        id: feedModel
+        id: feedModel;
 
         onError: {
             console.log("Error: " + details);
@@ -50,8 +35,6 @@ ApplicationWindow {
         signal abort
     }
 
-    property variant selectedSection: 0;
-    property string selectedSectionName: "Suosituimmat";
     initialPage: Component {
         id: mainPage;
 
@@ -108,7 +91,7 @@ ApplicationWindow {
     Rectangle {
         id: infoBanner;
         y: Theme.paddingSmall;
-        z: -1;
+        z: 1;
         width: parent.width;
 
         height: infoLabel.height + 2 * Theme.paddingMedium;
@@ -164,6 +147,6 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-        settings.loadSettings();
+        settings.init();
     }
 }

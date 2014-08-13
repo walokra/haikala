@@ -5,7 +5,7 @@ QtObject {
     id: settings;
 
     signal settingsLoaded;
-    signal feedSettingsLoaded;
+    signal feedSettingsLoaded(bool skipRefreshTimeout);
     signal categoriesLoaded;
 
     property string deviceID: "";
@@ -20,7 +20,7 @@ QtObject {
     property string latestName: "Uusimmat"; // to be used as heading for "all latest news" list
     property string domainToUse: "high.fi"; // to be used to communicate back and forth with the server using the right domain
     property string genericNewsURLPart: "uutiset"; // The value this field returns will be used to retrieve generic news lists
-    property string selectedCountry: "Finland";
+    property string userLanguage: "Finnish";
 
     property string highFiAPI: "json-private"
 
@@ -38,7 +38,7 @@ QtObject {
 
         loadJSONSettings();
 
-        loadFeedSettings();
+        loadFeedSettings(true);
 
         settingsLoaded();
     }
@@ -48,7 +48,6 @@ QtObject {
         var url = "http://" + domainToUse + "/api/?act=listLanguages&APIKEY=" + constants.apiKey;
         //console.debug("listLanguages, url=" + url);
 
-        var supportedLanguages = [];
         var req = new XMLHttpRequest;
         req.open("GET", url);
         req.onreadystatechange = function() {
@@ -77,14 +76,14 @@ QtObject {
         var categories = [];
         var cat = {
             "title": mostPopularName,
-            "sectionID": 0,
+            "sectionID": "top",
             "htmlFilename": "top",
             "selected": true
         };
         categories.push(cat);
         cat = {
             "title": latestName,
-            "sectionID": 1,
+            "sectionID": genericNewsURLPart,
             "htmlFilename": genericNewsURLPart,
             "selected": true
         };
@@ -124,47 +123,49 @@ QtObject {
         req.send();
     }
 
-    function loadFeedSettings() {
-        //for (var i=0; i < categories.length; i++) {}
-
-        categories.forEach(function(entry) {
-            //sourcesModel.addSource(entry.id, entry.name, entry.url)
-            entry.selected = Storage.readSetting(entry.sectionID);
-            //console.debug("entry=" + entry.id + "; selected=" + entry.selected);
-            if (entry.selected) {
-                sourcesModel.addSource(entry.sectionID, entry.title, entry.htmlFilename);
-            }
-        });
-
-        // Selecting specific feeds if they're selected in settings
-        /*
-        feeds_filterable.forEach(function(entry) {
-            entry.selected = Storage.readSetting(entry.id);
-            //console.debug("entry=" + entry.id + "; selected=" + entry.selected);
-            if (entry.selected) {
-                sourcesModel.addSource(entry.id, entry.name, entry.url)
-            }
-        });
-        */
-        feedSettingsLoaded();
-    }
-
-    function saveFeedSettings() {
-        sourcesModel.clear()
+    function loadFeedSettings(skipRefreshTimeout) {
+        sources = [];
+        var cat = {
+            "title": categories[0].title,
+            "sectionID": categories[0].sectionID,
+            "htmlFilename": categories[0].htmlFilename
+        };
+        sources.push(cat);
+        cat = {
+            "title": categories[1].title,
+            "sectionID": categories[1].sectionID,
+            "htmlFilename": categories[1].htmlFilename
+        };
+        sources.push(cat);
 
         // Check which feeds are selected and add them to source
         categories.forEach(function(entry) {
-            if (entry.selected === true) {
-                //console.debug("categories selected, " + entry.sectionID + "; "+ entry.selected)
-                sourcesModel.addSource(entry.sectionID, entry.title, entry.htmlFilename)
+            //sourcesModel.addSource(entry.id, entry.name, entry.url)
+            entry.selected = Storage.readSetting(entry.sectionID);
+            //console.debug("entry=" + entry.sectionID + "; selected=" + entry.selected);
+            if (entry.selected) {
+                //sourcesModel.addSource(entry.sectionID, entry.title, entry.htmlFilename);
+                var cat = {
+                    "title": entry.title,
+                    "sectionID": entry.sectionID,
+                    "htmlFilename": entry.htmlFilename
+                };
+                sources.push(cat);
             }
         });
+        //console.debug("loadFeedSettings, sources=" + JSON.stringify(sources));
+
+        feedSettingsLoaded(skipRefreshTimeout);
+    }
+
+    function saveFeedSettings() {
+        main.selectedSectionName = settings.mostPopularName;
 
         categories.forEach(function(entry) {
             saveSetting(entry.sectionID, entry.selected);
         });
 
-        feedSettingsLoaded();
+        loadFeedSettings(true);
     }
 
     function loadSettings() {
@@ -212,9 +213,9 @@ QtObject {
         if (genericNewsURLPart === "") {
             genericNewsURLPart = "uutiset";
         }
-        selectedCountry = Storage.readSetting("selectedCountry");
-        if (selectedCountry === "") {
-            selectedCountry = "Finland";
+        userLanguage = Storage.readSetting("userLanguage");
+        if (userLanguage === "") {
+            userLanguage = "Finnish";
         }
 
         //console.debug("deviceID=" + deviceID);

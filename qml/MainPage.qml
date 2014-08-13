@@ -7,7 +7,7 @@ Page {
 
     property alias contentItem: flickable;
     property bool hasQuickScroll: listView.hasOwnProperty("quickScroll") || listView.quickScroll;
-    property bool moreEnabled: selectedSection !== "top" && sourcesModel.count > 0 && hasMore && !feedModel.busy && feedModel.allFeeds.length > 0;
+    property bool moreEnabled: selectedSection !== "top" && sources.length > 0 && hasMore && !feedModel.busy;
 
     onStatusChanged: {
         if (status === PageStatus.Activating) {
@@ -20,7 +20,7 @@ Page {
 
         onRefresh: {
             currPageNro = 1;
-            feedModel.refresh();
+            feedModel.refresh(selectedSection);
         }
 
         onAbort: {
@@ -79,7 +79,7 @@ Page {
                 text: qsTr("Refresh")
                 onClicked: {
                     currPageNro = 1;
-                    feedModel.refresh();
+                    feedModel.refresh(selectedSection, false);
                 }
             }
         }
@@ -119,7 +119,7 @@ Page {
 
             ViewPlaceholder {
                 id: placeholder;
-                enabled: sourcesModel.count > 0 && !feedModel.busy && feedModel.allFeeds.length === 0 && newsModel.count === 0;
+                enabled: sources.length > 0 && !feedModel.busy && feedModel.allFeeds.length === 0 && newsModel.count === 0;
                 text: searchResults === 0 ? qsTr("No results") : qsTr("Pull down to refresh");
             }
 
@@ -288,17 +288,6 @@ Page {
                 if (entry.link === link) {
                     entry.read = true;
                     break;
-                }
-            };
-
-            for (i=0; i < feedModel.allFeeds.length; i++) {
-                var feed = feedModel.allFeeds[i];
-                for (var j=0; j < feed.entries.length; j++) {
-                    var e = feed.entries[j];
-                    if (e.link === link) {
-                        e.read = true;
-                        break;
-                    }
                 }
             };
             //

@@ -5,21 +5,6 @@ Item {
     id: root;
     height: settingsSlideView.height; width: settingsSlideView.width;
 
-    Connections {
-        target: settings;
-
-        onSettingsLoaded: {
-            console.log("onSettingsLoaded")
-            for (var i=0; i<settings.supportedLanguages.count; i++) {
-                console.debug("supportedLanguages=" + settings.supportedLanguages[i]);
-                if (settings.supportedLanguages[i] === settings.selectedCountry) {
-                    languageBox.currentIndex = i;
-                    break;
-                }
-            }
-        }
-    }
-
     SilicaFlickable {
         id: flickable;
 
@@ -83,9 +68,8 @@ Item {
                                     settings.latestName = modelData.latestName;
                                     settings.domainToUse = modelData.domainToUse;
                                     settings.genericNewsURLPart = modelData.genericNewsURLPart;
-                                    settings.selectedCountry = modelData.country;
+                                    settings.userLanguage = modelData.language;
 
-                                    main.selectedSectionName = modelData.mostPopularName;
                                     // Refresh categories list
                                     settings.listCategories();
                                 }
@@ -97,6 +81,15 @@ Item {
         }
 
         VerticalScrollDecorator { flickable: flickable }
+    }
+
+    Component.onCompleted: {
+        for (var i=0; i < settings.supportedLanguages.length; i++) {
+            if (settings.supportedLanguages[i].language === settings.userLanguage) {
+                languageBox.currentIndex = i;
+                break;
+            }
+        }
     }
 
 }

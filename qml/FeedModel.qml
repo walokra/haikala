@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 import "components/utils.js" as Utils
 
 Item {
-    id: wrapper
+    id: root;
 
     signal error(string details)
 
@@ -11,18 +11,23 @@ Item {
     property int refreshTimeout: 30;
 
     // flag indicating that this model is busy
-    property bool busy: false
+    property bool busy: false;
 
-    property variant sources: []
-    property variant _sourcesQueue: []
+    property var _sourcesQueue: [];
     property variant lastRefresh;
     property string lastSection;
     property bool loading: false;
 
-    property var allFeeds : [];
-
     // name of the feed currently loading
-    property string currentlyLoading
+    property string currentlyLoading;
+
+    Connections {
+        target: settings;
+
+        onFeedSettingsLoaded: {
+            feedModel.refresh(selectedSection, true);
+        }
+    }
 
     function load(source, onSuccess, onFailure) {
         var title = source.title;
@@ -76,62 +81,10 @@ Item {
         return item;
     }
 
-    /*
-     * Takes the next source from the sources queue and loads it.
+    /**
+     * Loads given source.
      */
-    function _loadFeeds(queue) {
-        //console.debug("_loadFeeds(" + JSON.stringify(queue) + ")");
-        if (queue.length > 0) {
-            var source = queue.pop();
-            load(source,
-                 function(jsonObject, sectionID, title) {
-                     //console.log("_loadFeeds: load success");
-                     var entries = [];
-                     for (var i in jsonObject.responseData.feed.entries) {
-                         if (loading) {
-                            entries.push(_loadItem(jsonObject.responseData.feed.entries, i));
-                         } else {
-                             break;
-                         }
-                     }
-
-                     var feed = { };
-                     feed["title"] = title;
-                     feed["sectionID"] = sectionID;
-                     feed["entries"] = entries;
-
-                     //console.debug("entries.count=" + entries.length);
-                     if (entries.length === 70) {
-                         hasMore = true;
-                     } else {
-                         hasMore = false;
-                     }
-
-                     allFeeds.push(feed);
-
-                     if (loading) {
-                        _loadFeeds(queue);
-                     }
-                 },
-                function(status, responseText) {
-                    _handleError(status, responseText);
-                }
-             );
-        } else {
-            for(var i in allFeeds) {
-               if (allFeeds[i].sectionID === selectedSection) {
-                   newsModel.append(allFeeds[i].entries)
-                   break;
-               }
-            }
-
-            busy = false;
-            loading = false;
-            currentlyLoading = "";
-        }
-    }
-
-    function _loadMore(queue) {
+    function _loadFeed(queue) {
         //console.debug("_loadMore(" + JSON.stringify(queue) + ")");
         var source = queue.pop();
         load(source,
@@ -158,7 +111,6 @@ Item {
                      hasMore = false;
                  }
 
-                 allFeeds.push(feed);
                  newsModel.append(entries);
 
                  busy = false;
@@ -174,7 +126,7 @@ Item {
     /*
      * Clears and reloads the model from the current sources.
      */
-    function refresh() {
+    function refresh(sectionID, skipRefreshTimeout) {
         searchResults = -1;
         searchText = "";
         var refresh = true;
@@ -188,16 +140,20 @@ Item {
             }
         }
 
-        if (refresh) {
+        if (refresh || skipRefreshTimeout) {
             busy = true;
             loading = true;
-            allFeeds = [];
             newsModel.clear();
-            _sourcesQueue = sources;
-            //console.debug("_sourcesQueue=" + JSON.stringify(_sourcesQueue));
 
-            _loadFeeds(_sourcesQueue);
+            sources.forEach(function(entry) {
+                if (entry.sectionID === selectedSection) {
+                    _sourcesQueue.push(entry);
+                }
+            });
+
+            _loadFeed(_sourcesQueue);
             lastRefresh = new Date();
+            lastSection = selectedSection;
         }
     }
 
@@ -218,7 +174,7 @@ Item {
         loading = true;
         var tmp = [];
         sources.forEach(function(entry) {
-            if (entry.id === selectedSection) {
+            if (entry.sectionID === selectedSection) {
                 var data = {
                     "sectionID": entry.sectionID,
                     "title": entry.title,
@@ -230,7 +186,7 @@ Item {
         });
         _sourcesQueue = tmp;
 
-        _loadMore(_sourcesQueue);
+        _loadFeed(_sourcesQueue);
     }
 
     function search(searchText) {

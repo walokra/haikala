@@ -1,3 +1,7 @@
+* Fri Aug 15 2014 Marko Wallin <mtw@iki.fi> 0.4.0-1
+Search functionality.
+Get supported languages and categories to get news in different languages.
+
 * Sun Aug 10 2014 Marko Wallin <mtw@iki.fi> 0.3.1-1
 Fixed paging with fixed API.
 Minor UI fixes.

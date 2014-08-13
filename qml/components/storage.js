@@ -74,14 +74,14 @@ function readSetting(key) {
         }
     });
 
+    //console.debug("storage.js: readSetting(key=" + key + "; value=" + res + ")");
+
     if (res === 'true') {
         return true;
     }
     else if (res === 'false') {
         return false;
     }
-
-    //console.debug("storage.js: readSetting(key=" + key + "; value=" + res + ")");
 
     return res;
 }

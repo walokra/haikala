@@ -7,7 +7,7 @@ CoverBackground {
 
     onStatusChanged: {
         //console.log("cover.onStatusChanged, status=" + status);
-        if (status == PageStatus.Deactivating) {
+        if (status === PageStatus.Deactivating) {
             //console.log("cover deactivating");
             Utils.updateTimeSince(newsModel);
         }
@@ -116,7 +116,7 @@ CoverBackground {
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
             onTriggered: {
-                coverAdaptor.refresh();
+                coverAdaptor.refresh(false);
             }
         }
     }
