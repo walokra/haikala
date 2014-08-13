@@ -5,6 +5,14 @@ Item {
     id: root;
     height: settingsSlideView.height; width: settingsSlideView.width;
 
+    Connections {
+        target: settings
+
+        onCategoriesLoaded: {
+            txtSwitchRepeater.model = settings.categories;
+        }
+    }
+
     SilicaFlickable {
         id: flickable;
 

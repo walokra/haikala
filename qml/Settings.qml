@@ -6,6 +6,7 @@ QtObject {
 
     signal settingsLoaded;
     signal feedSettingsLoaded;
+    signal categoriesLoaded;
 
     property string deviceID: "";
 
@@ -19,6 +20,7 @@ QtObject {
     property string latestName: "Uusimmat"; // to be used as heading for "all latest news" list
     property string domainToUse: "high.fi"; // to be used to communicate back and forth with the server using the right domain
     property string genericNewsURLPart: "uutiset"; // The value this field returns will be used to retrieve generic news lists
+    property string selectedCountry: "Finland";
 
     property string highFiAPI: "json-private"
 
@@ -113,6 +115,9 @@ QtObject {
 
             saveSetting("categories", JSON.stringify(categories));
             //console.debug(JSON.stringify(categories));
+            settings.categories = categories;
+
+            categoriesLoaded();
         }
 
         req.setRequestHeader("User-Agent", constants.userAgent);
@@ -206,6 +211,10 @@ QtObject {
         genericNewsURLPart = Storage.readSetting("genericNewsURLPart");
         if (genericNewsURLPart === "") {
             genericNewsURLPart = "uutiset";
+        }
+        selectedCountry = Storage.readSetting("selectedCountry");
+        if (selectedCountry === "") {
+            selectedCountry = "Finland";
         }
 
         //console.debug("deviceID=" + deviceID);

@@ -18,6 +18,7 @@ db.transaction(function(tx) {
 /**
   Read all settings.
 */
+/*
 function readAllSettings() {
     var res = {};
     db.readTransaction(function(tx) {
@@ -31,11 +32,12 @@ function readAllSettings() {
             } else {
                 res[rs.rows.item(i).key] = rs.rows.item(i).value
             }
-            console.log("storage.js: readAllSettings, key=" + rs.rows.item(i).key + "; value=" + rs.rows.item(i).value);
+            //console.debug("storage.js: readAllSettings, key=" + rs.rows.item(i).key + "; value=" + rs.rows.item(i).value);
         }
     });
     return res;
 }
+*/
 
 /**
   Write setting to database.
