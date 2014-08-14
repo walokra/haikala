@@ -16,6 +16,7 @@ Panel {
     }
 
     SilicaFlickable {
+        z: 1;
         pressDelay: 0;
 
         anchors.fill: parent;

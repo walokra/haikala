@@ -51,7 +51,7 @@ Item {
                         checked: modelData.selected
                         onCheckedChanged: {
                             //console.debug("onCheckedChanged, id=" + modelData.id)
-                            checked ? addFeed(modelData.sectionID) : removeFeed(modelData.sectionID);
+                            checked ? internal.addFeed(modelData.sectionID) : internal.removeFeed(modelData.sectionID);
                         }
                     }
                 }
@@ -61,26 +61,37 @@ Item {
         VerticalScrollDecorator { flickable: flickable }
     }
 
-    function addFeed(id) {
-        //console.debug("addFeed: " + id)
-        settings.categories.forEach(function(entry) {
-            if (entry.sectionID === id) {
-                entry.selected = true;
-            }
-        });
-    }
+    QtObject {
+        id: internal;
 
-    function removeFeed(id) {
-        //console.debug("removeFeed: " + id)
-        settings.categories.forEach(function(entry) {
-            if (entry.sectionID === id) {
-                entry.selected = false;
-            }
-        });
-    }
+        function addFeed(id) {
+            //console.debug("FeedsView, addFeed: " + id)
+            settings.categories.forEach(function(entry) {
+                if (entry.sectionID === id) {
+                    entry.selected = true;
 
-    Component.onCompleted: {
+                    var cat = {
+                        "title": entry.title,
+                        "sectionID": entry.sectionID,
+                        "htmlFilename": entry.htmlFilename
+                    };
+                    sources.push(cat);
+                }
+            });
+        }
 
+        function removeFeed(id) {
+            //console.debug("removeFeed: " + id)
+            var i=0;
+            settings.categories.forEach(function(entry) {
+                if (entry.sectionID === id) {
+                    entry.selected = false;
+
+                    settings.categories.remove(i);
+                }
+                i++;
+            });
+        }
     }
 
 }

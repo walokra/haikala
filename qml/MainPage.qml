@@ -1,6 +1,7 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "components/utils.js" as Utils
+import "components/highfi.js" as HighFi
 
 Page {
     id: mp
@@ -71,7 +72,21 @@ Page {
                     searchText = "\"" + text + "\"";
                     pullDownMenu.close();
                     searchTextField.focus = false;
-                    feedModel.search(text);
+
+                    newsModel.clear();
+                    HighFi.search(text, settings.domainToUse, function(entries) {
+                        //console.debug("entries.count=" + entries.length);
+                        if (entries.length === 70) {
+                            hasMore = true;
+                        } else {
+                            hasMore = false;
+                        }
+
+                        newsModel.append(entries);
+                        searchResultsCount = newsModel.count;
+                    }, function(status, statusText){
+                        infoBanner.handleError(status, statusText);
+                    });
                 }
             }
 
@@ -120,7 +135,7 @@ Page {
             ViewPlaceholder {
                 id: placeholder;
                 enabled: sources.length > 0 && !feedModel.busy && feedModel.allFeeds.length === 0 && newsModel.count === 0;
-                text: searchResults === 0 ? qsTr("No results") : qsTr("Pull down to refresh");
+                text: searchResultsCount === 0 ? qsTr("No results") : qsTr("Pull down to refresh");
             }
 
             model: newsModel
@@ -163,7 +178,7 @@ Page {
                             }
                             pageStack.push(Qt.resolvedUrl("WebPage.qml"), props);
 
-                            internal.makeHighFiCall(highFiUrl);
+                            HighFi.makeHighFiCall(highFiUrl);
                         }
                     }
                 }
@@ -265,21 +280,6 @@ Page {
 
     QtObject {
         id: internal;
-
-        function makeHighFiCall(url) {
-            //console.log("makeHighFiCall. url=" + url);
-
-            var req = new XMLHttpRequest;
-            req.open("GET", url);
-            req.onreadystatechange = function() {
-                if (req.readyState === XMLHttpRequest.DONE) {
-                    //console.debug(req.status +"; " + req.responseText);
-                }
-            }
-
-            req.setRequestHeader("User-Agent", constants.userAgent);
-            req.send();
-        }
 
         function markAsRead(link) {
             // @FIXME: better way to mark as read?

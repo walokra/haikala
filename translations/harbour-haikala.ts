@@ -44,22 +44,6 @@
     </message>
 </context>
 <context>
-    <name>FeedModel</name>
-    <message>
-        <source>Error with %1:
-%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown error with code %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FeedsView</name>
     <message>
         <source>Filter shown feeds</source>
@@ -166,6 +150,25 @@
     </message>
     <message>
         <source>Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>highfi</name>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>main</name>
+    <message>
+        <source>Error with %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown error with code %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

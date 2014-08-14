@@ -1,5 +1,6 @@
 import QtQuick 2.1
 import "components/storage.js" as Storage
+import "components/highfi.js" as HighFi
 
 QtObject {
     id: settings;
@@ -22,10 +23,13 @@ QtObject {
     property string genericNewsURLPart: "uutiset"; // The value this field returns will be used to retrieve generic news lists
     property string userLanguage: "Finnish";
 
-    property string highFiAPI: "json-private"
-
     function init() {
+        HighFi.init(constants.apiKey, constants.userAgent);
+
         loadSettings();
+        loadJSONSettings();
+        //console.log("settings.supportedLanguages=" + JSON.stringify(supportedLanguages));
+        //console.log("settings.categories=" + JSON.stringify(categories));
 
         if (supportedLanguages.length == 0) {
             listLanguages();
@@ -33,97 +37,42 @@ QtObject {
         if (categories.length == 0) {
             listCategories();
         }
-        //console.log("setting.supportedLanguages=" + JSON.stringify(supportedLanguages));
-        //console.log("setting.categories=" + JSON.stringify(categories));
 
-        loadJSONSettings();
-
-        loadFeedSettings(true);
+        loadFeedSettings();
 
         settingsLoaded();
     }
 
-    // http://high.fi/api/?act=listLanguages&APIKEY=123456
     function listLanguages() {
-        var url = "http://" + domainToUse + "/api/?act=listLanguages&APIKEY=" + constants.apiKey;
-        //console.debug("listLanguages, url=" + url);
-
-        var req = new XMLHttpRequest;
-        req.open("GET", url);
-        req.onreadystatechange = function() {
-            if (req.readyState === XMLHttpRequest.DONE) {
-                var jsonObject = JSON.parse(req.responseText);
-                jsonObject.responseData.supportedLanguages.forEach(function(entry) {
-                    var item = { };
-                    for (var key in entry) {
-                        item[key] = entry[key];
-                    }
-
-                    supportedLanguages.push(item);
-                });
-
+        HighFi.listLanguages(domainToUse,
+            function(languages) {
+                supportedLanguages = languages;
                 saveSetting("supportedLanguages", JSON.stringify(supportedLanguages));
                 //console.debug(JSON.stringify(supportedLanguages));
+            },
+            function(status, responseText) {
+                infoBanner.handleError(status, responseText);
             }
-        }
-
-        req.setRequestHeader("User-Agent", constants.userAgent);
-        req.send();
+        );
     }
 
     // http://en.high.fi/api/?act=listCategories&usedLanguage=english&APIKEY=123456
     function listCategories() {
-        var categories = [];
-        var cat = {
-            "title": mostPopularName,
-            "sectionID": "top",
-            "htmlFilename": "top",
-            "selected": true
-        };
-        categories.push(cat);
-        cat = {
-            "title": latestName,
-            "sectionID": genericNewsURLPart,
-            "htmlFilename": genericNewsURLPart,
-            "selected": true
-        };
-        categories.push(cat);
+        HighFi.listCategories(domainToUse, mostPopularName, genericNewsURLPart,latestName, useToRetrieveLists,
+            function(categories) {
+                saveSetting("categories", JSON.stringify(categories));
+                //console.debug(JSON.stringify(categories));
+                settings.categories = categories;
 
-        var url = "http://" + domainToUse + "/api/?act=listCategories&usedLanguage=" + useToRetrieveLists + "&APIKEY=" + constants.apiKey;
-        //console.debug("listCategories, url=" + url);
-
-        var req = new XMLHttpRequest;
-        req.open("GET", url);
-        req.onreadystatechange = function() {
-            if (req.readyState === XMLHttpRequest.DONE) {
-                //console.debug(req.status +"; " + req.responseText);
-                var jsonObject = JSON.parse(req.responseText);
-
-                jsonObject.responseData.categories.forEach(function(entry) {
-                    if (entry.depth === 1) {
-                        var item = { };
-                        for (var key in entry) {
-                            item[key] = entry[key];
-                        }
-                        item["selected"] = false;
-
-                        categories.push(item);
-                    }
-                });
+                categoriesLoaded();
+            },
+            function(status, responseText) {
+                infoBanner.handleError(status, responseText);
             }
-
-            saveSetting("categories", JSON.stringify(categories));
-            //console.debug(JSON.stringify(categories));
-            settings.categories = categories;
-
-            categoriesLoaded();
-        }
-
-        req.setRequestHeader("User-Agent", constants.userAgent);
-        req.send();
+        );
     }
 
-    function loadFeedSettings(skipRefreshTimeout) {
+    function loadFeedSettings() {
         sources = [];
         var cat = {
             "title": categories[0].title,
@@ -142,9 +91,8 @@ QtObject {
         categories.forEach(function(entry) {
             //sourcesModel.addSource(entry.id, entry.name, entry.url)
             entry.selected = Storage.readSetting(entry.sectionID);
-            //console.debug("entry=" + entry.sectionID + "; selected=" + entry.selected);
             if (entry.selected) {
-                //sourcesModel.addSource(entry.sectionID, entry.title, entry.htmlFilename);
+                //console.debug("settings, entry=" + entry.title + "(" + entry.sectionID + "); selected=" + entry.selected);
                 var cat = {
                     "title": entry.title,
                     "sectionID": entry.sectionID,
@@ -155,7 +103,7 @@ QtObject {
         });
         //console.debug("loadFeedSettings, sources=" + JSON.stringify(sources));
 
-        feedSettingsLoaded(skipRefreshTimeout);
+        feedSettingsLoaded(true);
     }
 
     function saveFeedSettings() {
@@ -165,7 +113,7 @@ QtObject {
             saveSetting(entry.sectionID, entry.selected);
         });
 
-        loadFeedSettings(true);
+        loadFeedSettings();
     }
 
     function loadSettings() {
@@ -233,8 +181,14 @@ QtObject {
     }
 
     function saveSettings() {
-        Storage.writeSetting("showDescription", showDescription);
-        Storage.writeSetting("useMobileURL", useMobileURL);
+        saveSetting("showDescription", showDescription);
+        saveSetting("useMobileURL", useMobileURL);
+        saveSetting("useToRetrieveLists", useToRetrieveLists);
+        saveSetting("mostPopularName", mostPopularName);
+        saveSetting("latestName", latestName);
+        saveSetting("domainToUse", domainToUse);
+        saveSetting("genericNewsURLPart", genericNewsURLPart);
+        saveSetting("userLanguage", userLanguage);
     }
 
     function saveSetting(key, value) {

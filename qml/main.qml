@@ -11,20 +11,12 @@ ApplicationWindow {
     property int currPageNro: 1;
     property bool hasMore: false;
     property string searchText: "";
-    property int searchResults: -1;
+    property int searchResultsCount: -1;
     property var sources: [];
 
     ListModel { id: newsModel }
 
-    SourcesModel { id: sourcesModel; }
-
-    FeedModel {
-        id: feedModel;
-
-        onError: {
-            console.log("Error: " + details);
-        }
-    }
+    FeedModel { id: feedModel; }
 
     cover: Qt.resolvedUrl("CoverPage.qml")
 
@@ -91,7 +83,7 @@ ApplicationWindow {
     Rectangle {
         id: infoBanner;
         y: Theme.paddingSmall;
-        z: 1;
+        z: -1;
         width: parent.width;
 
         height: infoLabel.height + 2 * Theme.paddingMedium;
@@ -135,6 +127,26 @@ ApplicationWindow {
         function showHttpError(errorCode, errorMessage) {
             console.log("API error: code=" + errorCode + "; message=" + errorMessage);
             showError(errorMessage);
+        }
+
+        function handleError(status, error) {
+            console.log("status=" + status + "; error=" + error);
+
+            var feedName = currentlyLoading + "";
+            if (error !== "") {
+                if (error.substring(0, 5) === "Host ") {
+                    // Host ... not found
+                    showError(qsTr("Error with %1:\n%2").arg(feedName).arg(error));
+                } else if (error.indexOf(" - server replied: ") !== -1) {
+                    var idx = error.indexOf(" - server replied: ");
+                    var reply = error.substring(idx + 19);
+                    showError(qsTr("Error with %1:\n%2").arg(feedName).arg(reply));
+                } else {
+                    showError(qsTr("Error with %1:\n%2").arg(feedName).arg(error));
+                }
+            } else {
+                showError(qsTr("Error with %1:\n%2").arg(feedName).arg(qsTr("Unknown error with code %1").arg(status)));
+            }
         }
 
         Behavior on opacity { FadeAnimation {} }

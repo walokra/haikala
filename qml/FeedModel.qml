@@ -1,6 +1,7 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "components/utils.js" as Utils
+import "components/highfi.js" as HighFi
 
 Item {
     id: root;
@@ -24,36 +25,17 @@ Item {
     Connections {
         target: settings;
 
-        onFeedSettingsLoaded: {
-            feedModel.refresh(selectedSection, true);
+        onSettingsLoaded: {
+            feedModel.refresh("", true);
         }
     }
 
-    function load(source, onSuccess, onFailure) {
-        var title = source.title;
-        var url = "http://" + settings.domainToUse + "/" + source.htmlFilename + "/" + settings.highFiAPI + "?APIKEY=" + constants.apiKey;
-        var sectionID = source.sectionID;
-        console.debug("load(source="  + JSON.stringify(source) + "), url=" + url);
+    Connections {
+        target: settings;
 
-        //console.log("Now loading: " + name);
-        currentlyLoading = title;
-
-        var req = new XMLHttpRequest;
-        req.open("GET", url);
-        req.onreadystatechange = function() {
-            if (req.readyState === XMLHttpRequest.DONE) {
-                if (req.status == 200 ) {
-                    //console.debug("200: " + req.responseText);
-                    var jsonObject = JSON.parse(req.responseText);
-                    onSuccess(jsonObject, sectionID, title);
-                } else {
-                    onFailure(req.status, req.responseText);
-                }
-            }
+        onFeedSettingsLoaded: {
+            feedModel.refresh("", true);
         }
-
-        req.setRequestHeader("User-Agent", constants.userAgent);
-        req.send();
     }
 
     /*
@@ -87,9 +69,10 @@ Item {
     function _loadFeed(queue) {
         //console.debug("_loadMore(" + JSON.stringify(queue) + ")");
         var source = queue.pop();
-        load(source,
-             function(jsonObject, sectionID, title) {
-                 //console.log("_loadFeeds: load success");
+        console.log("Now loading: " + source.title);
+        currentlyLoading = source.title;
+        HighFi.load(source, settings.domainToUse,
+             function(jsonObject) {
                  var entries = [];
                  for (var i in jsonObject.responseData.feed.entries) {
                      if (loading) {
@@ -98,11 +81,6 @@ Item {
                          break;
                      }
                  }
-
-                 var feed = { };
-                 feed["title"] = title;
-                 feed["sectionID"] = sectionID;
-                 feed["entries"] = entries;
 
                  //console.debug("entries.count=" + entries.length);
                  if (entries.length === 70) {
@@ -118,7 +96,9 @@ Item {
                  currentlyLoading = "";
              },
             function(status, responseText) {
-                _handleError(status, responseText);
+                infoBanner.handleError(status, responseText);
+                busy = false;
+                loading = false;
             }
          );
     }
@@ -127,14 +107,14 @@ Item {
      * Clears and reloads the model from the current sources.
      */
     function refresh(sectionID, skipRefreshTimeout) {
-        searchResults = -1;
+        searchResultsCount = -1;
         searchText = "";
         var refresh = true;
         if (lastRefresh) {
             var diff = new Date().getTime() - lastRefresh.getTime() // milliseconds
             diff = diff / 1000;
-            console.log("diff=" + diff + " s");
-            if (diff < refreshTimeout) {
+            console.log("refresh, diff=" + diff + " s");
+            if (diff < refreshTimeout && sectionID === lastSection) {
                 console.log("Timeout between refreshing same section is 30s");
                 refresh = false;
             }
@@ -145,11 +125,20 @@ Item {
             loading = true;
             newsModel.clear();
 
+            if (sectionID === "") {
+                sectionID = settings.genericNewsURLPart;
+            }
+
+            _sourcesQueue = [];
+            //console.debug("sources.length=" + sources.length);
             sources.forEach(function(entry) {
-                if (entry.sectionID === selectedSection) {
+                //console.debug("source.entry=" + JSON.stringify(entry));
+                if (entry.sectionID.toString() === sectionID.toString()) {
+                    //console.debug("refresh, entry.sectionID=" + entry.sectionID);
                     _sourcesQueue.push(entry);
                 }
             });
+            //console.debug("_sourcesQueue.length=" + _sourcesQueue.length);
 
             _loadFeed(_sourcesQueue);
             lastRefresh = new Date();
@@ -187,68 +176,5 @@ Item {
         _sourcesQueue = tmp;
 
         _loadFeed(_sourcesQueue);
-    }
-
-    function search(searchText) {
-        newsModel.clear();
-        // http://high.fi/search.cfm?q=formula&x=0&y=0&outputtype=json-private
-        var url = "http://" + settings.domainToUse + "/search.cfm?q=" + searchText + "&x=0&y=0&outputtype=" + settings.highFiAPI + "&APIKEY=" + constants.apiKey;
-        console.debug("search, url=" + url);
-
-        var req = new XMLHttpRequest;
-        req.open("GET", url);
-        req.onreadystatechange = function() {
-            if (req.readyState === XMLHttpRequest.DONE) {
-                //console.debug(req.status +"; " + req.responseText);
-                var jsonObject = JSON.parse(req.responseText);
-
-                var entries = [];
-                for (var i in jsonObject.responseData.feed.entries) {
-                    entries.push(feedModel.createItem(jsonObject.responseData.feed.entries[i]));
-                }
-
-                var feed = { };
-                feed["title"] = qsTr("Search");
-                feed["sectionID"] = -1;
-                feed["entries"] = entries;
-
-                //console.debug("entries.count=" + entries.length);
-                if (entries.length === 70) {
-                    hasMore = true;
-                } else {
-                    hasMore = false;
-                }
-
-                newsModel.append(entries);
-            }
-
-            searchResults = newsModel.count;
-        }
-
-        req.setRequestHeader("User-Agent", constants.userAgent);
-        req.send();
-    }
-
-    function _handleError(status, error) {
-        console.log("status=" + status + "; error=" + error);
-
-        var feedName = currentlyLoading + "";
-        if (error !== "") {
-            if (error.substring(0, 5) === "Host ") {
-                // Host ... not found
-                infoBanner.showError(qsTr("Error with %1:\n%2").arg(feedName).arg(error));
-            } else if (error.indexOf(" - server replied: ") !== -1) {
-                var idx = error.indexOf(" - server replied: ");
-                var reply = error.substring(idx + 19);
-                infoBanner.showError(qsTr("Error with %1:\n%2").arg(feedName).arg(reply));
-            } else {
-                infoBanner.showError(qsTr("Error with %1:\n%2").arg(feedName).arg(error));
-            }
-        } else {
-            infoBanner.showError(qsTr("Error with %1:\n%2").arg(feedName).arg(qsTr("Unknown error with code %1").arg(status)));
-        }
-
-        busy = false;
-        loading = false;
     }
 }

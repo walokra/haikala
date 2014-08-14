@@ -21,7 +21,6 @@ OTHER_FILES = \
     qml/Settings.qml \
     qml/main.qml \
     qml/FeedModel.qml \
-    qml/SourcesModel.qml \
     qml/AboutPage.qml \
     qml/WebPage.qml \
     qml/Panel.qml \
@@ -32,7 +31,8 @@ OTHER_FILES = \
     qml/SettingsPage.qml \
     qml/SettingsView.qml \
     qml/FeedsView.qml \
-    qml/TabPanel.qml
+    qml/TabPanel.qml \
+    qml/components/highfi.js
 
 INCLUDEPATH += $$PWD
 

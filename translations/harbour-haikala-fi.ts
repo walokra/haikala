@@ -48,15 +48,15 @@
     <message>
         <source>Error with %1:
 %2</source>
-        <translation>Virhe %1: %2</translation>
+        <translation type="obsolete">Virhe %1: %2</translation>
     </message>
     <message>
         <source>Unknown error with code %1</source>
-        <translation>Tuntematon virhe koodilla %1</translation>
+        <translation type="obsolete">Tuntematon virhe koodilla %1</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Hae</translation>
+        <translation type="obsolete">Hae</translation>
     </message>
 </context>
 <context>
@@ -175,6 +175,25 @@
     <message>
         <source>Open in browser</source>
         <translation>Avaa selaimessa</translation>
+    </message>
+</context>
+<context>
+    <name>highfi</name>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished">Hae</translation>
+    </message>
+</context>
+<context>
+    <name>main</name>
+    <message>
+        <source>Error with %1:
+%2</source>
+        <translation type="unfinished">Virhe %1: %2</translation>
+    </message>
+    <message>
+        <source>Unknown error with code %1</source>
+        <translation type="unfinished">Tuntematon virhe koodilla %1</translation>
     </message>
 </context>
 <context>
