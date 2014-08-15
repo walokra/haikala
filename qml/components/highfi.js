@@ -134,7 +134,7 @@ function listCategories(domainToUse, mostPopularName, genericNewsURLPart,latestN
     categories.push(cat);
 
     var url = "http://" + domainToUse + "/api/?act=listCategories&usedLanguage=" + useToRetrieveLists + "&APIKEY=" + API_KEY;
-    //console.debug("listCategories, url=" + url);
+    //console.debug("high.js, listCategories, url=" + url);
 
     var req = new XMLHttpRequest;
     req.open("GET", url);

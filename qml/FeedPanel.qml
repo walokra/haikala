@@ -17,7 +17,7 @@ Panel {
     Connections {
         target: settings;
 
-        onSettingsChanged: {
+        onFeedSettingsChanged: {
             feedRepeater.model = settings.categories;
         }
     }

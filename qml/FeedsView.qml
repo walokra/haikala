@@ -5,6 +5,15 @@ Item {
     id: root;
     height: settingsSlideView.height; width: settingsSlideView.width;
 
+    Connections {
+        target: settings;
+
+        onFeedSettingsLoaded: {
+            txtSwitchRepeater.model = settings.categories;
+            //console.debug("onCategoriesLoaded, settings.categories=" + JSON.stringify(settings.categories));
+        }
+    }
+
     SilicaFlickable {
         id: flickable;
 
@@ -75,6 +84,7 @@ Item {
                     settings.saveSetting(entry.sectionID, entry.selected);
                 }
             });
+            settings.feedSettingsChanged();
         }
 
         function removeFeed(id) {
@@ -89,6 +99,7 @@ Item {
                 }
                 i++;
             });
+            settings.feedSettingsChanged();
         }
     }
 

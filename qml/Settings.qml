@@ -7,8 +7,7 @@ QtObject {
 
     signal settingsLoaded;
     signal feedSettingsLoaded(bool skipRefreshTimeout);
-    signal categoriesLoaded;
-    signal settingsChanged;
+    signal feedSettingsChanged;
 
     property string deviceID: "";
 
@@ -45,7 +44,6 @@ QtObject {
         } else {
             categories = JSON.parse(categories);
         }
-        categoriesLoaded();
         //console.debug("settings.init(), cats=" + JSON.stringify(categories));
 
         loadFeedSettings();
@@ -70,8 +68,9 @@ QtObject {
     function listCategories() {
         HighFi.listCategories(domainToUse, mostPopularName, genericNewsURLPart,latestName, useToRetrieveLists,
             function(cats) {
-                saveSetting("categories", JSON.stringify(cats));
                 categories = cats;
+                saveSetting("categories", JSON.stringify(cats));
+                loadFeedSettings();
             },
             function(status, responseText) {
                 infoBanner.handleError(status, responseText);
@@ -181,12 +180,16 @@ QtObject {
         categories = Storage.readSetting("categories");
     }
 
+    /*
     function saveSettings() {
         saveSetting("showDescription", showDescription);
         saveSetting("useMobileURL", useMobileURL);
 
         saveLanguageSettings();
+
+        settingsChanged();
     }
+    */
 
     function saveLanguageSettings() {
         saveSetting("useToRetrieveLists", useToRetrieveLists);
@@ -199,7 +202,6 @@ QtObject {
 
     function saveSetting(key, value) {
         Storage.writeSetting(key, value);
-        settingsChanged();
     }
 
     // http://stackoverflow.com/a/8809472
