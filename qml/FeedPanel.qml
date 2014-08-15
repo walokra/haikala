@@ -8,9 +8,16 @@ Panel {
     signal clicked();
 
     Connections {
-        target: settings
+        target: settings;
 
         onFeedSettingsLoaded: {
+            feedRepeater.model = settings.categories;
+        }
+    }
+    Connections {
+        target: settings;
+
+        onSettingsChanged: {
             feedRepeater.model = settings.categories;
         }
     }

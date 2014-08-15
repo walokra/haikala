@@ -1,19 +1,25 @@
 .pragma library
 .import QtQuick.LocalStorage 2.0 as LS
+
 Qt.include("../lib/sha1.js");
 
 var identifier = "Haikala";
 var version = "1.0";
 var description = "Haikala database";
 
+var QUERY = {
+    CREATE_SETTINGS_TABLE: 'CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);'
+}
+
 /**
   Open app's database, create it if not exists.
 */
-var db = LS.LocalStorage.openDatabaseSync(identifier, version, description, 10240);
-db.transaction(function(tx) {
-        tx.executeSql("CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);");
-    }
-);
+var db = LS.LocalStorage.openDatabaseSync(identifier, version, description, 1000000, function(db) {
+    db.transaction(function(tx) {
+        // Create settings table (key, value)
+        tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
+    });
+});
 
 /**
   Read all settings.

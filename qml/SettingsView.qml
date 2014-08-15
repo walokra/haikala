@@ -35,6 +35,7 @@ Item {
                     checked: settings.showDescription;
                     onCheckedChanged: {
                         checked ? settings.showDescription = true : settings.showDescription = false;
+                        settings.saveSetting("showDescription", settings.showDescription);
                     }
                 }
 
@@ -43,6 +44,7 @@ Item {
                     checked: settings.useMobileURL;
                     onCheckedChanged: {
                         checked ? settings.useMobileURL = true : settings.useMobileURL = false;
+                        settings.saveSetting("useMobileURL", settings.useMobileURL);
                     }
                 }
 
@@ -70,6 +72,7 @@ Item {
                                     settings.genericNewsURLPart = modelData.genericNewsURLPart;
                                     settings.userLanguage = modelData.language;
 
+                                    settings.saveLanguageSettings();
                                     // Refresh categories list
                                     settings.listCategories();
                                 }

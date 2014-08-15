@@ -42,9 +42,9 @@ ApplicationWindow {
         }
     }
 
-    Settings { id: settings }
+    Settings { id: settings; }
 
-    Constants { id: constants }
+    Constants { id: constants; }
 
     PanelView {
         id: viewer;

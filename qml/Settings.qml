@@ -8,6 +8,7 @@ QtObject {
     signal settingsLoaded;
     signal feedSettingsLoaded(bool skipRefreshTimeout);
     signal categoriesLoaded;
+    signal settingsChanged;
 
     property string deviceID: "";
 
@@ -24,6 +25,8 @@ QtObject {
     property string userLanguage: "Finnish";
 
     function init() {
+        //console.debug("settings.init()");
+
         HighFi.init(constants.apiKey, constants.userAgent);
 
         loadSettings();
@@ -31,12 +34,19 @@ QtObject {
         //console.log("settings.supportedLanguages=" + JSON.stringify(supportedLanguages));
         //console.log("settings.categories=" + JSON.stringify(categories));
 
-        if (supportedLanguages.length == 0) {
+        if (supportedLanguages === "" || supportedLanguages.length == 0) {
             listLanguages();
+        } else {
+            supportedLanguages = JSON.parse(supportedLanguages);
         }
-        if (categories.length == 0) {
+
+        if (categories === "" || categories.length == 0) {
             listCategories();
+        } else {
+            categories = JSON.parse(categories);
         }
+        categoriesLoaded();
+        //console.debug("settings.init(), cats=" + JSON.stringify(categories));
 
         loadFeedSettings();
 
@@ -59,12 +69,9 @@ QtObject {
     // http://en.high.fi/api/?act=listCategories&usedLanguage=english&APIKEY=123456
     function listCategories() {
         HighFi.listCategories(domainToUse, mostPopularName, genericNewsURLPart,latestName, useToRetrieveLists,
-            function(categories) {
-                saveSetting("categories", JSON.stringify(categories));
-                //console.debug(JSON.stringify(categories));
-                settings.categories = categories;
-
-                categoriesLoaded();
+            function(cats) {
+                saveSetting("categories", JSON.stringify(cats));
+                categories = cats;
             },
             function(status, responseText) {
                 infoBanner.handleError(status, responseText);
@@ -117,15 +124,15 @@ QtObject {
     }
 
     function loadSettings() {
-        /* problem with json objects
-        var results = Storage.readAllSettings();
-        for (var s in results) {
-            if (settings.hasOwnProperty(s)) {
-                settings[s] = results[s];
-            }
-        }*/
+        //console.debug("settings.loadSettings()");
 
         deviceID = Storage.readSetting("deviceID");
+        if (deviceID === "") {
+            var uuid = _generateUUID();
+            deviceID = Storage.makeHash(uuid);
+            Storage.writeSetting("deviceID", deviceID);
+        }
+        //console.debug("generated uuid=" + uuid + "; deviceID=" + deviceID);
 
         showDescription = Storage.readSetting("showDescription");
         if (showDescription === "") {
@@ -165,24 +172,23 @@ QtObject {
         if (userLanguage === "") {
             userLanguage = "Finnish";
         }
-
-        //console.debug("deviceID=" + deviceID);
-        if (deviceID === "") {
-            var uuid = _generateUUID();
-            deviceID = Storage.makeHash(uuid);
-            Storage.writeSetting("deviceID", deviceID);
-        }
-        //console.debug("generated uuid=" + uuid + "; deviceID=" + deviceID);
     }
 
     function loadJSONSettings() {
-        supportedLanguages = JSON.parse(Storage.readSetting("supportedLanguages"));
-        categories = JSON.parse(Storage.readSetting("categories"));
+        //console.debug("settings.loadJSONSettings()");
+
+        supportedLanguages = Storage.readSetting("supportedLanguages");
+        categories = Storage.readSetting("categories");
     }
 
     function saveSettings() {
         saveSetting("showDescription", showDescription);
         saveSetting("useMobileURL", useMobileURL);
+
+        saveLanguageSettings();
+    }
+
+    function saveLanguageSettings() {
         saveSetting("useToRetrieveLists", useToRetrieveLists);
         saveSetting("mostPopularName", mostPopularName);
         saveSetting("latestName", latestName);
@@ -193,6 +199,7 @@ QtObject {
 
     function saveSetting(key, value) {
         Storage.writeSetting(key, value);
+        settingsChanged();
     }
 
     // http://stackoverflow.com/a/8809472

@@ -44,30 +44,10 @@
     </message>
 </context>
 <context>
-    <name>FeedModel</name>
-    <message>
-        <source>Error with %1:
-%2</source>
-        <translation type="obsolete">Virhe %1: %2</translation>
-    </message>
-    <message>
-        <source>Unknown error with code %1</source>
-        <translation type="obsolete">Tuntematon virhe koodilla %1</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation type="obsolete">Hae</translation>
-    </message>
-</context>
-<context>
     <name>FeedsView</name>
     <message>
         <source>Feeds</source>
         <translation>Syötteet</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Tallenna</translation>
     </message>
     <message>
         <source>Filter shown feeds</source>
@@ -79,10 +59,6 @@
     <message>
         <source>About</source>
         <translation>Tietoja</translation>
-    </message>
-    <message>
-        <source>Feeds</source>
-        <translation type="obsolete">Syötteet</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -140,14 +116,14 @@
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Kielet</translation>
     </message>
 </context>
 <context>
     <name>TabPanel</name>
     <message>
         <source>Save</source>
-        <translation>Tallenna</translation>
+        <translation type="obsolete">Tallenna</translation>
     </message>
     <message>
         <source>Close</source>
@@ -181,7 +157,7 @@
     <name>highfi</name>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Hae</translation>
+        <translation>Hae</translation>
     </message>
 </context>
 <context>
@@ -189,11 +165,11 @@
     <message>
         <source>Error with %1:
 %2</source>
-        <translation type="unfinished">Virhe %1: %2</translation>
+        <translation>Virhe %1: %2</translation>
     </message>
     <message>
         <source>Unknown error with code %1</source>
-        <translation type="unfinished">Tuntematon virhe koodilla %1</translation>
+        <translation>Tuntematon virhe koodilla %1</translation>
     </message>
 </context>
 <context>

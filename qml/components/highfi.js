@@ -11,7 +11,7 @@ function init(api_key, user_agent) {
 
 function load(source, domainToUse, onSuccess, onFailure) {
     var url = "http://" + domainToUse + "/" + source.htmlFilename + "/" + HIGH_FI_API + "?APIKEY=" + API_KEY;
-    console.debug("highfi.js, load(source="  + JSON.stringify(source) + "), url=" + url);
+    //console.debug("highfi.js, load(source="  + JSON.stringify(source) + "), url=" + url);
 
     var req = new XMLHttpRequest;
     req.open("GET", url);

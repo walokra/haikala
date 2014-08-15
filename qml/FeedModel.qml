@@ -22,6 +22,7 @@ Item {
     // name of the feed currently loading
     property string currentlyLoading;
 
+    /*
     Connections {
         target: settings;
 
@@ -29,6 +30,7 @@ Item {
             feedModel.refresh("", true);
         }
     }
+    */
 
     Connections {
         target: settings;
@@ -113,9 +115,9 @@ Item {
         if (lastRefresh) {
             var diff = new Date().getTime() - lastRefresh.getTime() // milliseconds
             diff = diff / 1000;
-            console.log("refresh, diff=" + diff + " s");
+            //console.log("refresh, diff=" + diff + " s");
             if (diff < refreshTimeout && sectionID === lastSection) {
-                console.log("Timeout between refreshing same section is 30s");
+                console.log("Timeout between refreshing same section is 30s. Last refresh was " + diff + " ago.");
                 refresh = false;
             }
         }
@@ -130,11 +132,8 @@ Item {
             }
 
             _sourcesQueue = [];
-            //console.debug("sources.length=" + sources.length);
             sources.forEach(function(entry) {
-                //console.debug("source.entry=" + JSON.stringify(entry));
                 if (entry.sectionID.toString() === sectionID.toString()) {
-                    //console.debug("refresh, entry.sectionID=" + entry.sectionID);
                     _sourcesQueue.push(entry);
                 }
             });

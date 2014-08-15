@@ -57,6 +57,7 @@ Item {
         PushUpMenu {
             id: pushupMenu;
 
+            /*
             MenuItem {
                 text: qsTr("Save");
                 onClicked: {
@@ -66,6 +67,7 @@ Item {
                     pageStack.pop(PageStackAction.Animated);
                 }
             }
+            */
             MenuItem {
                 text: qsTr("Close");
                 onClicked: {

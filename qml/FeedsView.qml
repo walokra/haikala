@@ -5,14 +5,6 @@ Item {
     id: root;
     height: settingsSlideView.height; width: settingsSlideView.width;
 
-    Connections {
-        target: settings
-
-        onCategoriesLoaded: {
-            txtSwitchRepeater.model = settings.categories;
-        }
-    }
-
     SilicaFlickable {
         id: flickable;
 
@@ -61,6 +53,10 @@ Item {
         VerticalScrollDecorator { flickable: flickable }
     }
 
+    Component.onCompleted: {
+        txtSwitchRepeater.model = settings.categories;
+    }
+
     QtObject {
         id: internal;
 
@@ -76,6 +72,7 @@ Item {
                         "htmlFilename": entry.htmlFilename
                     };
                     sources.push(cat);
+                    settings.saveSetting(entry.sectionID, entry.selected);
                 }
             });
         }
@@ -88,6 +85,7 @@ Item {
                     entry.selected = false;
 
                     settings.categories.remove(i);
+                    settings.saveSetting(entry.sectionID, entry.selected);
                 }
                 i++;
             });

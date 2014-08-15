@@ -122,10 +122,6 @@
 <context>
     <name>TabPanel</name>
     <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
