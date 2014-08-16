@@ -39,12 +39,42 @@ Item {
                     }
                 }
 
+                Column {
+                    spacing: constants.paddingSmall;
+                    anchors { left: parent.left; right: parent.right; }
+                    anchors.leftMargin: Theme.paddingLarge;
+                    anchors.rightMargin: Theme.paddingLarge;
+
+                    Label {
+                        id: helpDescText;
+                        width: parent.width;
+                        font.pixelSize: Theme.fontSizeTiny;
+                        wrapMode: Text.Wrap;
+                        text: qsTr("Show synopsis or abbreviation of the news story if available.");
+                    }
+                }
+
                 TextSwitch {
                     text: qsTr("Use mobile optimized URLs");
                     checked: settings.useMobileURL;
                     onCheckedChanged: {
                         checked ? settings.useMobileURL = true : settings.useMobileURL = false;
                         settings.saveSetting("useMobileURL", settings.useMobileURL);
+                    }
+                }
+
+                Column {
+                    spacing: constants.paddingSmall;
+                    anchors { left: parent.left; right: parent.right; }
+                    anchors.leftMargin: Theme.paddingLarge;
+                    anchors.rightMargin: Theme.paddingLarge;
+
+                    Label {
+                        id: helpMobileText;
+                        width: parent.width;
+                        font.pixelSize: Theme.fontSizeTiny;
+                        wrapMode: Text.Wrap;
+                        text: qsTr("Use mobile URL for the story if available otherwise using the normal URL.");
                     }
                 }
 
@@ -78,6 +108,21 @@ Item {
                                 }
                             }
                         }
+                    }
+                }
+
+                Column {
+                    spacing: constants.paddingSmall;
+                    anchors { left: parent.left; right: parent.right; }
+                    anchors.leftMargin: Theme.paddingLarge;
+                    anchors.rightMargin: Theme.paddingLarge;
+
+                    Label {
+                        id: helpLangText;
+                        width: parent.width;
+                        font.pixelSize: Theme.fontSizeTiny;
+                        wrapMode: Text.Wrap;
+                        text: qsTr("Select news portal's source language.");
                     }
                 }
             }

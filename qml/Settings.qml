@@ -11,6 +11,8 @@ QtObject {
 
     property string deviceID: "";
 
+    property string installedVersion: "";
+
     // SettingsPage
     property bool showDescription: false;
     property bool useMobileURL: false;
@@ -25,6 +27,7 @@ QtObject {
 
     function init() {
         //console.debug("settings.init()");
+        //Storage.reset();
 
         HighFi.init(constants.apiKey, constants.userAgent);
 
@@ -171,6 +174,8 @@ QtObject {
         if (userLanguage === "") {
             userLanguage = "Finnish";
         }
+
+        installedVersion = Storage.readSetting("installedVersion");
     }
 
     function loadJSONSettings() {

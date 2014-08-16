@@ -22,6 +22,17 @@ var db = LS.LocalStorage.openDatabaseSync(identifier, version, description, 1000
 });
 
 /**
+    Reset
+*/
+function reset() {
+    db.transaction(function(tx) {
+        //tx.executeSql("DROP TABLE settings;");
+        var res = tx.executeSql("DELETE FROM settings WHERE key=?;", "installedVersion");
+        tx.executeSql("COMMIT;");
+    });
+}
+
+/**
   Read all settings.
 */
 /*

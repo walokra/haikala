@@ -29,13 +29,24 @@ Page {
         }
     }
 
+    Connections {
+        target: settings;
+
+        onSettingsLoaded: {
+            if (settings.installedVersion === "" || settings.installedVersion !== APP_VERSION) {
+                settings.installedVersion = APP_VERSION;
+                settings.saveSetting("version", settings.installedVersion);
+                pageStack.push(Qt.resolvedUrl("ChangelogDialog.qml"));
+            }
+        }
+    }
+
     SilicaFlickable {
         id: flickable
         z: -2;
 
         anchors.fill: parent
 
-        //PageHeader { id: header; title: selectedSectionName + ((currPageNro > 1) ? ", " + qsTr("page") + " " + currPageNro : " - " + constants.appName) }
         PageHeader { id: header; title: (searchText != "") ? searchText  + " - " + constants.appName: selectedSectionName + " - " + constants.appName }
 
         PullDownMenu {

@@ -31,6 +31,53 @@
         <source>news portal&apos;s feeds. Haikala is open source software and licensed under the terms of the MIT license.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Changelog</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChangelogDialog</name>
+    <message>
+        <source>Changelog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close changelog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search functionality.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New news sources in different languages which are supported by High.fi.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings are saved automatically when changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cover page shows latest headlines.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show descriptions and use mobile optimized URLs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy original URL or mobile URL to clipboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pagination for getting more headlines.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -39,7 +86,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Updated</source>
+        <source>updated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -116,6 +163,18 @@
     </message>
     <message>
         <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show synopsis or abbreviation of the news story if available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use mobile URL for the story if available otherwise using the normal URL.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select news portal&apos;s source language.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

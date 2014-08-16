@@ -81,6 +81,7 @@ CoverBackground {
         Label {
             id: lastUpdateLbl
             anchors { right: parent.right; bottom: parent.bottom }
+            anchors.horizontalCenter: parent.horizontalCenter;
             font.pixelSize: Theme.fontSizeTiny
             color: Theme.secondaryColor
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -91,7 +92,7 @@ CoverBackground {
 
     function formatLastUpdatedLbl(date) {
         if (date) {
-            return qsTr("Updated") + " " + date.getHours() + ":" + date.getMinutes() + ", " + date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
+            return qsTr("updated") + " " + date.getHours() + ":" + date.getMinutes() + ", " + date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
         } else {
             return ""
         }

@@ -31,6 +31,53 @@
         <source>news portal&apos;s feeds. Haikala is open source software and licensed under the terms of the MIT license.</source>
         <translation>uutisportaalin syötteille. Haikala on avoimen lähdekoodin ohjelmisto ja lisensoitu MIT-lisenssillä.</translation>
     </message>
+    <message>
+        <source>Changelog</source>
+        <translation>Muutokset</translation>
+    </message>
+</context>
+<context>
+    <name>ChangelogDialog</name>
+    <message>
+        <source>Changelog</source>
+        <translation>Muutokset</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation>Versio</translation>
+    </message>
+    <message>
+        <source>Close changelog</source>
+        <translation>Sulje muutostiedote</translation>
+    </message>
+    <message>
+        <source>Search functionality.</source>
+        <translation>Haku-toiminto.</translation>
+    </message>
+    <message>
+        <source>New news sources in different languages which are supported by High.fi.</source>
+        <translation>Uutislähteitä nyt useammilla kielillä, mitä High.fi tarjoaa.</translation>
+    </message>
+    <message>
+        <source>Settings are saved automatically when changed.</source>
+        <translation>Asetukset tallennetaan automaattisesti.</translation>
+    </message>
+    <message>
+        <source>Cover page shows latest headlines.</source>
+        <translation>Kansisivu näyttää viimeisimmät otsikot.</translation>
+    </message>
+    <message>
+        <source>Show descriptions and use mobile optimized URLs.</source>
+        <translation>Mahdollisuus näyttää lyhyt kuvaus otsikon alla ja käyttää mobiili-osoitteita.</translation>
+    </message>
+    <message>
+        <source>Copy original URL or mobile URL to clipboard.</source>
+        <translation>Kopioi osoite leikepöydälle.</translation>
+    </message>
+    <message>
+        <source>Pagination for getting more headlines.</source>
+        <translation>Mahdollisuus hakea lisää uutisotsikoita.</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -39,8 +86,8 @@
         <translation>Päivitetään</translation>
     </message>
     <message>
-        <source>Updated</source>
-        <translation>Päivitetty</translation>
+        <source>updated</source>
+        <translation>päivitetty</translation>
     </message>
 </context>
 <context>
@@ -118,13 +165,21 @@
         <source>Language</source>
         <translation>Kielet</translation>
     </message>
+    <message>
+        <source>Show synopsis or abbreviation of the news story if available.</source>
+        <translation>Näytä tiivistelmä tai ote uutisesta, jos saatavilla.</translation>
+    </message>
+    <message>
+        <source>Use mobile URL for the story if available otherwise using the normal URL.</source>
+        <translation>Käytä mobiiliosoitteita uutisen avaamisessa, jos mahdollista, muuten normaalia osoitetta.</translation>
+    </message>
+    <message>
+        <source>Select news portal&apos;s source language.</source>
+        <translation>Valitse maa, jonka uutissivuista uutiset haetaan.</translation>
+    </message>
 </context>
 <context>
     <name>TabPanel</name>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Tallenna</translation>
-    </message>
     <message>
         <source>Close</source>
         <translation>Sulje</translation>

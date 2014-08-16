@@ -47,12 +47,27 @@ Page {
                 anchors { left: parent.left; right: parent.right; }
                 height: versionText.height;
 
-                Label {
-                    id: versionText;
-                    width: parent.width;
-                    font.pixelSize: constants.fontSizeMedium;
-                    wrapMode: Text.Wrap;
-                    text: APP_VERSION + "-" + APP_RELEASE;
+                ListItem {
+                    Label {
+                        id: versionText;
+                        font.pixelSize: constants.fontSizeMedium;
+                        text: APP_VERSION + "-" + APP_RELEASE;
+                    }
+
+                    Label {
+                        id: changeLog;
+                        anchors { right: parent.right; leftMargin: constants.paddingLarge; rightMargin: constants.paddingLarge; }
+                        font.pixelSize: constants.fontSizeMedium;
+                        text: qsTr("Changelog");
+                        color: Theme.highlightColor;
+
+                        MouseArea {
+                            anchors.fill: parent;
+                            onClicked: {
+                                pageStack.push(Qt.resolvedUrl("ChangelogDialog.qml"));
+                            }
+                        }
+                    }
                 }
             }
 

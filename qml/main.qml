@@ -18,7 +18,7 @@ ApplicationWindow {
 
     FeedModel { id: feedModel; }
 
-    cover: Qt.resolvedUrl("CoverPage.qml")
+    cover: Qt.resolvedUrl("CoverPage.qml");
 
     QtObject {
         id: coverAdaptor
@@ -41,6 +41,8 @@ ApplicationWindow {
             }
         }
     }
+
+    Dialog { id: changelogPage; }
 
     Settings { id: settings; }
 

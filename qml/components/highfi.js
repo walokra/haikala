@@ -5,6 +5,7 @@ var API_KEY;
 var USER_AGENT;
 
 function init(api_key, user_agent) {
+    //console.debug("high.js, init: apiKey=" + api_key + "; userAgent=" + user_agent);
     API_KEY = api_key;
     USER_AGENT = user_agent;
 }

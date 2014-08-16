@@ -32,7 +32,8 @@ OTHER_FILES = \
     qml/SettingsView.qml \
     qml/FeedsView.qml \
     qml/TabPanel.qml \
-    qml/components/highfi.js
+    qml/components/highfi.js \
+    qml/ChangelogDialog.qml
 
 INCLUDEPATH += $$PWD
 
