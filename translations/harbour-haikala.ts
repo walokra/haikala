@@ -55,10 +55,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New news sources in different languages which are supported by High.fi.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings are saved automatically when changed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -76,6 +72,10 @@
     </message>
     <message>
         <source>Pagination for getting more headlines.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>News sources from different regions which are supported by High.fi.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -135,6 +135,10 @@
         <source>No results</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -162,7 +166,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Language</source>
+        <source>Region for categories</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -170,11 +174,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use mobile URL for the story if available otherwise using the normal URL.</source>
+        <source>Use mobile optimized address for the story if available otherwise use normal address.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select news portal&apos;s source language.</source>
+        <source>Select news portal&apos;s region for categories.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -205,13 +209,6 @@
     </message>
     <message>
         <source>Link</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>highfi</name>
-    <message>
-        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

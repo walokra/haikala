@@ -74,7 +74,7 @@ Item {
                         width: parent.width;
                         font.pixelSize: Theme.fontSizeTiny;
                         wrapMode: Text.Wrap;
-                        text: qsTr("Use mobile URL for the story if available otherwise using the normal URL.");
+                        text: qsTr("Use mobile optimized address for the story if available otherwise use normal address.");
                     }
                 }
 
@@ -82,7 +82,7 @@ Item {
                     id: languageBox;
                     currentIndex: 0;
                     width: parent.width;
-                    label: qsTr("Language");
+                    label: qsTr("Region for categories");
 
                     menu: ContextMenu {
 
@@ -122,7 +122,7 @@ Item {
                         width: parent.width;
                         font.pixelSize: Theme.fontSizeTiny;
                         wrapMode: Text.Wrap;
-                        text: qsTr("Select news portal's source language.");
+                        text: qsTr("Select news portal's region for categories.");
                     }
                 }
             }

@@ -49,7 +49,7 @@ Dialog {
                     width: parent.width;
                     wrapMode: Text.Wrap;
                     font.pixelSize: Theme.fontSizeSmall;
-                    text: qsTr("New news sources in different languages which are supported by High.fi.");
+                    text: qsTr("News sources from different regions which are supported by High.fi.");
                 }
 
                 Label {

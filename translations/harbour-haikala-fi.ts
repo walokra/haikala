@@ -55,10 +55,6 @@
         <translation>Haku-toiminto.</translation>
     </message>
     <message>
-        <source>New news sources in different languages which are supported by High.fi.</source>
-        <translation>Uutislähteitä nyt useammilla kielillä, mitä High.fi tarjoaa.</translation>
-    </message>
-    <message>
         <source>Settings are saved automatically when changed.</source>
         <translation>Asetukset tallennetaan automaattisesti.</translation>
     </message>
@@ -77,6 +73,10 @@
     <message>
         <source>Pagination for getting more headlines.</source>
         <translation>Mahdollisuus hakea lisää uutisotsikoita.</translation>
+    </message>
+    <message>
+        <source>News sources from different regions which are supported by High.fi.</source>
+        <translation>Uutislähteitä nyt eri kielialueilta, joita High.fi tarjoaa.</translation>
     </message>
 </context>
 <context>
@@ -135,6 +135,10 @@
         <source>No results</source>
         <translation>Ei hakutuloksia</translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished">Hae</translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -162,20 +166,20 @@
         <translation>Käytä mobiili-sivustoja</translation>
     </message>
     <message>
-        <source>Language</source>
-        <translation>Kielet</translation>
+        <source>Region for categories</source>
+        <translation>Uutissyötteiden alueasetus</translation>
     </message>
     <message>
         <source>Show synopsis or abbreviation of the news story if available.</source>
         <translation>Näytä tiivistelmä tai ote uutisesta, jos saatavilla.</translation>
     </message>
     <message>
-        <source>Use mobile URL for the story if available otherwise using the normal URL.</source>
+        <source>Use mobile optimized address for the story if available otherwise use normal address.</source>
         <translation>Käytä mobiiliosoitteita uutisen avaamisessa, jos mahdollista, muuten normaalia osoitetta.</translation>
     </message>
     <message>
-        <source>Select news portal&apos;s source language.</source>
-        <translation>Valitse maa, jonka uutissivuista uutiset haetaan.</translation>
+        <source>Select news portal&apos;s region for categories.</source>
+        <translation>&gt;Valitse alue, jonka uutissivustoista uutiset haetaan.</translation>
     </message>
 </context>
 <context>
@@ -212,7 +216,7 @@
     <name>highfi</name>
     <message>
         <source>Search</source>
-        <translation>Hae</translation>
+        <translation type="obsolete">Hae</translation>
     </message>
 </context>
 <context>
