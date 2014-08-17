@@ -4,7 +4,6 @@
 Qt.include("../lib/sha1.js");
 
 var identifier = "Haikala";
-var version = "1.0";
 var description = "Haikala database";
 
 var QUERY = {
@@ -14,8 +13,8 @@ var QUERY = {
 /**
   Open app's database, create it if not exists.
 */
-var db = LS.LocalStorage.openDatabaseSync(identifier, version, description, 1000000, function(db) {
-    db.transaction(function(tx) {
+var db = LS.LocalStorage.openDatabaseSync(identifier, "", description, 1000000, function(db) {
+    db.changeVersion(db.version, "1.0", function(tx) {
         // Create settings table (key, value)
         tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
     });
@@ -26,8 +25,9 @@ var db = LS.LocalStorage.openDatabaseSync(identifier, version, description, 1000
 */
 function reset() {
     db.transaction(function(tx) {
-        //tx.executeSql("DROP TABLE settings;");
-        var res = tx.executeSql("DELETE FROM settings WHERE key=?;", "installedVersion");
+        tx.executeSql("DROP TABLE IF EXISTS settings;");
+        tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
+        //var res = tx.executeSql("DELETE FROM settings WHERE key=?;", "installedVersion");
         tx.executeSql("COMMIT;");
     });
 }

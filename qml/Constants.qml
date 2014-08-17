@@ -5,9 +5,10 @@ QtObject {
     id: constant;
 
     property string appName : "Haikala";
+    property string apiKey : ""
 
     // TODO: add SailfishOS version to userAgent
-    property string userAgent : appName + " " + APP_VERSION + "-" + APP_RELEASE + " (Sailfish OS)";
+    property string userAgent : appName + ", " + APP_VERSION + "-" + APP_RELEASE + " (Sailfish OS)";
 
     // easier access to colors
     property color colorHighlight : Theme.highlightColor;
