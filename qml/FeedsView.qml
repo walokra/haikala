@@ -21,7 +21,7 @@ Item {
 
         PageHeader {
             id: header;
-            title: qsTr("Feeds");
+            title: qsTr("Select categories");
         }
 
         contentHeight: contentArea.height + 150;
@@ -29,12 +29,10 @@ Item {
         Column {
             id: contentArea;
             anchors { top: header.bottom; left: parent.left; right: parent.right }
-            width: parent.width
+            width: parent.width;
 
-            anchors.leftMargin: constants.paddingMedium
-            anchors.rightMargin: constants.paddingMedium
-
-            SectionHeader { text: qsTr("Filter shown feeds") }
+            anchors.leftMargin: constants.paddingMedium;
+            anchors.rightMargin: constants.paddingMedium;
 
             Column {
                 id: newsFeeds;
@@ -49,9 +47,10 @@ Item {
 
                     delegate: TextSwitch {
                         text: modelData.title
-                        checked: modelData.selected
+                        checked: (modelData.sectionID === settings.genericNewsURLPart || modelData.sectionID === "top") ? true : modelData.selected
+                        enabled: (modelData.sectionID === settings.genericNewsURLPart || modelData.sectionID === "top") ? false : true;
                         onCheckedChanged: {
-                            //console.debug("onCheckedChanged, id=" + modelData.id)
+                            //console.debug("onCheckedChanged, id=" + modelData.sectionID + "; genericNewsURLPart=" + settings.genericNewsURLPart)
                             checked ? internal.addFeed(modelData.sectionID) : internal.removeFeed(modelData.sectionID);
                         }
                     }
@@ -94,7 +93,6 @@ Item {
                 if (entry.sectionID === id) {
                     entry.selected = false;
 
-                    settings.categories.remove(i);
                     settings.saveSetting(entry.sectionID, entry.selected);
                 }
                 i++;

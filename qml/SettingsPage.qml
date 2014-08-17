@@ -10,13 +10,13 @@ Page {
     property Item settingsView: settingsView;
 
     SlideshowView {
-        id: settingsSlideView
-        objectName: "settingsSlideView"
+        id: settingsSlideView;
+        objectName: "settingsSlideView";
 
         itemWidth: width;
         itemHeight: height;
         height: window.height - settingsPageHeader.visibleHeight;
-        clip:true
+        clip: true;
 
         anchors { top: parent.top; left: parent.left; right: parent.right }
         model: VisualItemModel {
@@ -28,6 +28,6 @@ Page {
     TabPanel {
         id: settingsPageHeader;
         listView: settingsSlideView;
-        lblArray: [qsTr("Feeds"), qsTr("Settings")]
+        lblArray: [qsTr("Categories"), qsTr("Settings")]
     }
 }

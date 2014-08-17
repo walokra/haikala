@@ -93,12 +93,8 @@
 <context>
     <name>FeedsView</name>
     <message>
-        <source>Feeds</source>
-        <translation>Syötteet</translation>
-    </message>
-    <message>
-        <source>Filter shown feeds</source>
-        <translation>Rajaa näkyvät syötteet</translation>
+        <source>Select categories</source>
+        <translation>Valitse kategoriat</translation>
     </message>
 </context>
 <context>
@@ -137,7 +133,15 @@
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Hae</translation>
+        <translation>Haku</translation>
+    </message>
+    <message>
+        <source>No search results found</source>
+        <translation>Haku ei tuottanut yhtään osumaa</translation>
+    </message>
+    <message>
+        <source>Nothing found for the given search term. Try again with different search?</source>
+        <translation>Haetulla termillä ei löytynyt yhtään hakutulosta. Yritä uudelleen eri hakuehdolla?</translation>
     </message>
 </context>
 <context>
@@ -147,8 +151,8 @@
         <translation>Asetukset</translation>
     </message>
     <message>
-        <source>Feeds</source>
-        <translation>Lähteet</translation>
+        <source>Categories</source>
+        <translation>Kategoriat</translation>
     </message>
 </context>
 <context>

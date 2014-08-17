@@ -35,30 +35,17 @@ function load(source, domainToUse, onSuccess, onFailure) {
 function search(searchText, domainToUse, onSuccess, onFailure) {
     // http://high.fi/search.cfm?q=formula&x=0&y=0&outputtype=json-private
     var url = "http://" + domainToUse + "/search.cfm?q=" + searchText + "&x=0&y=0&outputtype=" + HIGH_FI_API + "&APIKEY=" + API_KEY;
-    console.debug("highfi.js, search, url=" + url);
+    //console.debug("highfi.js, search, url=" + url);
 
     var req = new XMLHttpRequest;
     req.open("GET", url);
     req.onreadystatechange = function() {
         if (req.readyState === XMLHttpRequest.DONE) {
-            var jsonObject;
             if (req.status === 200) {
                 //console.debug(req.status +"; " + req.responseText);
-                jsonObject = JSON.parse(req.responseText);
-
-                var entries = [];
-                for (var i in jsonObject.responseData.feed.entries) {
-                    entries.push(feedModel.createItem(jsonObject.responseData.feed.entries[i]));
-                }
-
-                var feed = { };
-                feed["title"] = qsTr("Search");
-                feed["sectionID"] = -1;
-                feed["entries"] = entries;
-
-                onSuccess(entries);
+                var jsonObject = JSON.parse(req.responseText);
+                onSuccess(jsonObject);
             } else {
-                jsonObject = JSON.parse(xhr.responseText);
                 onFailure(xhr.status, xhr.statusText);
             }
         }

@@ -93,11 +93,7 @@
 <context>
     <name>FeedsView</name>
     <message>
-        <source>Filter shown feeds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Feeds</source>
+        <source>Select categories</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -139,15 +135,23 @@
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No search results found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing found for the given search term. Try again with different search?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
     <message>
-        <source>Feeds</source>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Settings</source>
+        <source>Categories</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

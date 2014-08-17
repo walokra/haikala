@@ -33,8 +33,8 @@ QtObject {
 
         loadSettings();
         loadJSONSettings();
-        //console.log("settings.supportedLanguages=" + JSON.stringify(supportedLanguages));
-        //console.log("settings.categories=" + JSON.stringify(categories));
+        //console.debug("settings.supportedLanguages=" + JSON.stringify(supportedLanguages));
+        //console.debug("settings.categories=" + JSON.stringify(categories));
 
         if (supportedLanguages === "" || supportedLanguages.length == 0) {
             listLanguages();
@@ -46,10 +46,9 @@ QtObject {
             listCategories();
         } else {
             categories = JSON.parse(categories);
+            loadFeedSettings();
         }
         //console.debug("settings.init(), cats=" + JSON.stringify(categories));
-
-        loadFeedSettings();
 
         settingsLoaded();
     }
@@ -72,7 +71,13 @@ QtObject {
         HighFi.listCategories(domainToUse, mostPopularName, genericNewsURLPart,latestName, useToRetrieveLists,
             function(cats) {
                 categories = cats;
-                saveSetting("categories", JSON.stringify(cats));
+                //console.debug("categories=" + JSON.stringify(categories))
+                saveSetting("categories", JSON.stringify(categories));
+
+                // top and latest news are always selected
+                settings.saveSetting("top", true);
+                settings.saveSetting(genericNewsURLPart, true);
+
                 loadFeedSettings();
             },
             function(status, responseText) {
@@ -83,22 +88,9 @@ QtObject {
 
     function loadFeedSettings() {
         sources = [];
-        var cat = {
-            "title": categories[0].title,
-            "sectionID": categories[0].sectionID,
-            "htmlFilename": categories[0].htmlFilename
-        };
-        sources.push(cat);
-        cat = {
-            "title": categories[1].title,
-            "sectionID": categories[1].sectionID,
-            "htmlFilename": categories[1].htmlFilename
-        };
-        sources.push(cat);
 
         // Check which feeds are selected and add them to source
         categories.forEach(function(entry) {
-            //sourcesModel.addSource(entry.id, entry.name, entry.url)
             entry.selected = Storage.readSetting(entry.sectionID);
             if (entry.selected) {
                 //console.debug("settings, entry=" + entry.title + "(" + entry.sectionID + "); selected=" + entry.selected);

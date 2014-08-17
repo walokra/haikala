@@ -35,7 +35,7 @@ Page {
         onSettingsLoaded: {
             if (settings.installedVersion === "" || settings.installedVersion !== APP_VERSION) {
                 settings.installedVersion = APP_VERSION;
-                settings.saveSetting("version", settings.installedVersion);
+                settings.saveSetting("installedVersion", settings.installedVersion);
                 pageStack.push(Qt.resolvedUrl("ChangelogDialog.qml"));
             }
         }
@@ -85,19 +85,44 @@ Page {
                     searchTextField.focus = false;
 
                     newsModel.clear();
-                    HighFi.search(text, settings.domainToUse, function(entries) {
-                        //console.debug("entries.count=" + entries.length);
-                        if (entries.length === 70) {
-                            hasMore = true;
-                        } else {
-                            hasMore = false;
-                        }
+                    HighFi.search(text, settings.domainToUse,
+                        function(jsonObject) {
+                            var entries = [];
+                            for (var i in jsonObject.responseData.feed.entries) {
+                                entries.push(feedModel.createItem(jsonObject.responseData.feed.entries[i]));
+                            }
 
-                        newsModel.append(entries);
-                        searchResultsCount = newsModel.count;
-                    }, function(status, statusText){
-                        infoBanner.handleError(status, statusText);
-                    });
+                            if (entries.length === 0) {
+                                var item = { };
+
+                                item["title"] = qsTr("No search results found");
+                                item["author"] = "";
+                                item["shortDescription"] = qsTr("Nothing found for the given search term. Try again with different search?");
+                                item["timeSince"] = Utils.timeDiff(new Date().getTime());
+                                item["read"] = false;
+                                item["link"] = "";
+
+                                entries.push(item);
+                            }
+
+                            var feed = { };
+                            feed["title"] = qsTr("Search");
+                            feed["sectionID"] = "search";
+                            feed["entries"] = entries;
+
+                            //console.debug("entries.count=" + entries.length);
+                            if (entries.length === 70) {
+                                hasMore = true;
+                            } else {
+                                hasMore = false;
+                            }
+
+                            newsModel.append(entries);
+                            searchResultsCount = newsModel.count;
+                        }, function(status, statusText){
+                            infoBanner.handleError(status, statusText);
+                        }
+                    );
                 }
             }
 
