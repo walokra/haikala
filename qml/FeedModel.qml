@@ -71,7 +71,7 @@ Item {
     function _loadFeed(queue) {
         //console.debug("_loadMore(" + JSON.stringify(queue) + ")");
         var source = queue.pop();
-        console.log("Now loading: " + source.title);
+        //console.log("Now loading: " + source.title);
         currentlyLoading = source.title;
         HighFi.load(source, settings.domainToUse,
              function(jsonObject) {

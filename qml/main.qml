@@ -134,7 +134,7 @@ ApplicationWindow {
         function handleError(status, error) {
             console.log("status=" + status + "; error=" + error);
 
-            var feedName = currentlyLoading + "";
+            var feedName = feedModel.currentlyLoading;
             if (error !== "") {
                 if (error.substring(0, 5) === "Host ") {
                     // Host ... not found
