@@ -22,16 +22,6 @@ Item {
     // name of the feed currently loading
     property string currentlyLoading;
 
-    /*
-    Connections {
-        target: settings;
-
-        onSettingsLoaded: {
-            feedModel.refresh("", true);
-        }
-    }
-    */
-
     Connections {
         target: settings;
 
@@ -70,39 +60,45 @@ Item {
      */
     function _loadFeed(queue) {
         //console.debug("_loadMore(" + JSON.stringify(queue) + ")");
-        var source = queue.pop();
-        //console.log("Now loading: " + source.title);
-        currentlyLoading = source.title;
-        HighFi.load(source, settings.domainToUse,
-             function(jsonObject) {
-                 var entries = [];
-                 for (var i in jsonObject.responseData.feed.entries) {
-                     if (loading) {
-                        entries.push(_loadItem(jsonObject.responseData.feed.entries, i));
-                     } else {
-                         break;
+        if (queue.length > 0) {
+            var source = queue.pop();
+            //console.log("Now loading: " + source.title);
+            currentlyLoading = source.title;
+            HighFi.load(source, settings.domainToUse,
+                 function(jsonObject) {
+                     var entries = [];
+                     for (var i in jsonObject.responseData.feed.entries) {
+                         if (loading) {
+                            entries.push(_loadItem(jsonObject.responseData.feed.entries, i));
+                         } else {
+                             break;
+                         }
                      }
-                 }
 
-                 //console.debug("entries.count=" + entries.length);
-                 if (entries.length === 70) {
-                     hasMore = true;
-                 } else {
-                     hasMore = false;
-                 }
+                     //console.debug("entries.count=" + entries.length);
+                     if (entries.length === 70) {
+                         hasMore = true;
+                     } else {
+                         hasMore = false;
+                     }
 
-                 newsModel.append(entries);
+                     newsModel.append(entries);
 
-                 busy = false;
-                 loading = false;
-                 currentlyLoading = "";
-             },
-            function(status, responseText) {
-                infoBanner.handleError(status, responseText);
-                busy = false;
-                loading = false;
-            }
-         );
+                     busy = false;
+                     loading = false;
+                     currentlyLoading = "";
+                 },
+                function(status, responseText) {
+                    infoBanner.handleError(status, responseText);
+                    busy = false;
+                    loading = false;
+                }
+             );
+        } else {
+            busy = false;
+            loading = false;
+            currentlyLoading = "";
+        }
     }
 
     /*
@@ -157,18 +153,17 @@ Item {
      * Get next page of headlines.
      */
     function getPage(page) {
-        //console.debug("getPage("+page+")");
         busy = true;
         loading = true;
         var tmp = [];
         sources.forEach(function(entry) {
-            if (entry.sectionID === selectedSection) {
-                var data = {
-                    "sectionID": entry.sectionID,
+            if (entry.sectionID.toString() === selectedSection.toString()) {
+                var item = {
                     "title": entry.title,
-                    "url": entry.htmlFilename + "/"+page,
+                    "sectionID": entry.sectionID,
+                    "htmlFilename": entry.htmlFilename + "/"+page
                 };
-                tmp.push(data);
+                tmp.push(item);
                 //console.debug("tmp=" + JSON.stringify(tmp));
             }
         });

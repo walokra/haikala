@@ -85,7 +85,7 @@ ApplicationWindow {
     Rectangle {
         id: infoBanner;
         y: Theme.paddingSmall;
-        z: -1;
+        z: 9;
         width: parent.width;
 
         height: infoLabel.height + 2 * Theme.paddingMedium;
