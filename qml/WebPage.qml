@@ -5,8 +5,6 @@ Page {
     id: root
 
     property string url
-    //property string originalURL
-    //property string originalMobileURL
 
     // work around Silica bug: don't let webview enable forward navigation
     onForwardNavigationChanged: {

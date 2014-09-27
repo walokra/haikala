@@ -68,6 +68,15 @@ Page {
                 }
             }
 
+            MenuItem {
+                id: favoritesMenu
+                text: qsTr("Favorites")
+                onClicked: {
+                    favoritesPage.load();
+                    pageStack.push(favoritesPage);
+                }
+            }
+
             SearchField {
                 id: searchTextField;
 
@@ -180,69 +189,11 @@ Page {
             section.criteria: ViewSection.FullString
             section.delegate: sectionHeading
 
-            delegate: Item {
-                id: feedItem
-                opacity: feedModel.busy ? 0.2 : 1
-                enabled: !feedModel.busy
-                clip: true
+            delegate: Loader {
+                asynchronous: false;
 
-                width: listView.width;
-                height: childrenRect.height + constants.paddingLarge;
-                anchors.bottomMargin: constants.paddingLarge;
-
-                Label {
-                    id: titleLbl
-                    width: parent.width
-                    font.pixelSize: constants.fontSizeSmall
-                    color: (read) ? constants.colorSecondary : constants.colorPrimary;
-                    textFormat: Text.PlainText
-                    wrapMode: Text.Wrap;
-                    text: title
-
-                    MouseArea {
-                        enabled: link !== ""
-                        anchors.fill: parent
-                        onClicked: {
-                            internal.markAsRead(link);
-
-                            var url = (settings.useMobileURL && originalMobileURL != "") ? originalMobileURL : originalURL;
-                            var highFiUrl = (settings.useMobileURL && mobileLink != "") ? mobileLink : link;
-                            var props = {
-                                "url": url
-                                //,"originalURL": originalURL,
-                                //"originalMobileURL": originalMobileURL
-                            }
-                            pageStack.push(Qt.resolvedUrl("WebPage.qml"), props);
-
-                            HighFi.makeHighFiCall(highFiUrl);
-                        }
-                    }
-                }
-
-                Column {
-                    spacing: constants.paddingSmall;
-                    anchors { top: titleLbl.bottom; left: parent.left; right: parent.right; }
-                    anchors.leftMargin: constants.paddingSmall;
-
-                    Label {
-                        id: descLbl;
-                        visible: settings.showDescription == true && shortDescription != "";
-                        width: parent.width
-                        font.pixelSize: constants.fontSizeXXSmall
-                        color: constants.colorHighlight;
-                        textFormat: Text.PlainText
-                        wrapMode: Text.Wrap;
-                        text: shortDescription;
-                    }
-
-                    Label {
-                        id: authorLbl
-                        width: parent.width
-                        font.pixelSize: constants.fontSizeXXSmall
-                        color: constants.colorHilightSecondary
-                        textFormat: Text.PlainText
-                        text: author
-                    }
+                sourceComponent: FeedItemDelegate {
+                    id: feedItemDelegate;
                 }
             }
 

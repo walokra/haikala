@@ -42,6 +42,8 @@ ApplicationWindow {
         }
     }
 
+    FavoritesPage { id: favoritesPage; }
+
     Dialog { id: changelogPage; }
 
     Settings { id: settings; }

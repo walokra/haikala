@@ -7,7 +7,8 @@ var identifier = "Haikala";
 var description = "Haikala database";
 
 var QUERY = {
-    CREATE_SETTINGS_TABLE: 'CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);'
+    CREATE_SETTINGS_TABLE: 'CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);',
+    CREATE_FAVORITES_TABLE: 'CREATE TABLE IF NOT EXISTS favorites(key TEXT PRIMARY KEY, value TEXT);'
 }
 
 /**
@@ -15,10 +16,19 @@ var QUERY = {
 */
 var db = LS.LocalStorage.openDatabaseSync(identifier, "", description, 1000000, function(db) {
     db.changeVersion(db.version, "1.0", function(tx) {
-        // Create settings table (key, value)
         tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
+
+        tx.executeSql(QUERY.CREATE_FAVORITES_TABLE);
     });
 });
+
+function init() {
+    db.transaction(function(tx) {
+        //tx.executeSql("DROP TABLE IF EXISTS favorites;");
+        tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
+        tx.executeSql(QUERY.CREATE_FAVORITES_TABLE);
+    });
+}
 
 /**
     Reset
@@ -26,7 +36,9 @@ var db = LS.LocalStorage.openDatabaseSync(identifier, "", description, 1000000, 
 function reset() {
     db.transaction(function(tx) {
         tx.executeSql("DROP TABLE IF EXISTS settings;");
+        tx.executeSql("DROP TABLE IF EXISTS favorites;");
         tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
+        tx.executeSql(QUERY.CREATE_FAVORITES_TABLE);
         //var res = tx.executeSql("DELETE FROM settings WHERE key=?;", "installedVersion");
         tx.executeSql("COMMIT;");
     });
@@ -107,4 +119,44 @@ function makeHash(string) {
     var hash = CryptoJS.SHA1(string);
     //console.debug("hash=" + hash);
     return hash.toString(CryptoJS.enc.Hex);
+}
+
+/**
+  Write favorite info to database.
+*/
+function writeFavorite(key, value) {
+    //console.debug("storage.js: writeFavorite=" + JSON.stringify(value));
+    db.transaction(function(tx) {
+        tx.executeSql("INSERT OR REPLACE INTO favorites VALUES (?, ?);", [key, JSON.stringify(value)]);
+        tx.executeSql("COMMIT;");
+    });
+}
+
+/**
+  Delete favorite item.
+*/
+function deleteFavorite(key) {
+    //console.debug("storage.js: deleteFavorite=" + key);
+    db.transaction(function(tx) {
+        tx.executeSql("DELETE FROM favorites WHERE key=?;", [key]);
+        tx.executeSql("COMMIT;");
+    });
+}
+
+/**
+ Read favorite items from database.
+*/
+function readFavorites() {
+    var res = [];
+    db.readTransaction(function(tx) {
+        var rows = tx.executeSql("SELECT * FROM favorites");
+        //console.log("rows=" + JSON.stringify(rows));
+
+        for (var i=0; i<rows.rows.length; i++) {
+            res[i] = rows.rows.item(i).value;
+            //console.log("key=" + rs.rows.item(i).key + "; value=" + rs.rows.item(i).value);
+        }
+    });
+
+    return res;
 }

@@ -28,6 +28,7 @@ QtObject {
     function init() {
         //console.debug("settings.init()");
         //Storage.reset();
+        Storage.init();
 
         HighFi.init(constants.apiKey, constants.userAgent);
 
@@ -216,4 +217,7 @@ QtObject {
         return CryptoJS.SHA1(string);
     }
 
+    function writeFavorite(key, value) {
+        Storage.writeFavorite(key, value);
+    }
 }

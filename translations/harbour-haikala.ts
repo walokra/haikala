@@ -91,6 +91,36 @@
     </message>
 </context>
 <context>
+    <name>FavoritesPage</name>
+    <message>
+        <source>Favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FeedItemContextMenu</name>
+    <message>
+        <source>Copy link to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open link in browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launching browser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link added to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FeedsView</name>
     <message>
         <source>Select categories</source>
@@ -141,6 +171,10 @@
     </message>
     <message>
         <source>Nothing found for the given search term. Try again with different search?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Favorites</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
