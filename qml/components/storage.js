@@ -149,8 +149,7 @@ function deleteFavorite(key) {
 function readFavorites() {
     var res = [];
     db.readTransaction(function(tx) {
-        var rows = tx.executeSql("SELECT * FROM favorites");
-        //console.log("rows=" + JSON.stringify(rows));
+        var rows = tx.executeSql("SELECT key, value FROM favorites");
 
         for (var i=0; i<rows.rows.length; i++) {
             res[i] = rows.rows.item(i).value;

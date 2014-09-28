@@ -194,6 +194,7 @@ Page {
 
                 sourceComponent: FeedItemDelegate {
                     id: feedItemDelegate;
+                    favPage: false;
                 }
             }
 
@@ -279,6 +280,23 @@ Page {
             };
             //
         }
+
+        /*
+        function checkFavorited() {
+            var favorites = settings.readFavorites();
+
+            for (var i=0; i < newsModel.count; i++) {
+                var entry = newsModel.get(i);
+                for (var j=0; j < favorites.length; j++) {
+                    var articleID = favorites[j];
+                    if (entry.articleID === articleID) {
+                        entry.favorited = true;
+                        break;
+                    }
+                }
+            };
+        }
+        */
     }
 
     BusyIndicator {

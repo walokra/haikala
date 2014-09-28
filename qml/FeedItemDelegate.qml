@@ -1,5 +1,6 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
+import "components/highfi.js" as HighFi
 
 Item {
     id: feedItemDelegate;
@@ -8,6 +9,7 @@ Item {
     property bool menuOpen: contextMenu != null && contextMenu.parent === feedItemDelegate;
     property string contextLink;
     property var currData: [];
+    property bool favPage;
 
     opacity: feedModel.busy ? 0.2 : 1
     enabled: !feedModel.busy
@@ -62,7 +64,8 @@ Item {
                         "mobileLink": mobileLink,
                         "originalMobileURL": originalMobileURL,
                         "highlight": highlight,
-                        "read": false
+                        "read": false,
+                        "favorited": true
                     }
                     currData = item;
                     contextMenu = itemContextMenu.createObject(itemContainer);
@@ -71,33 +74,74 @@ Item {
             }
         }
 
-        Column {
-            spacing: constants.paddingSmall;
-            anchors { left: parent.left; right: parent.right; }
-            anchors.leftMargin: constants.paddingSmall;
+        //ListItem {
+            //anchors { left: parent.left; right: parent.right; }
 
-            Label {
-                id: descLbl;
-                visible: settings.showDescription == true && shortDescription != "";
-                width: parent.width
-                font.pixelSize: constants.fontSizeXXSmall
-                color: constants.colorHighlight;
-                textFormat: Text.PlainText
-                wrapMode: Text.Wrap;
-                text: shortDescription;
+            Column {
+                spacing: constants.paddingSmall;
+                anchors { left: parent.left; right: parent.right; }
+                anchors.leftMargin: constants.paddingSmall;
+
+                Label {
+                    id: descLbl;
+                    visible: settings.showDescription == true && shortDescription != "";
+                    width: parent.width
+                    font.pixelSize: constants.fontSizeXXSmall
+                    color: constants.colorHighlight;
+                    textFormat: Text.PlainText
+                    wrapMode: Text.Wrap;
+                    text: shortDescription;
+                }
+
+                Label {
+                    id: authorLbl
+                    width: parent.width
+                    font.pixelSize: constants.fontSizeXXSmall
+                    color: constants.colorHilightSecondary
+                    textFormat: Text.PlainText
+                    text: author
+                }
             }
 
-            Label {
-                id: authorLbl
-                width: parent.width
-                font.pixelSize: constants.fontSizeXXSmall
-                color: constants.colorHilightSecondary
-                textFormat: Text.PlainText
-                text: author
+            /*
+            Rectangle {
+                id: favIcon;
+                height: 32;
+                width: height;
+                radius: 64;
+                color: favorited ? Theme.highlightBackgroundColor : constants.colorSecondary;
+
+                IconButton {
+                    anchors.centerIn: parent;
+                    height: 32;
+                    width: height;
+                    icon.source: "image://theme/icon-s-favorite";
+
+                    onClicked: {
+                        var item = {
+                            "articleID": articleID,
+                            "sectionID": sectionID,
+                            "title": title,
+                            "link": link,
+                            "author": author,
+                            "shortDescription": shortDescription,
+                            "publishedDate": publishedDate,
+                            "publishedDateJS": publishedDateJS,
+                            "originalURL": originalURL,
+                            "mobileLink": mobileLink,
+                            "originalMobileURL": originalMobileURL,
+                            "highlight": highlight,
+                            "read": false,
+                            "favorited": true
+                        }
+                        settings.writeFavorite(item.articleID, item);
+                        favIcon.color = Theme.highlightBackgroundColor;
+                    }
+                }
             }
         }
+        */
     } // itemContainer
-
 
     Component {
         id: itemContextMenu;
@@ -105,6 +149,7 @@ Item {
         FeedItemContextMenu {
             url: contextLink;
             itemData: currData;
+            isFavPage: favPage;
         }
     }
 }

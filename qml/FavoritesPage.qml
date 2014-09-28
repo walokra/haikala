@@ -44,6 +44,7 @@ Page {
 
                 sourceComponent: FeedItemDelegate {
                     id: feedItemDelegate;
+                    favPage: true;
                 }
             }
 

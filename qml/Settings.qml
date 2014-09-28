@@ -220,4 +220,13 @@ QtObject {
     function writeFavorite(key, value) {
         Storage.writeFavorite(key, value);
     }
+
+    function deleteFavorite(key) {
+        Storage.deleteFavorite(key);
+    }
+
+    function readFavorites() {
+        return Storage.readFavorites();
+    }
+
 }

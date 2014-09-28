@@ -119,6 +119,14 @@
         <source>Link added to favorites</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remove from favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Favorite removed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FeedsView</name>

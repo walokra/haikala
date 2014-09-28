@@ -5,6 +5,7 @@ ContextMenu {
     id: contextMenu;
     property var url;
     property var itemData: [];
+    property bool isFavPage;
 
     MenuItem {
         anchors { left: parent.left; right: parent.right; }
@@ -34,10 +35,23 @@ ContextMenu {
         anchors { left: parent.left; right: parent.right; }
         font.pixelSize: constants.fontSizeXSmall;
         text: qsTr("Add to favorites");
+        visible: !isFavPage;
         onClicked: {
             //console.debug("data=" + JSON.stringify(itemData));
-            settings.writeFavorite(data.articleID, itemData);
+            settings.writeFavorite(articleID, itemData);
             infoBanner.showText(qsTr("Link added to favorites"));
+        }
+    }
+
+    MenuItem {
+        anchors { left: parent.left; right: parent.right; }
+        font.pixelSize: constants.fontSizeXSmall;
+        text: qsTr("Remove from favorites");
+        visible: isFavPage;
+        onClicked: {
+            hide();
+            favoritesModel.removeItem(articleID);
+            infoBanner.showText(qsTr("Favorite removed"));
         }
     }
 
