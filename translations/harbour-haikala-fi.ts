@@ -55,20 +55,8 @@
         <translation>Haku-toiminto.</translation>
     </message>
     <message>
-        <source>Settings are saved automatically when changed.</source>
-        <translation>Asetukset tallennetaan automaattisesti.</translation>
-    </message>
-    <message>
         <source>Cover page shows latest headlines.</source>
         <translation>Kansisivu näyttää viimeisimmät otsikot.</translation>
-    </message>
-    <message>
-        <source>Show descriptions and use mobile optimized URLs.</source>
-        <translation>Mahdollisuus näyttää lyhyt kuvaus otsikon alla ja käyttää mobiili-osoitteita.</translation>
-    </message>
-    <message>
-        <source>Copy original URL or mobile URL to clipboard.</source>
-        <translation>Kopioi osoite leikepöydälle.</translation>
     </message>
     <message>
         <source>Pagination for getting more headlines.</source>
@@ -77,6 +65,26 @@
     <message>
         <source>News sources from different regions which are supported by High.fi.</source>
         <translation>Uutislähteitä nyt eri kielialueilta, joita High.fi tarjoaa.</translation>
+    </message>
+    <message>
+        <source>Add news item to favorites.</source>
+        <translation>Lisää uutisotsikko suosikkeihin.</translation>
+    </message>
+    <message>
+        <source>Reset application settings and favorites.</source>
+        <translation>Tyhjennä asetukset ja suosikki-lista.</translation>
+    </message>
+    <message>
+        <source>Settings are saved automatically.</source>
+        <translation>Asetukset tallennetaan automaattisesti.</translation>
+    </message>
+    <message>
+        <source>Show descriptions and use mobile links.</source>
+        <translation>Mahdollisuus näyttää lyhyt kuvaus otsikon alla ja käyttää mobiili-osoitteita.</translation>
+    </message>
+    <message>
+        <source>Copy link to clipboard.</source>
+        <translation>Kopioi osoite leikepöydälle.</translation>
     </message>
 </context>
 <context>
@@ -94,38 +102,38 @@
     <name>FavoritesPage</name>
     <message>
         <source>Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Suosikit</translation>
     </message>
 </context>
 <context>
     <name>FeedItemContextMenu</name>
     <message>
         <source>Copy link to clipboard</source>
-        <translation type="unfinished">Kopioi linkki leikepöydälle</translation>
+        <translation>Kopioi linkki leikepöydälle</translation>
     </message>
     <message>
         <source>Open link in browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaa linkki selaimessa</translation>
     </message>
     <message>
         <source>Launching browser.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avataan selainta.</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisää suosikkeihin</translation>
     </message>
     <message>
         <source>Link added to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Linkki lisätty suosikkeihin</translation>
     </message>
     <message>
         <source>Remove from favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista suosikeista</translation>
     </message>
     <message>
         <source>Favorite removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Linkki poistettu suosikeista</translation>
     </message>
 </context>
 <context>
@@ -183,7 +191,7 @@
     </message>
     <message>
         <source>Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Suosikit</translation>
     </message>
 </context>
 <context>
@@ -227,6 +235,18 @@
         <source>Select news portal&apos;s region for categories.</source>
         <translation>&gt;Valitse alue, jonka uutissivustoista uutiset haetaan.</translation>
     </message>
+    <message>
+        <source>Resets all settings and removes all favorited news items.</source>
+        <translation>Poista kaikki asetukset ja suosikkeihin lisätyt linkit.</translation>
+    </message>
+    <message>
+        <source>Reset Haikala</source>
+        <translation>Tyhjennä asetukset</translation>
+    </message>
+    <message>
+        <source>Resetting Haikala.</source>
+        <translation>Tyhjennetään asetuksia.</translation>
+    </message>
 </context>
 <context>
     <name>TabPanel</name>
@@ -256,13 +276,6 @@
     <message>
         <source>Open in browser</source>
         <translation>Avaa selaimessa</translation>
-    </message>
-</context>
-<context>
-    <name>highfi</name>
-    <message>
-        <source>Search</source>
-        <translation type="obsolete">Hae</translation>
     </message>
 </context>
 <context>

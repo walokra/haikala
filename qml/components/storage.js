@@ -15,16 +15,14 @@ var QUERY = {
   Open app's database, create it if not exists.
 */
 var db = LS.LocalStorage.openDatabaseSync(identifier, "", description, 1000000, function(db) {
-    db.changeVersion(db.version, "1.0", function(tx) {
+    db.changeVersion(db.version, "1.1", function(tx) {
         tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
-
         tx.executeSql(QUERY.CREATE_FAVORITES_TABLE);
     });
 });
 
-function init() {
-    db.transaction(function(tx) {
-        //tx.executeSql("DROP TABLE IF EXISTS favorites;");
+if (db.version === "1.0") {
+    db.changeVersion(db.version, "1.1", function(tx) {
         tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
         tx.executeSql(QUERY.CREATE_FAVORITES_TABLE);
     });
@@ -40,7 +38,7 @@ function reset() {
         tx.executeSql(QUERY.CREATE_SETTINGS_TABLE);
         tx.executeSql(QUERY.CREATE_FAVORITES_TABLE);
         //var res = tx.executeSql("DELETE FROM settings WHERE key=?;", "installedVersion");
-        tx.executeSql("COMMIT;");
+        //tx.executeSql("COMMIT;");
     });
 }
 

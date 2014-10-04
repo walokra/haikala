@@ -23,7 +23,7 @@ function load(source, domainToUse, onSuccess, onFailure) {
                 var jsonObject = JSON.parse(req.responseText);
                 onSuccess(jsonObject);
             } else {
-                onFailure(req.status, req.responseText);
+                onFailure(req.status, req.responseText, url);
             }
         }
     }
@@ -46,7 +46,7 @@ function search(searchText, domainToUse, onSuccess, onFailure) {
                 var jsonObject = JSON.parse(req.responseText);
                 onSuccess(jsonObject);
             } else {
-                onFailure(xhr.status, xhr.statusText);
+                onFailure(xhr.status, xhr.statusText, url);
             }
         }
     }
@@ -73,7 +73,7 @@ function makeHighFiCall(url) {
 // http://high.fi/api/?act=listLanguages&APIKEY=123456
 function listLanguages(domainToUse, onSuccess, onFailure) {
     var url = "http://" + domainToUse + "/api/?act=listLanguages&APIKEY=" + API_KEY;
-    //console.debug("listLanguages, url=" + url);
+    //console.debug("high.js, listLanguages, url=" + url);
 
     var req = new XMLHttpRequest;
     req.open("GET", url);
@@ -94,8 +94,7 @@ function listLanguages(domainToUse, onSuccess, onFailure) {
 
                 onSuccess(languages);
             } else {
-                jsonObject = JSON.parse(xhr.responseText);
-                onFailure(xhr.status, xhr.statusText);
+                onFailure(xhr.status, xhr.statusText, url);
             }
         }
     }
@@ -146,8 +145,7 @@ function listCategories(domainToUse, mostPopularName, genericNewsURLPart,latestN
                 onSuccess(categories);
             }
             else {
-               jsonObject = JSON.parse(xhr.responseText);
-               onFailure(xhr.status, xhr.statusText);
+               onFailure(xhr.status, xhr.statusText, url);
            }
         }
     }

@@ -92,7 +92,8 @@ ApplicationWindow {
 
         height: infoLabel.height + 2 * Theme.paddingMedium;
         color: Theme.highlightBackgroundColor;
-        opacity: 0;
+        visible: false;
+        opacity: 0.9;
 
         Label {
             id: infoLabel;
@@ -108,14 +109,14 @@ ApplicationWindow {
             MouseArea {
                 anchors.fill: parent;
                 onClicked: {
-                    infoBanner.opacity = 0.0;
+                    infoBanner.visible = false;
                 }
             }
         }
 
         function showText(text) {
             infoLabel.text = text;
-            opacity = 0.9;
+            visible = true;
             //console.log("infoBanner: " + text);
             closeTimer.restart();
         }
@@ -123,7 +124,7 @@ ApplicationWindow {
         function showError(text) {
             if (text) {
                 infoLabel.text = text;
-                opacity = 0.9;
+                visible = true;
                 //console.log("infoBanner: " + text);
             }
         }
@@ -133,7 +134,8 @@ ApplicationWindow {
             showError(errorMessage);
         }
 
-        function handleError(status, error) {
+        function handleError(status, error, url) {
+            //console.log("status=" + status + "; error=" + error + "; url=" + url);
             console.log("status=" + status + "; error=" + error);
 
             var feedName = feedModel.currentlyLoading;
@@ -158,7 +160,7 @@ ApplicationWindow {
         Timer {
             id: closeTimer;
             interval: 3000;
-            onTriggered: infoBanner.opacity = 0.0;
+            onTriggered: infoBanner.visible = false;
         }
     }
 

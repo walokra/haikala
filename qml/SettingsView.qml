@@ -21,6 +21,7 @@ Item {
             id: contentArea;
             anchors { top: header.bottom; left: parent.left; right: parent.right; }
             width: parent.width;
+            spacing: 2 * Theme.paddingLarge;
 
             anchors.leftMargin: constants.paddingMedium;
             anchors.rightMargin: constants.paddingMedium;
@@ -126,6 +127,35 @@ Item {
                     }
                 }
             }
+
+            Column {
+                spacing: constants.paddingSmall;
+                anchors { left: parent.left; right: parent.right; }
+                anchors.leftMargin: Theme.paddingLarge;
+                anchors.rightMargin: Theme.paddingLarge;
+
+                Button {
+                    id: resetButton;
+                    anchors.horizontalCenter: parent.horizontalCenter;
+                    text: qsTr("Reset Haikala");
+                    onClicked: {
+                        remorse.execute(qsTr("Resetting Haikala."), function() {
+                            settings.reset();
+                            pageStack.pop(PageStackAction.Animated);
+                        });
+                    }
+                }
+
+                Label {
+                    id: helpResetText;
+                    width: parent.width;
+                    font.pixelSize: Theme.fontSizeTiny;
+                    wrapMode: Text.Wrap;
+                    text: qsTr("Resets all settings and removes all favorited news items.");
+                }
+            }
+
+            RemorsePopup { id: remorse; }
         }
 
         VerticalScrollDecorator { flickable: flickable }

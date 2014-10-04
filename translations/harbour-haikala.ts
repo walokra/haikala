@@ -55,19 +55,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Settings are saved automatically when changed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cover page shows latest headlines.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show descriptions and use mobile optimized URLs.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy original URL or mobile URL to clipboard.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -76,6 +64,26 @@
     </message>
     <message>
         <source>News sources from different regions which are supported by High.fi.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add news item to favorites.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset application settings and favorites.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings are saved automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show descriptions and use mobile links.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy link to clipboard.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -225,6 +233,18 @@
     </message>
     <message>
         <source>Select news portal&apos;s region for categories.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resets all settings and removes all favorited news items.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset Haikala</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resetting Haikala.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

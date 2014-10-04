@@ -128,8 +128,8 @@ Page {
 
                             newsModel.append(entries);
                             searchResultsCount = newsModel.count;
-                        }, function(status, statusText){
-                            infoBanner.handleError(status, statusText);
+                        }, function(status, statusText, url){
+                            infoBanner.handleError(status, statusText, url);
                         }
                     );
                 }
@@ -179,7 +179,7 @@ Page {
 
             ViewPlaceholder {
                 id: placeholder;
-                enabled: sources.length > 0 && !feedModel.busy && feedModel.allFeeds.length === 0 && newsModel.count === 0;
+                enabled: sources.length > 0 && !feedModel.busy && newsModel.count === 0;
                 text: searchResultsCount === 0 ? qsTr("No results") : qsTr("Pull down to refresh");
             }
 

@@ -29,6 +29,30 @@ Dialog {
             anchors.margins: Theme.paddingMedium;
             spacing: Theme.paddingMedium;
 
+            SectionHeader { text: qsTr("Version") + " 0.5 (2014-10-05)" }
+
+            Column {
+                anchors { left: parent.left; right: parent.right; }
+                width: parent.width;
+                height: childrenRect.height;
+
+                spacing: constants.paddingSmall;
+
+                Label {
+                    width: parent.width;
+                    wrapMode: Text.Wrap;
+                    font.pixelSize: Theme.fontSizeSmall;
+                    text: qsTr("Add news item to favorites.");
+                }
+
+                Label {
+                    width: parent.width;
+                    wrapMode: Text.Wrap;
+                    font.pixelSize: Theme.fontSizeSmall;
+                    text: qsTr("Reset application settings and favorites.");
+                }
+            }
+
             SectionHeader { text: qsTr("Version") + " 0.4 (2014-08-17)" }
 
             Column {
@@ -56,7 +80,7 @@ Dialog {
                     width: parent.width;
                     wrapMode: Text.Wrap;
                     font.pixelSize: Theme.fontSizeSmall;
-                    text: qsTr("Settings are saved automatically when changed.");
+                    text: qsTr("Settings are saved automatically.");
                 }
             }
 
@@ -80,14 +104,14 @@ Dialog {
                     width: parent.width;
                     font.pixelSize: Theme.fontSizeSmall;
                     wrapMode: Text.Wrap;
-                    text: qsTr("Show descriptions and use mobile optimized URLs.");
+                    text: qsTr("Show descriptions and use mobile links.");
                 }
 
                 Label {
                     width: parent.width;
                     font.pixelSize: Theme.fontSizeSmall;
                     wrapMode: Text.Wrap;
-                    text: qsTr("Copy original URL or mobile URL to clipboard.");
+                    text: qsTr("Copy link to clipboard.");
                 }
 
                 Label {

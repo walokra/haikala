@@ -1,3 +1,7 @@
+* Sun Oct 5 2014 Marko Wallin <mtw@iki.fi> 0.5.0-1
+Add news item to favorites from item's context menu.
+Option to reset application settings and favorited items.
+
 * Sun Aug 17 2014 Marko Wallin <mtw@iki.fi> 0.4.0-1
 Search functionality.
 Get supported languages and categories to get news in different languages.

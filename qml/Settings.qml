@@ -26,9 +26,7 @@ QtObject {
     property string userLanguage: "Finnish";
 
     function init() {
-        //console.debug("settings.init()");
-        //Storage.reset();
-        Storage.init();
+        console.log("Loading application settings.");
 
         HighFi.init(constants.apiKey, constants.userAgent);
 
@@ -61,8 +59,8 @@ QtObject {
                 saveSetting("supportedLanguages", JSON.stringify(supportedLanguages));
                 //console.debug(JSON.stringify(supportedLanguages));
             },
-            function(status, responseText) {
-                infoBanner.handleError(status, responseText);
+            function(status, responseText, url) {
+                infoBanner.handleError(status, responseText, url);
             }
         );
     }
@@ -81,8 +79,8 @@ QtObject {
 
                 loadFeedSettings();
             },
-            function(status, responseText) {
-                infoBanner.handleError(status, responseText);
+            function(status, responseText, url) {
+                infoBanner.handleError(status, responseText, url);
             }
         );
     }
@@ -178,17 +176,6 @@ QtObject {
         categories = Storage.readSetting("categories");
     }
 
-    /*
-    function saveSettings() {
-        saveSetting("showDescription", showDescription);
-        saveSetting("useMobileURL", useMobileURL);
-
-        saveLanguageSettings();
-
-        settingsChanged();
-    }
-    */
-
     function saveLanguageSettings() {
         saveSetting("useToRetrieveLists", useToRetrieveLists);
         saveSetting("mostPopularName", mostPopularName);
@@ -227,6 +214,15 @@ QtObject {
 
     function readFavorites() {
         return Storage.readFavorites();
+    }
+
+    function reset() {
+        console.log("Resetting application settings and favorites");
+        Storage.reset();
+        settings.saveSetting("changelogShown", true);
+        settings.installedVersion = APP_VERSION;
+        settings.saveSetting("installedVersion", settings.installedVersion);
+        init();
     }
 
 }

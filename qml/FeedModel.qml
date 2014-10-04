@@ -89,8 +89,8 @@ Item {
                      loading = false;
                      currentlyLoading = "";
                  },
-                function(status, responseText) {
-                    infoBanner.handleError(status, responseText);
+                function(status, responseText, url) {
+                    infoBanner.handleError(status, responseText, url);
                     busy = false;
                     loading = false;
                 }
