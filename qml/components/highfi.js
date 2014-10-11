@@ -103,20 +103,28 @@ function listLanguages(domainToUse, onSuccess, onFailure) {
     req.send();
 }
 
+/**
+  Returns full list of news categories available for the selected language.
+  The API doesn't return the always-present "Most popular" and "Latest news" lists so we add those manually.
+
+  E.g. url: http://high.fi/api/?act=listCategories&usedLanguage=finnish&APIKEY=1234567
+*/
 function listCategories(domainToUse, mostPopularName, genericNewsURLPart,latestName, useToRetrieveLists, onSuccess, onFailure) {
     var categories = [];
     var cat = {
         "title": mostPopularName,
         "sectionID": "top",
         "htmlFilename": "top",
-        "selected": true
+        "selected": true,
+        "depth": 1
     };
     categories.push(cat);
     cat = {
         "title": latestName,
         "sectionID": genericNewsURLPart,
         "htmlFilename": genericNewsURLPart,
-        "selected": true
+        "selected": true,
+        "depth": 1
     };
     categories.push(cat);
 
@@ -132,15 +140,13 @@ function listCategories(domainToUse, mostPopularName, genericNewsURLPart,latestN
                 //console.debug(req.status +"; " + req.responseText);
                 jsonObject = JSON.parse(req.responseText);
                 jsonObject.responseData.categories.forEach(function(entry) {
-                    if (entry.depth === 1) {
-                        var item = { };
-                        for (var key in entry) {
-                            item[key] = entry[key];
-                        }
-                        item["selected"] = false;
-
-                        categories.push(item);
+                    var item = { };
+                    for (var key in entry) {
+                        item[key] = entry[key];
                     }
+                    item["selected"] = false;
+
+                    categories.push(item);
                 });
                 onSuccess(categories);
             }

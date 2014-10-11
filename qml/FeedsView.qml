@@ -29,14 +29,14 @@ Item {
         Column {
             id: contentArea;
             anchors { top: header.bottom; left: parent.left; right: parent.right }
-            width: parent.width;
+            width: parent.width
 
-            anchors.leftMargin: constants.paddingMedium;
-            anchors.rightMargin: constants.paddingMedium;
+            anchors.leftMargin: constants.paddingMedium
+            anchors.rightMargin: constants.paddingMedium
 
             Column {
                 id: newsFeeds;
-                anchors {left: parent.left; right: parent.right }
+                anchors { left: parent.left; right: parent.right; }
                 width: parent.width
                 height: childrenRect.height
 
@@ -45,17 +45,35 @@ Item {
                     width: parent.width
                     model: settings.categories
 
-                    delegate: TextSwitch {
-                        text: modelData.title
-                        checked: (modelData.sectionID === settings.genericNewsURLPart || modelData.sectionID === "top") ? true : modelData.selected
-                        enabled: (modelData.sectionID === settings.genericNewsURLPart || modelData.sectionID === "top") ? false : true;
-                        onCheckedChanged: {
-                            //console.debug("onCheckedChanged, id=" + modelData.sectionID + "; genericNewsURLPart=" + settings.genericNewsURLPart)
-                            checked ? internal.addFeed(modelData.sectionID) : internal.removeFeed(modelData.sectionID);
+                    delegate: ListItem {
+                        Row {
+                            id: depthRow;
+                            anchors { left: parent.left; top: parent.top; bottom: parent.bottom; }
+
+                            Repeater {
+                                model: modelData.depth
+
+                                Item {
+                                    anchors { top: parent.top; bottom: parent.bottom; }
+                                    width: (modelData > 0) ? 40 : 0;
+                                }
+                            }
                         }
-                    }
-                }
-            }
+
+                        TextSwitch {
+                            id: textSwitchItem
+                            anchors { left: depthRow.right; right: parent.right; leftMargin: constants.paddingSmall; }
+                            text: modelData.title
+                            checked: (modelData.sectionID === settings.genericNewsURLPart || modelData.sectionID === "top") ? true : modelData.selected
+                            enabled: (modelData.sectionID === settings.genericNewsURLPart || modelData.sectionID === "top") ? false : true;
+                            onCheckedChanged: {
+                                //console.debug("onCheckedChanged, id=" + modelData.sectionID + "; genericNewsURLPart=" + settings.genericNewsURLPart)
+                                checked ? internal.addFeed(modelData.sectionID) : internal.removeFeed(modelData.sectionID);
+                            }
+                        }
+                    } // delegateItem
+                } // txtSwitchRepeater
+            } // newsFeeds
         }
 
         VerticalScrollDecorator { flickable: flickable }
