@@ -34,7 +34,7 @@ Item {
                 TextSwitch {
                     text: qsTr("Show description");
                     checked: settings.showDescription;
-                    onCheckedChanged: {
+                    onClicked: {
                         checked ? settings.showDescription = true : settings.showDescription = false;
                         settings.saveSetting("showDescription", settings.showDescription);
                     }
@@ -58,7 +58,7 @@ Item {
                 TextSwitch {
                     text: qsTr("Use mobile optimized URLs");
                     checked: settings.useMobileURL;
-                    onCheckedChanged: {
+                    onClicked: {
                         checked ? settings.useMobileURL = true : settings.useMobileURL = false;
                         settings.saveSetting("useMobileURL", settings.useMobileURL);
                     }

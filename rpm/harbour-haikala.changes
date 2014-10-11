@@ -1,3 +1,7 @@
+* Sun Oct 12 2014 Marko Wallin <mtw@iki.fi> 0.6.0-1
+Filter shown news categories.
+Added sub categories to category selection.
+
 * Sun Oct 5 2014 Marko Wallin <mtw@iki.fi> 0.5.0-1
 Add news item to favorites from item's context menu.
 Option to reset application settings and favorited items.

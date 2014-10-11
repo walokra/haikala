@@ -8,6 +8,7 @@ Page {
 
     property Item feedsView: feedsView;
     property Item settingsView: settingsView;
+    property Item filterView: filterView
 
     SlideshowView {
         id: settingsSlideView;
@@ -21,6 +22,7 @@ Page {
         anchors { top: parent.top; left: parent.left; right: parent.right }
         model: VisualItemModel {
             FeedsView { id: feedsView; }
+            FeedsFilterView { id: filterView; }
             SettingsView { id: settingsView; }
         }
     }
@@ -28,6 +30,6 @@ Page {
     TabPanel {
         id: settingsPageHeader;
         listView: settingsSlideView;
-        lblArray: [qsTr("Categories"), qsTr("Settings")]
+        lblArray: [qsTr("Categories"),qsTr("Filter"), qsTr("Settings")]
     }
 }

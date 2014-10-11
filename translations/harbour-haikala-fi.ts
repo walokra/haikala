@@ -86,6 +86,14 @@
         <source>Copy link to clipboard.</source>
         <translation>Kopioi osoite leikepöydälle.</translation>
     </message>
+    <message>
+        <source>Filter shown news categories.</source>
+        <translation>Rajaa näytettäviä uutiskategorioita.</translation>
+    </message>
+    <message>
+        <source>Added sub categories to category selection.</source>
+        <translation>Lisätty kategorialistaan alikategoriat.</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -134,6 +142,13 @@
     <message>
         <source>Favorite removed</source>
         <translation>Linkki poistettu suosikeista</translation>
+    </message>
+</context>
+<context>
+    <name>FeedsFilterView</name>
+    <message>
+        <source>Hide categories</source>
+        <translation>Piilota kategoria</translation>
     </message>
 </context>
 <context>
@@ -203,6 +218,10 @@
     <message>
         <source>Categories</source>
         <translation>Kategoriat</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation>Rajaa</translation>
     </message>
 </context>
 <context>

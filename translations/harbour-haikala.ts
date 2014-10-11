@@ -86,6 +86,14 @@
         <source>Copy link to clipboard.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Filter shown news categories.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Added sub categories to category selection.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -133,6 +141,13 @@
     </message>
     <message>
         <source>Favorite removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FeedsFilterView</name>
+    <message>
+        <source>Hide categories</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -202,6 +217,10 @@
     </message>
     <message>
         <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

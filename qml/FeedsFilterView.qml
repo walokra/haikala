@@ -10,7 +10,7 @@ Item {
 
         onFeedSettingsLoaded: {
             txtSwitchRepeater.model = settings.categories;
-            //console.debug("onCategoriesLoaded, settings.categories=" + JSON.stringify(settings.categories));
+            console.debug("onFeedHiddenSettingsLoaded, settings.categoriesHidden=" + JSON.stringify(settings.categoriesHidden));
         }
     }
 
@@ -21,7 +21,7 @@ Item {
 
         PageHeader {
             id: header;
-            title: qsTr("Select categories");
+            title: qsTr("Hide categories");
         }
 
         contentHeight: contentArea.height + 150;
@@ -64,11 +64,11 @@ Item {
                             id: textSwitchItem
                             anchors { left: depthRow.right; right: parent.right; leftMargin: constants.paddingSmall; }
                             text: modelData.title
-                            checked: (modelData.sectionID === settings.genericNewsURLPart || modelData.sectionID === "top") ? true : modelData.selected
+                            checked: (modelData.sectionID === settings.genericNewsURLPart || modelData.sectionID === "top") ? false : internal.checkFiltered(modelData.sectionID)
                             enabled: (modelData.sectionID === settings.genericNewsURLPart || modelData.sectionID === "top") ? false : true;
                             onClicked: {
-                                //console.debug("onClicked, id=" + modelData.sectionID + "; genericNewsURLPart=" + settings.genericNewsURLPart)
-                                checked ? internal.addFeed(modelData.sectionID) : internal.removeFeed(modelData.sectionID);
+                                //console.debug("onClicked, id=" + modelData.sectionID)
+                                checked ? internal.addFeedToHidden(modelData.sectionID) : internal.removeFeedFromHidden(modelData.sectionID);
                             }
                         }
                     } // delegateItem
@@ -86,36 +86,34 @@ Item {
     QtObject {
         id: internal;
 
-        function addFeed(id) {
-            //console.debug("FeedsView, addFeed: " + id)
-            settings.categories.forEach(function(entry) {
-                if (entry.sectionID === id) {
-                    entry.selected = true;
-
-                    var cat = {
-                        "title": entry.title,
-                        "sectionID": entry.sectionID,
-                        "htmlFilename": entry.htmlFilename
-                    };
-                    sources.push(cat);
-                    settings.saveSetting(entry.sectionID, entry.selected);
+        function checkFiltered(id) {
+            for(var i=0; i < settings.categoriesHidden.length; i++) {
+                //console.debug("checkFiltered: " + settings.categoriesHidden[i] + "=" + id)
+                if (settings.categoriesHidden[i] === id) {
+                    return true;
                 }
-            });
-            settings.feedSettingsChanged();
+            }
+            return false;
         }
 
-        function removeFeed(id) {
-            //console.debug("removeFeed: " + id)
-            var i=0;
-            settings.categories.forEach(function(entry) {
-                if (entry.sectionID === id) {
-                    entry.selected = false;
+        function addFeedToHidden(id) {
+            //console.debug("addFeedToHidden: " + id)
+            settings.categoriesHidden.push(id);
+            //console.debug("categoriesHidden=" + JSON.stringify(settings.categoriesHidden));
+            settings.saveSetting("categoriesHidden", JSON.stringify(settings.categoriesHidden));
+        }
 
-                    settings.saveSetting(entry.sectionID, entry.selected);
+        function removeFeedFromHidden(id) {
+            //console.debug("removeFeedFromHidden: " + id)
+            var cats = settings.categoriesHidden;
+            for(var i=0; i < cats.length; i++) {
+                if (cats[i] === id) {
+                    cats.splice(i, 1);
+                    settings.categoriesHidden = cats;
+                    //console.debug("categoriesHidden=" + JSON.stringify(settings.categoriesHidden));
+                    settings.saveSetting("categoriesHidden", JSON.stringify(settings.categoriesHidden));
                 }
-                i++;
-            });
-            settings.feedSettingsChanged();
+            }
         }
     }
 

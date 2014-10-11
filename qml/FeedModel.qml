@@ -65,7 +65,7 @@ Item {
             var source = queue.pop();
             //console.log("Now loading: " + source.title);
             currentlyLoading = source.title;
-            HighFi.load(source, settings.domainToUse,
+            HighFi.load(source, settings.domainToUse, settings.categoriesHidden,
                  function(jsonObject) {
                      var entries = [];
                      for (var i in jsonObject.responseData.feed.entries) {

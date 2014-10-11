@@ -10,9 +10,12 @@ function init(api_key, user_agent) {
     USER_AGENT = user_agent;
 }
 
-function load(source, domainToUse, onSuccess, onFailure) {
+function load(source, domainToUse, hideSections, onSuccess, onFailure) {
     var url = "http://" + domainToUse + "/" + source.htmlFilename + "/" + HIGH_FI_API + "?APIKEY=" + API_KEY;
-    //console.debug("highfi.js, load(source="  + JSON.stringify(source) + "), url=" + url);
+    if (hideSections !== "" && hideSections.length > 0) {
+        url +="&jsonHideSections=" + hideSections.join();
+    }
+    //console.debug("highfi.js, load(source="  + JSON.stringify(source) + "), hideSections=" + hideSections + ", url=" + url);
 
     var req = new XMLHttpRequest;
     req.open("GET", url);

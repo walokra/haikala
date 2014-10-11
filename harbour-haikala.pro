@@ -37,7 +37,8 @@ OTHER_FILES = \
     qml/FeedItemContextMenu.qml \
     qml/FeedItemDelegate.qml \
     qml/FavoritesPage.qml \
-    qml/FavoritesModel.qml
+    qml/FavoritesModel.qml \
+    qml/FeedsFilterView.qml
 
 INCLUDEPATH += $$PWD
 

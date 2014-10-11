@@ -18,6 +18,7 @@ QtObject {
     property bool useMobileURL: false;
     property var supportedLanguages: [];
     property var categories : [];
+    property var categoriesHidden: []
     property string useToRetrieveLists: "finnish"; // from useToRetrieveLists variable in JSON
     property string mostPopularName: "Suosituimmat"; // to be used as heading for "top news" list, retrieved from JSON
     property string latestName: "Uusimmat"; // to be used as heading for "all latest news" list
@@ -34,12 +35,20 @@ QtObject {
         loadJSONSettings();
         //console.debug("settings.supportedLanguages=" + JSON.stringify(supportedLanguages));
         //console.debug("settings.categories=" + JSON.stringify(categories));
+        //console.debug("settings.categoriesHidden=" + JSON.stringify(categoriesHidden));
 
         if (supportedLanguages === "" || supportedLanguages.length == 0) {
             listLanguages();
         } else {
             supportedLanguages = JSON.parse(supportedLanguages);
         }
+
+        if (categoriesHidden === "" || categoriesHidden.length == 0) {
+            categoriesHidden = [];
+        } else {
+            categoriesHidden = JSON.parse(categoriesHidden);
+        }
+        //console.debug("settings.init(), categoriesHidden=" + JSON.stringify(categoriesHidden));
 
         if (categories === "" || categories.length == 0) {
             listCategories();
@@ -174,6 +183,7 @@ QtObject {
 
         supportedLanguages = Storage.readSetting("supportedLanguages");
         categories = Storage.readSetting("categories");
+        categoriesHidden = Storage.readSetting("categoriesHidden");
     }
 
     function saveLanguageSettings() {

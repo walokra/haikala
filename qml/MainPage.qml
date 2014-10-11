@@ -47,7 +47,10 @@ Page {
 
         anchors.fill: parent
 
-        PageHeader { id: header; title: (searchText != "") ? searchText  + " - " + constants.appName: selectedSectionName + " - " + constants.appName }
+        PageHeader {
+            id: header;
+            title: (searchText != "") ? searchText  + " - " + constants.appName: selectedSectionName + " - " + constants.appName;
+        }
 
         PullDownMenu {
             id: pullDownMenu
@@ -68,6 +71,7 @@ Page {
                 }
             }
 
+            // TODO: Could show favorites like categories in side menu.
             MenuItem {
                 id: favoritesMenu
                 text: qsTr("Favorites")
