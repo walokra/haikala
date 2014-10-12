@@ -50,7 +50,9 @@ QtObject {
         }
         //console.debug("settings.init(), categoriesHidden=" + JSON.stringify(categoriesHidden));
 
-        if (categories === "" || categories.length == 0) {
+        // Resetting categories to refresh or on 1st install
+        if ((installedVersion === "" || installedVersion !== APP_VERSION)
+                || (categories === "" || categories.length == 0)) {
             listCategories();
         } else {
             categories = JSON.parse(categories);

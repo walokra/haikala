@@ -21,7 +21,7 @@ Item {
 
         PageHeader {
             id: header;
-            title: qsTr("Select categories");
+            title: qsTr("Select favorite categories");
         }
 
         contentHeight: contentArea.height + 150;

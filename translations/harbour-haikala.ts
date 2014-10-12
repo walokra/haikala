@@ -154,7 +154,7 @@
 <context>
     <name>FeedsView</name>
     <message>
-        <source>Select categories</source>
+        <source>Select favorite categories</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

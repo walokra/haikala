@@ -10,7 +10,7 @@ Item {
 
         onFeedSettingsLoaded: {
             txtSwitchRepeater.model = settings.categories;
-            console.debug("onFeedHiddenSettingsLoaded, settings.categoriesHidden=" + JSON.stringify(settings.categoriesHidden));
+            //console.debug("onFeedHiddenSettingsLoaded, settings.categoriesHidden=" + JSON.stringify(settings.categoriesHidden));
         }
     }
 
