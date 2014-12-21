@@ -3,6 +3,7 @@ import Sailfish.Silica 1.0
 
 Page {
     id: root
+    objectName: "WebPage"
 
     property string url
 
@@ -16,6 +17,8 @@ Page {
     allowedOrientations: Orientation.All
 
     Loader {
+        id: loader
+
         anchors.fill: parent
         sourceComponent: parent.status === PageStatus.Active ? webComponent : undefined
     }
@@ -25,6 +28,7 @@ Page {
 
         SilicaWebView {
             id: webview
+            opacity: 1
 
             header: PageHeader {
                 title: webview.title
@@ -45,14 +49,9 @@ Page {
                     onClicked: {
                         //var shareUrl = (settings.useMobileURL && originalMobileURL != "") ? originalMobileURL : originalURL;
 
-                        textArea.text = url; textArea.selectAll(); textArea.copy();
-                        infoBanner.showText(qsTr("Link") + " " + textArea.text + " " + qsTr("copied to clipboard."));
+                        Clipboard.text = url;
+                        infoBanner.showText(qsTr("Link") + " " + Clipboard.text + " " + qsTr("copied to clipboard."));
                     }
-                }
-
-                TextArea {
-                    id: textArea;
-                    visible: false;
                 }
 
                 MenuItem {
@@ -64,9 +63,25 @@ Page {
                 }
             }
 
+            Component.onCompleted: {
+                try {
+                    experimental.userAgent =
+                            "Mozilla/5.0 (Maemo; Linux; Jolla; Sailfish; Mobile) " +
+                            "AppleWebKit/534.13 (KHTML, like Gecko) " +
+                            "NokiaBrowser/8.5.0 Mobile Safari/534.13";
+                } catch (err) {
+
+                }
+            }
+
             url: root.url
         }
     }
 
+    BusyIndicator {
+        running: loader.item ? loader.item.loading : false
+        anchors.centerIn: parent
+        size: BusyIndicatorSize.Large
+    }
 
 }

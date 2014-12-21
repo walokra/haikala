@@ -12,8 +12,8 @@ ContextMenu {
         font.pixelSize: constants.fontSizeXSmall;
         text: qsTr("Copy link to clipboard");
         onClicked: {
-            textArea.text = url; textArea.selectAll(); textArea.copy();
-            infoBanner.showText(qsTr("Link " + textArea.text + " copied to clipboard."));
+            Clipboard.text = url;
+            infoBanner.showText(qsTr("Link " + Clipboard.text + " copied to clipboard."));
         }
     }
 
@@ -55,8 +55,4 @@ ContextMenu {
         }
     }
 
-    TextArea {
-        id: textArea;
-        visible: false;
-    }
 }
