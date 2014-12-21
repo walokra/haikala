@@ -1,3 +1,6 @@
+* Sun Dec 21 2014 Marko Wallin <mtw@iki.fi> 0.6.1-1
+Fix Qt 5.2 WebView chokes on caches from older Qt versions.
+
 * Sun Oct 12 2014 Marko Wallin <mtw@iki.fi> 0.6.0-1
 Filter shown news categories.
 Added sub categories to category selection.
