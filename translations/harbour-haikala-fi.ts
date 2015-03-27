@@ -37,6 +37,13 @@
     </message>
 </context>
 <context>
+    <name>ActionBar</name>
+    <message>
+        <source>powered by high.fi</source>
+        <translation>voimanlähteenä high.fi</translation>
+    </message>
+</context>
+<context>
     <name>ChangelogDialog</name>
     <message>
         <source>Changelog</source>
@@ -93,6 +100,10 @@
     <message>
         <source>Added sub categories to category selection.</source>
         <translation>Lisätty kategorialistaan alikategoriat.</translation>
+    </message>
+    <message>
+        <source>Päätoiminnot alapalkkiin.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -165,10 +176,6 @@
         <translation>Tietoja</translation>
     </message>
     <message>
-        <source>Refresh</source>
-        <translation>Päivitä</translation>
-    </message>
-    <message>
         <source>Pull down to refresh</source>
         <translation>Vedä alas päivittääksesi</translation>
     </message>
@@ -181,20 +188,15 @@
         <translation>Asetukset</translation>
     </message>
     <message>
-        <source>powered by high.fi</source>
-        <translation>voimanlähteenä high.fi</translation>
-    </message>
-    <message>
-        <source>Search...</source>
-        <translation>Hae</translation>
-    </message>
-    <message>
         <source>No results</source>
         <translation>Ei hakutuloksia</translation>
     </message>
+</context>
+<context>
+    <name>SearchPanel</name>
     <message>
-        <source>Search</source>
-        <translation>Haku</translation>
+        <source>Search from news</source>
+        <translation>Hae uutisista</translation>
     </message>
     <message>
         <source>No search results found</source>
@@ -205,8 +207,8 @@
         <translation>Haetulla termillä ei löytynyt yhtään hakutulosta. Yritä uudelleen eri hakuehdolla?</translation>
     </message>
     <message>
-        <source>Favorites</source>
-        <translation>Suosikit</translation>
+        <source>Search</source>
+        <translation>Haku</translation>
     </message>
 </context>
 <context>

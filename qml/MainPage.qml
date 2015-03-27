@@ -45,7 +45,8 @@ Page {
         id: flickable
         z: -2;
 
-        anchors.fill: parent
+        anchors.fill: parent;
+        contentHeight: parent.height; contentWidth: parent.width;
 
         PageHeader {
             id: header;
@@ -70,82 +71,6 @@ Page {
                     pageStack.push(Qt.resolvedUrl("SettingsPage.qml"))
                 }
             }
-
-            // TODO: Could show favorites like categories in side menu.
-            MenuItem {
-                id: favoritesMenu
-                text: qsTr("Favorites")
-                onClicked: {
-                    favoritesPage.load();
-                    pageStack.push(favoritesPage);
-                }
-            }
-
-            SearchField {
-                id: searchTextField;
-
-                width: parent.width;
-                font.pixelSize: constants.fontSizeSmall;
-                font.bold: false;
-                placeholderText: qsTr("Search...");
-
-                EnterKey.enabled: text.trim().length > 0;
-                EnterKey.iconSource: "image://theme/icon-m-enter-accept";
-                EnterKey.onClicked: {
-                    //console.log("Searched: " + query);
-                    searchText = "\"" + text + "\"";
-                    pullDownMenu.close();
-                    searchTextField.focus = false;
-
-                    newsModel.clear();
-                    HighFi.search(text, settings.domainToUse,
-                        function(jsonObject) {
-                            var entries = [];
-                            for (var i in jsonObject.responseData.feed.entries) {
-                                entries.push(feedModel.createItem(jsonObject.responseData.feed.entries[i]));
-                            }
-
-                            if (entries.length === 0) {
-                                var item = { };
-
-                                item["title"] = qsTr("No search results found");
-                                item["author"] = "";
-                                item["shortDescription"] = qsTr("Nothing found for the given search term. Try again with different search?");
-                                item["timeSince"] = Utils.timeDiff(new Date().getTime());
-                                item["read"] = false;
-                                item["link"] = "";
-
-                                entries.push(item);
-                            }
-
-                            var feed = { };
-                            feed["title"] = qsTr("Search");
-                            feed["sectionID"] = "search";
-                            feed["entries"] = entries;
-
-                            //console.debug("entries.count=" + entries.length);
-                            if (entries.length === 70) {
-                                hasMore = true;
-                            } else {
-                                hasMore = false;
-                            }
-
-                            newsModel.append(entries);
-                            searchResultsCount = newsModel.count;
-                        }, function(status, statusText, url){
-                            infoBanner.handleError(status, statusText, url);
-                        }
-                    );
-                }
-            }
-
-            MenuItem {
-                text: qsTr("Refresh")
-                onClicked: {
-                    currPageNro = 1;
-                    feedModel.refresh(selectedSection, false);
-                }
-            }
         }
 
         // The delegate for each section header
@@ -154,25 +79,10 @@ Page {
             SectionHeader { text: section }
         }
 
-        Label {
-            id: poweredLbl;
-            anchors { bottom: parent.bottom; }
-            anchors.horizontalCenter: parent.horizontalCenter;
-            anchors.leftMargin: Theme.paddingMedium;
-            anchors.rightMargin: Theme.paddingMedium;
-            anchors.bottomMargin: Theme.paddingSmall;
-            anchors.topMargin: Theme.paddingSmall;
-            font.pixelSize: Theme.fontSizeTiny;
-            color: constants.colorHilightSecondary;
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
-            text: qsTr("powered by high.fi");
-            opacity: 0.7;
-        }
-
         SilicaListView {
             id: listView
 
-            anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: poweredLbl.top; }
+            anchors { top: header.bottom; left: parent.left; right: parent.right; bottom: actionBar.top; }
             anchors.margins: constants.paddingMedium;
             anchors.bottomMargin: Theme.paddingSmall;
             anchors.topMargin: Theme.paddingSmall;
@@ -266,7 +176,18 @@ Page {
                 }
             }
 
-            VerticalScrollDecorator { flickable: flickable }
+            onMovementEnded: {
+                if (atYBeginning) {
+                    actionBar.shown = true;
+                }
+            }
+
+            VerticalScrollDecorator { flickable: listView }
+        } // listview
+
+        ActionBar {
+            id: actionBar;
+            flickable: listView;
         }
     }
 

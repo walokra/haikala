@@ -37,6 +37,13 @@
     </message>
 </context>
 <context>
+    <name>ActionBar</name>
+    <message>
+        <source>powered by high.fi</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChangelogDialog</name>
     <message>
         <source>Changelog</source>
@@ -92,6 +99,10 @@
     </message>
     <message>
         <source>Added sub categories to category selection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Päätoiminnot alapalkkiin.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -165,10 +176,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pull down to refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -181,19 +188,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>powered by high.fi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No results</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>SearchPanel</name>
     <message>
-        <source>Search</source>
+        <source>Search from news</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -205,7 +207,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Favorites</source>
+        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
