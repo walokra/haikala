@@ -29,6 +29,23 @@ Dialog {
             anchors.margins: Theme.paddingMedium;
             spacing: Theme.paddingMedium;
 
+            SectionHeader { text: qsTr("Version") + " 0.7 (2015-03-27)" }
+
+            Column {
+                anchors { left: parent.left; right: parent.right; }
+                width: parent.width;
+                height: childrenRect.height;
+
+                spacing: constants.paddingSmall;
+
+                Label {
+                    width: parent.width;
+                    wrapMode: Text.Wrap;
+                    font.pixelSize: Theme.fontSizeSmall;
+                    text: qsTr("Päätoiminnot alapalkkiin.");
+                }
+            }
+
             SectionHeader { text: qsTr("Version") + " 0.6 (2014-10-12)" }
 
             Column {
