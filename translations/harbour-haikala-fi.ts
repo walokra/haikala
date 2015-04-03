@@ -102,8 +102,8 @@
         <translation>Lisätty kategorialistaan alikategoriat.</translation>
     </message>
     <message>
-        <source>Päätoiminnot alapalkkiin.</source>
-        <translation type="unfinished"></translation>
+        <source>Main functions in toolbar.</source>
+        <translation>Päätoiminnot alapalkkiin.</translation>
     </message>
 </context>
 <context>

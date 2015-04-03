@@ -102,7 +102,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Päätoiminnot alapalkkiin.</source>
+        <source>Main functions in toolbar.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -42,7 +42,7 @@ Dialog {
                     width: parent.width;
                     wrapMode: Text.Wrap;
                     font.pixelSize: Theme.fontSizeSmall;
-                    text: qsTr("Päätoiminnot alapalkkiin.");
+                    text: qsTr("Main functions in toolbar.");
                 }
             }
 
