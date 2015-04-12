@@ -13,7 +13,7 @@ ContextMenu {
         text: qsTr("Copy link to clipboard");
         onClicked: {
             Clipboard.text = url;
-            infoBanner.showText(qsTr("Link " + Clipboard.text + " copied to clipboard."));
+            infoBanner.showText(qsTr("Link %1 copied to clipboard.").arg(Clipboard.text));
         }
     }
 

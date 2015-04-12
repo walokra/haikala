@@ -154,6 +154,10 @@
         <source>Favorite removed</source>
         <translation>Linkki poistettu suosikeista</translation>
     </message>
+    <message>
+        <source>Link %1 copied to clipboard.</source>
+        <translation>Linkki %1 kopioitu leikepöydälle.</translation>
+    </message>
 </context>
 <context>
     <name>FeedsFilterView</name>
@@ -285,14 +289,6 @@
     <message>
         <source>Copy link to clipboard</source>
         <translation>Kopioi linkki leikepöydälle</translation>
-    </message>
-    <message>
-        <source>Link</source>
-        <translation>Linkki</translation>
-    </message>
-    <message>
-        <source>copied to clipboard.</source>
-        <translation>kopioitu leikepöydälle.</translation>
     </message>
     <message>
         <source>Open in browser</source>

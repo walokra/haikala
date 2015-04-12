@@ -154,6 +154,10 @@
         <source>Favorite removed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Link %1 copied to clipboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FeedsFilterView</name>
