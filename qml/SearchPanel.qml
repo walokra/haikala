@@ -46,7 +46,7 @@ Item {
                         item["shortDescription"] = qsTr("Nothing found for the given search term. Try again with different search?");
                         item["timeSince"] = Utils.timeDiff(new Date().getTime());
                         item["read"] = false;
-                        item["link"] = "";
+                        item["originalURL"] = "";
 
                         entries.push(item);
                     }

@@ -13,7 +13,7 @@ Name:       harbour-haikala
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    High.fi news portal's feed reader for Sailfish OS.
-Version:    0.7.0
+Version:    0.8.0
 Release:    1
 Group:      Applications/Internet
 License:    LICENSE
@@ -63,6 +63,9 @@ desktop-file-install --delete-original       \
    %{buildroot}%{_datadir}/applications/*.desktop
 
 %files
+%defattr(-,root,root,-)
+%defattr(0644,root,root,755)
+%attr(0755,root,root) %{_bindir}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png

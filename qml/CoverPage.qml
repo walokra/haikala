@@ -33,7 +33,8 @@ CoverBackground {
         Label {
             anchors { top: parent.top; left: parent.left; right: parent.right; }
             visible: feedModel.busy
-            font.pixelSize: Theme.fontSizeLarge
+            font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                ? Theme.fontSizeExtraLarge : Theme.fontSizeLarge
             color: Theme.highlightColor
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             text: qsTr("Refreshing")
@@ -71,7 +72,8 @@ CoverBackground {
                     text: title
                     maximumLineCount: 2
                     elide: Text.ElideRight
-                    font { pixelSize: Theme.fontSizeTiny; family: Theme.fontFamily }
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeSmall : Theme.fontSizeTiny
                     wrapMode: Text.Wrap
                     color: Theme.secondaryColor
                 }
@@ -82,7 +84,8 @@ CoverBackground {
             id: lastUpdateLbl
             anchors { right: parent.right; bottom: parent.bottom }
             anchors.horizontalCenter: parent.horizontalCenter;
-            font.pixelSize: Theme.fontSizeTiny
+            font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                ? Theme.fontSizeExtraSmall : Theme.fontSizeTiny
             color: Theme.secondaryColor
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             text: formatLastUpdatedLbl(feedModel.lastRefresh)

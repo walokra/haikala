@@ -105,6 +105,10 @@
         <source>Main functions in toolbar.</source>
         <translation>Päätoiminnot alapalkkiin.</translation>
     </message>
+    <message>
+        <source>Adjust user interface for tablet.</source>
+        <translation>Säädetty käyttöliittymää tablettia ajatellen.</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -293,6 +297,14 @@
     <message>
         <source>Open in browser</source>
         <translation>Avaa selaimessa</translation>
+    </message>
+    <message>
+        <source>Link</source>
+        <translation>Linkki</translation>
+    </message>
+    <message>
+        <source>copied to clipboard.</source>
+        <translation>kopioitu leikepöydälle.</translation>
     </message>
 </context>
 <context>

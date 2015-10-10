@@ -29,6 +29,24 @@ Dialog {
             anchors.margins: Theme.paddingMedium;
             spacing: Theme.paddingMedium;
 
+            SectionHeader { text: qsTr("Version") + " 0.8 (2015-10-10)" }
+
+            Column {
+                anchors { left: parent.left; right: parent.right; }
+                width: parent.width;
+                height: childrenRect.height;
+
+                spacing: constants.paddingSmall;
+
+                Label {
+                    width: parent.width;
+                    wrapMode: Text.Wrap;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
+                    text: qsTr("Adjust user interface for tablet.");
+                }
+            }
+
             SectionHeader { text: qsTr("Version") + " 0.7 (2015-03-27)" }
 
             Column {
@@ -41,7 +59,9 @@ Dialog {
                 Label {
                     width: parent.width;
                     wrapMode: Text.Wrap;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
+
                     text: qsTr("Main functions in toolbar.");
                 }
             }
@@ -58,14 +78,16 @@ Dialog {
                 Label {
                     width: parent.width;
                     wrapMode: Text.Wrap;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     text: qsTr("Filter shown news categories.");
                 }
 
                 Label {
                     width: parent.width;
                     wrapMode: Text.Wrap;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     text: qsTr("Added sub categories to category selection.");
                 }
             }
@@ -82,14 +104,16 @@ Dialog {
                 Label {
                     width: parent.width;
                     wrapMode: Text.Wrap;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     text: qsTr("Add news item to favorites.");
                 }
 
                 Label {
                     width: parent.width;
                     wrapMode: Text.Wrap;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     text: qsTr("Reset application settings and favorites.");
                 }
             }
@@ -106,21 +130,24 @@ Dialog {
                 Label {
                     width: parent.width;
                     wrapMode: Text.Wrap;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     text: qsTr("Search functionality.");
                 }
 
                 Label {
                     width: parent.width;
                     wrapMode: Text.Wrap;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     text: qsTr("News sources from different regions which are supported by High.fi.");
                 }
 
                 Label {
                     width: parent.width;
                     wrapMode: Text.Wrap;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     text: qsTr("Settings are saved automatically.");
                 }
             }
@@ -136,28 +163,32 @@ Dialog {
 
                 Label {
                     width: parent.width;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     wrapMode: Text.Wrap;
                     text: qsTr("Cover page shows latest headlines.");
                 }
 
                 Label {
                     width: parent.width;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     wrapMode: Text.Wrap;
                     text: qsTr("Show descriptions and use mobile links.");
                 }
 
                 Label {
                     width: parent.width;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     wrapMode: Text.Wrap;
                     text: qsTr("Copy link to clipboard.");
                 }
 
                 Label {
                     width: parent.width;
-                    font.pixelSize: Theme.fontSizeSmall;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeMedium : Theme.fontSizeSmall
                     wrapMode: Text.Wrap;
                     text: qsTr("Pagination for getting more headlines.");
                 }

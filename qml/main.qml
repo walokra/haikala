@@ -98,7 +98,8 @@ ApplicationWindow {
         Label {
             id: infoLabel;
             text : ''
-            font.pixelSize: Theme.fontSizeExtraSmall;
+            font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                ? Theme.fontSizeSmall : Theme.fontSizeExtraSmall
             width: parent.width - 2 * Theme.paddingSmall
             anchors.top: parent.top;
             anchors.topMargin: Theme.paddingMedium;

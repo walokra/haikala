@@ -1,3 +1,7 @@
+* Sat Oct 10 2015 Marko Wallin <mtw@iki.fi> 0.8.0-1
+Adjust UI for tablet.
+Use new shareURL, mobileShareURL and clickTrackingLink variables.
+
 * Fri Mar 27 2015 Marko Wallin <mtw@iki.fi> 0.7.0-1
 Move search, favorites and refresh to toolbar.
 Switch to using PublishedDateJS.

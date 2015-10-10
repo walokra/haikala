@@ -50,8 +50,8 @@ Item {
         item["timeSince"] = Utils.timeDiff(obj["publishedDateJS"]);
         item["read"] = false;
         item["favorited"] = false;
-        item["link"] += encodeURI("&deviceID=" + settings.deviceID + "&appID=" + constants.userAgent);
-        //console.debug("link=" + item["link"]);
+        item["originalURL"] += encodeURI("&deviceID=" + settings.deviceID + "&appID=" + constants.userAgent);
+        //console.debug("originalURL=" + item["originalURL"]);
 
         return item;
     }

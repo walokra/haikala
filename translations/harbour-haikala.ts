@@ -105,6 +105,10 @@
         <source>Main functions in toolbar.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Adjust user interface for tablet.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>

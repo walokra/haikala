@@ -50,7 +50,8 @@ Panel {
                         anchors { left: parent.left; right: parent.right; }
                         anchors.verticalCenter: parent.verticalCenter;
                         text: modelData.title;
-                        font.pixelSize: constants.fontSizeMedium;
+                        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                            ? Theme.fontSizeLarge : Theme.fontSizeMedium
                         color: feedItem.highlighted ? constants.colorHighlight : constants.colorPrimary;
                     }
 

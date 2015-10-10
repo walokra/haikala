@@ -64,7 +64,7 @@ Page {
             // @FIXME: better way to mark as read?
             for (var i=0; i < newsModel.count; i++) {
                 var entry = newsModel.get(i);
-                if (entry.link === link) {
+                if (entry.originalURL === link) {
                     entry.read = true;
                     break;
                 }

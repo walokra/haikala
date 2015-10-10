@@ -42,7 +42,8 @@ Item {
         anchors.rightMargin: Theme.paddingMedium;
         anchors.bottomMargin: Theme.paddingSmall;
         anchors.topMargin: Theme.paddingMedium;
-        font.pixelSize: Theme.fontSizeTiny;
+        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                            ? Theme.fontSizeSmall : Theme.fontSizeTiny
         color: constants.colorHilightSecondary;
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
         text: qsTr("powered by high.fi");

@@ -4,22 +4,25 @@ import Sailfish.Silica 1.0
 ContextMenu {
     id: contextMenu;
     property var url;
+    property var shareUrl;
     property var itemData: [];
     property bool isFavPage;
 
     MenuItem {
         anchors { left: parent.left; right: parent.right; }
-        font.pixelSize: constants.fontSizeXSmall;
+        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                            ? Theme.fontSizeSmall : Theme.fontSizeExtraSmall
         text: qsTr("Copy link to clipboard");
         onClicked: {
-            Clipboard.text = url;
+            Clipboard.text = shareUrl;
             infoBanner.showText(qsTr("Link %1 copied to clipboard.").arg(Clipboard.text));
         }
     }
 
     MenuItem {
         anchors { left: parent.left; right: parent.right; }
-        font.pixelSize: constants.fontSizeXSmall;
+        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                            ? Theme.fontSizeSmall : Theme.fontSizeExtraSmall
         text: qsTr("Open link in browser");
         onClicked: {
             var props = {
@@ -33,7 +36,8 @@ ContextMenu {
 
     MenuItem {
         anchors { left: parent.left; right: parent.right; }
-        font.pixelSize: constants.fontSizeXSmall;
+        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                            ? Theme.fontSizeSmall : Theme.fontSizeExtraSmall
         text: qsTr("Add to favorites");
         visible: !isFavPage;
         onClicked: {
@@ -45,7 +49,8 @@ ContextMenu {
 
     MenuItem {
         anchors { left: parent.left; right: parent.right; }
-        font.pixelSize: constants.fontSizeXSmall;
+        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                            ? Theme.fontSizeSmall : Theme.fontSizeExtraSmall
         text: qsTr("Remove from favorites");
         visible: isFavPage;
         onClicked: {

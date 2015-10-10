@@ -49,7 +49,8 @@ Item {
                     Label {
                         id: helpDescText;
                         width: parent.width;
-                        font.pixelSize: Theme.fontSizeTiny;
+                        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                            ? Theme.fontSizeExtraSmall : Theme.fontSizeTiny
                         wrapMode: Text.Wrap;
                         text: qsTr("Show synopsis or abbreviation of the news story if available.");
                     }
@@ -73,7 +74,8 @@ Item {
                     Label {
                         id: helpMobileText;
                         width: parent.width;
-                        font.pixelSize: Theme.fontSizeTiny;
+                        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                            ? Theme.fontSizeExtraSmall : Theme.fontSizeTiny
                         wrapMode: Text.Wrap;
                         text: qsTr("Use mobile optimized address for the story if available otherwise use normal address.");
                     }
@@ -121,7 +123,8 @@ Item {
                     Label {
                         id: helpLangText;
                         width: parent.width;
-                        font.pixelSize: Theme.fontSizeTiny;
+                        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                            ? Theme.fontSizeExtraSmall : Theme.fontSizeTiny
                         wrapMode: Text.Wrap;
                         text: qsTr("Select news portal's region for categories.");
                     }
@@ -149,7 +152,8 @@ Item {
                 Label {
                     id: helpResetText;
                     width: parent.width;
-                    font.pixelSize: Theme.fontSizeTiny;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeExtraSmall : Theme.fontSizeTiny
                     wrapMode: Text.Wrap;
                     text: qsTr("Resets all settings and removes all favorited news items.");
                 }

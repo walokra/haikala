@@ -36,7 +36,8 @@ Page {
                     textFormat: Text.StyledText;
                     linkColor: Theme.highlightColor;
                     wrapMode: Text.Wrap;
-                    font.pixelSize: constants.fontSizeMedium;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeLarge : Theme.fontSizeMedium
                     text: qsTr("Haikala is a news reader for") + " <a href='http://high.fi'>High.fi</a> " + qsTr("news portal's feeds. Haikala is open source software and licensed under the terms of the MIT license.")
                 }
             }
@@ -50,14 +51,16 @@ Page {
                 ListItem {
                     Label {
                         id: versionText;
-                        font.pixelSize: constants.fontSizeMedium;
+                        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                            ? Theme.fontSizeLarge : Theme.fontSizeMedium
                         text: APP_VERSION + "-" + APP_RELEASE;
                     }
 
                     Label {
                         id: changeLog;
                         anchors { right: parent.right; leftMargin: constants.paddingLarge; rightMargin: constants.paddingLarge; }
-                        font.pixelSize: constants.fontSizeMedium;
+                        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                            ? Theme.fontSizeLarge : Theme.fontSizeMedium
                         text: qsTr("Changelog");
                         color: Theme.highlightColor;
 
@@ -85,7 +88,8 @@ Page {
                 Label {
                     anchors { left: rotImage.right; leftMargin: constants.paddingLarge;}
                     text: "Marko Wallin, @walokra"
-                    font.pixelSize: constants.fontSizeLarge
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeExtraLarge : Theme.fontSizeLarge
                 }
             }
 
@@ -93,7 +97,8 @@ Page {
                 anchors { right: parent.right; rightMargin: Theme.paddingLarge; }
                 textFormat: Text.StyledText;
                 linkColor: Theme.highlightColor;
-                font.pixelSize: Theme.fontSizeSmall;
+                font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                    ? Theme.fontSizeMedium : Theme.fontSizeSmall
                 truncationMode: TruncationMode.Fade;
                 text: qsTr("Bug reports") + ": " + "<a href='https://github.com/walokra/haikala/issues'>Github</a>";
                 onLinkActivated: Qt.openUrlExternally(link);
@@ -113,7 +118,8 @@ Page {
                     textFormat: Text.StyledText
                     linkColor: Theme.highlightColor
                     text: "<a href='http://high.fi'>High.fi</a>";
-                    font.pixelSize: constants.fontSizeLarge;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeExtraLarge : Theme.fontSizeLarge
                     onLinkActivated: Qt.openUrlExternally(link);
                 }
             }
@@ -128,7 +134,8 @@ Page {
                 Label {
                     anchors { left: qtImage.right; leftMargin: constants.paddingLarge; }
                     text: "Qt + QML";
-                    font.pixelSize: constants.fontSizeLarge;
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeExtraLarge : Theme.fontSizeLarge
                 }
             }
         }

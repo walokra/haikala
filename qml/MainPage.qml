@@ -198,7 +198,7 @@ Page {
             // @FIXME: better way to mark as read?
             for (var i=0; i < newsModel.count; i++) {
                 var entry = newsModel.get(i);
-                if (entry.link === link) {
+                if (entry.originalURL === link) {
                     entry.read = true;
                     break;
                 }
@@ -237,7 +237,8 @@ Page {
         anchors.bottom: parent.bottom
         anchors.margins: Theme.paddingMedium
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: Theme.fontSizeMedium
+        font.pixelSize: Screen.sizeCategory >= Screen.Large
+                            ? Theme.fontSizeLarge : Theme.fontSizeMedium
         color: Theme.secondaryColor
         truncationMode: TruncationMode.Fade
         text: feedModel.currentlyLoading

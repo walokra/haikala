@@ -8,6 +8,7 @@ Item {
     property Item contextMenu;
     property bool menuOpen: contextMenu != null && contextMenu.parent === feedItemDelegate;
     property string contextLink;
+    property string contextShareLink;
     property var currData: [];
     property bool favPage;
 
@@ -27,22 +28,25 @@ Item {
         Label {
             id: titleLbl
             width: parent.width
-            font.pixelSize: constants.fontSizeSmall
+            font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                ? Theme.fontSizeMedium : Theme.fontSizeSmall
             color: (read) ? constants.colorSecondary : constants.colorPrimary;
             textFormat: Text.PlainText
             wrapMode: Text.Wrap;
             text: title
 
             MouseArea {
-                enabled: link !== ""
+                enabled: originalURL !== ""
                 anchors.fill: parent
                 onClicked: {
-                    internal.markAsRead(link);
+                    internal.markAsRead(originalURL);
 
                     var url = (settings.useMobileURL && originalMobileURL != "") ? originalMobileURL : originalURL;
-                    var highFiUrl = (settings.useMobileURL && mobileLink != "") ? mobileLink : link;
+                    var shareUrl = (settings.useMobileURL && mobileShareURL != "") ? mobileShareURL : shareURL;
+                    var highFiUrl = clickTrackingLink;
                     var props = {
-                        "url": url
+                        "url": url,
+                        "shareUrl": shareUrl
                     }
                     pageStack.push(Qt.resolvedUrl("WebPage.qml"), props);
 
@@ -51,18 +55,22 @@ Item {
 
                 onPressAndHold: {
                     contextLink = (settings.useMobileURL && originalMobileURL != "") ? originalMobileURL : originalURL;
+                    contextShareLink = (settings.useMobileURL && mobileShareURL != "") ? mobileShareURL : shareURL;
                     var item = {
                         "articleID": articleID,
                         "sectionID": sectionID,
                         "title": title,
-                        "link": link,
+//                        "link": link,
                         "author": author,
                         "shortDescription": shortDescription,
                         "publishedDate": publishedDate,
                         "publishedDateJS": publishedDateJS,
                         "originalURL": originalURL,
-                        "mobileLink": mobileLink,
+//                        "mobileLink": mobileLink,
                         "originalMobileURL": originalMobileURL,
+                        "clickTrackingLink": clickTrackingLink,
+                        "shareURL": shareURL,
+                        "mobileShareURL": mobileShareURL,
                         "highlight": highlight,
                         "read": false,
                         "favorited": true
@@ -86,7 +94,8 @@ Item {
                     id: descLbl;
                     visible: settings.showDescription == true && shortDescription != "";
                     width: parent.width
-                    font.pixelSize: constants.fontSizeXXSmall
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeExtraSmall : Theme.fontSizeTiny
                     color: constants.colorHighlight;
                     textFormat: Text.PlainText
                     wrapMode: Text.Wrap;
@@ -96,7 +105,8 @@ Item {
                 Label {
                     id: authorLbl
                     width: parent.width
-                    font.pixelSize: constants.fontSizeXXSmall
+                    font.pixelSize: Screen.sizeCategory >= Screen.Large
+                                        ? Theme.fontSizeExtraSmall : Theme.fontSizeTiny
                     color: constants.colorHilightSecondary
                     textFormat: Text.PlainText
                     text: author
@@ -148,6 +158,7 @@ Item {
 
         FeedItemContextMenu {
             url: contextLink;
+            shareUrl: contextShareLink;
             itemData: currData;
             isFavPage: favPage;
         }
