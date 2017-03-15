@@ -30,4 +30,8 @@ QtObject {
     property int fontSizeXLarge : Theme.fontSizeExtraLarge;
     property int fontSizeXXLarge : Theme.fontSizeHuge;
 
+    // Icons
+    property string iconSearch: "image://theme/icon-m-search";
+    property string iconFavorites: "image://theme/icon-m-favorite";
+    property string iconRefresh: "image://theme/icon-m-refresh";
 }
