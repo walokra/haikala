@@ -16,7 +16,7 @@ Summary:    High.fi news portal's feed reader for Sailfish OS.
 Version:    0.8.0
 Release:    1
 Group:      Applications/Internet
-License:    LICENSE
+License:    MIT
 URL:        http://ruleoftech.com/lab/haikala
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-haikala.yaml

@@ -4,7 +4,7 @@ Version: 0.8.0
 Release: 1
 Group: Applications/Internet
 URL: http://ruleoftech.com/lab/haikala
-License: LICENSE
+License: MIT
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |-
